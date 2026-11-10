@@ -1,0 +1,22 @@
+{
+  "dataset": "Stanford Alpaca",
+  "attribution": "Stanford Center for Research on Foundation Models / tatsu-lab",
+  "source": "https://github.com/tatsu-lab/stanford_alpaca",
+  "revision": "761dc5bfbdeeffa89b8bff5d038781a4055f796a",
+  "download_url": "https://raw.githubusercontent.com/tatsu-lab/stanford_alpaca/761dc5bfbdeeffa89b8bff5d038781a4055f796a/alpaca_data.json",
+  "source_sha256": "2eddafc6b977608d778aaab8dfc7e50e547b3af9826dfb9e909d9fc362e4a419",
+  "license": "CC-BY-NC-4.0",
+  "license_url": "https://github.com/tatsu-lab/stanford_alpaca/blob/761dc5bfbdeeffa89b8bff5d038781a4055f796a/DATA_LICENSE",
+  "usage": "Noncommercial research use; see upstream usage and license notices.",
+  "format": "JSON array of objects containing messages with role and content fields",
+  "conversion": "User content is stripped instruction plus two newlines and stripped input when present; assistant content is stripped output. No system prompt added.",
+  "filtering": "Omit empty instructions or answers and keep the first occurrence of each exact converted user prompt before splitting.",
+  "shuffle": "Python random.Random(42).shuffle; first round(5% of retained records) assigned to validation",
+  "seed": 42,
+  "source_count": 52002,
+  "omitted_count": 28,
+  "counts": {
+    "train": 49375,
+    "validation": 2599
+  }
+}
