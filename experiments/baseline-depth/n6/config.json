@@ -1,0 +1,29 @@
+{
+  "model": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 6,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "dropout": 0.1
+  },
+  "args": {
+    "out": "runs/n6-d384",
+    "layers": 6,
+    "d_model": 384,
+    "heads": 6,
+    "d_ff": 0,
+    "dropout": 0.1,
+    "steps": 5000,
+    "batch_rows": 8,
+    "lr": 0.001,
+    "min_lr_frac": 0.1,
+    "warmup": 100,
+    "weight_decay": 0.1,
+    "clip": 1.0,
+    "eval_every": 250,
+    "seed": 0
+  },
+  "parameters": 23602944
+}
