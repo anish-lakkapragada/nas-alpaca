@@ -18,7 +18,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from cuda_model import Config, SpecGPT, baseline_spec, count_parameters, validate
+from cuda_model import (Config, SpecGPT, baseline_parameter_count, baseline_spec,
+                        count_parameters, learned_scale_count, spec_parameter_count, validate)
 
 
 DEVICE = "cpu"
@@ -52,8 +53,8 @@ def weighted_loss(model, batch):
 
 def test_baseline_parameter_counts():
     for config, expected in [
-        (Config(), 48_780_288),
-        (Config(n_layers=8, d_model=384, n_heads=6, d_ff=1536), 27_144_960),
+        (Config(), 27_144_960),
+        (Config(n_layers=10, d_model=512, n_heads=8, d_ff=2048), 48_780_288),
     ]:
         model = SpecGPT(config=config)
         assert count_parameters(model) == expected, (config, count_parameters(model))
@@ -61,6 +62,9 @@ def test_baseline_parameter_counts():
         assert sum(p.numel() for p in model.parameters()) == expected
         del model
         gc.collect()
+    assert len(baseline_spec()["layers"]) == 8
+    assert Config().to_dict() == dict(vocab_size=32768, max_len=1024, n_layers=8,
+                                      d_model=384, n_heads=6, d_ff=1536, dropout=.1)
 
 
 def test_primitive_parameter_counts_and_shared_norms():
@@ -157,6 +161,217 @@ def test_no_conversation_or_future_leakage():
     assert torch.count_nonzero(embeddings[0].grad[:, 5:9]).item() > 0
 
 
+def scaled_spec(learned, values=(1.0,)):
+    spec = baseline_spec(4)
+    for index, layer in enumerate(spec["layers"]):
+        for offset, kind in enumerate(("attn", "ffn")):
+            initial = values[(2 * index + offset) % len(values)]
+            layer[f"{kind}_scale"] = {"init": initial, "learned": True} if learned else initial
+        layer["order"] = "attn_ffn"
+    return spec
+
+
+def assert_common_parameter_gradients(reference, actual, atol=0, rtol=0):
+    params = dict(actual.named_parameters())
+    for name, parameter in reference.named_parameters():
+        assert parameter.grad is not None and params[name].grad is not None, name
+        torch.testing.assert_close(params[name].grad, parameter.grad, atol=atol, rtol=rtol, msg=name)
+
+
+def test_default_fixed_one_learned_one_equivalence():
+    # Explicit default order and fixed 1 introduce neither state nor operations;
+    # learned 1 preserves the initial function and existing-weight gradients.
+    for dropout in (0., .25):
+        cfg = tiny_config()
+        cfg.dropout = dropout
+        models = []
+        for spec in (baseline_spec(4), scaled_spec(False), scaled_spec(True)):
+            torch.manual_seed(1701)
+            models.append(SpecGPT(spec, cfg).to(DEVICE).train(dropout > 0))
+        baseline, fixed, learned = models
+        original_state = baseline.state_dict()
+        assert set(fixed.state_dict()) == set(original_state)
+        for model in (fixed, learned):
+            for name, value in original_state.items():
+                torch.testing.assert_close(value, model.state_dict()[name], atol=0, rtol=0)
+        assert count_parameters(fixed) == count_parameters(baseline)
+        assert count_parameters(learned) == count_parameters(baseline) + 8
+        assert learned_scale_count(learned.spec) == 8
+        batch = packed_batch()
+        losses, outputs = [], []
+        for model in models:
+            torch.manual_seed(991)  # dropout must also use the identical mask
+            outputs.append(model(batch[0], batch[3], batch[2]))
+            torch.manual_seed(991)
+            loss = weighted_loss(model, batch)
+            loss.backward()
+            losses.append(loss)
+        for index in (1, 2):
+            torch.testing.assert_close(outputs[index], outputs[0], atol=0, rtol=0)
+            torch.testing.assert_close(losses[index], losses[0], atol=0, rtol=0)
+            assert_common_parameter_gradients(baseline, models[index])
+        for scalar in learned.branch_scales.values():
+            assert scalar.ndim == 0 and scalar.grad is not None and torch.isfinite(scalar.grad)
+
+
+def test_fixed_and_learned_matching_initial_scales():
+    values = (.5, -.25, 0., 1.25, .7, .1)
+    fixed = tiny_model(scaled_spec(False, values))
+    learned = tiny_model(scaled_spec(True, values))
+    batch = packed_batch()
+    for model in (fixed, learned):
+        weighted_loss(model, batch).backward()
+    assert_common_parameter_gradients(fixed, learned)
+    torch.testing.assert_close(fixed(batch[0], batch[3], batch[2]), learned(batch[0], batch[3], batch[2]), atol=0, rtol=0)
+    # Mixed precision must not silently change the initial fixed/learned pair.
+    with torch.no_grad(), torch.autocast(device_type=DEVICE, dtype=torch.bfloat16):
+        torch.testing.assert_close(fixed(batch[0], batch[3], batch[2]), learned(batch[0], batch[3], batch[2]), atol=0, rtol=0)
+    # A zero learned branch can learn away from zero, even though its branch
+    # weights receive zero gradient at initialization.
+    zero_key = "L1_attn"
+    assert learned.branch_scales[zero_key].item() == 0.
+    assert learned.branch_scales[zero_key].grad.abs().item() > 0.
+    assert torch.count_nonzero(learned.attns["A1"].attn.qkv.weight.grad).item() == 0
+
+
+def test_reverse_order_and_zero_scale_identities():
+    batch = packed_batch()
+    normal = baseline_spec(1)
+    reversed_spec = copy.deepcopy(normal)
+    reversed_spec["layers"][0].update(order="ffn_attn", attn_scale=.5, ffn_scale=.75)
+    model = tiny_model(reversed_spec)
+    initial = model.tok(batch[0]) + model.pos(batch[3])
+    mask = model.attention_mask(batch[2])
+    after_ffn = initial + .75 * model.ffns["F0"](initial)
+    expected = model.ln_f(after_ffn + .5 * model.attns["A0"](after_ffn, mask))
+    torch.testing.assert_close(model.hidden_states(batch[0], batch[3], batch[2]), expected, atol=0, rtol=0)
+    forward_spec = copy.deepcopy(reversed_spec)
+    forward_spec["layers"][0]["order"] = "attn_ffn"
+    forward = tiny_model(forward_spec)
+    assert not torch.equal(model(batch[0], batch[3], batch[2]), forward(batch[0], batch[3], batch[2]))
+    for kind in ("attn", "ffn"):
+        for delete in (False, True):
+            spec = copy.deepcopy(normal)
+            if delete:
+                spec["layers"][0][kind] = None
+            else:
+                spec["layers"][0][f"{kind}_scale"] = 0.
+            reversed_spec = copy.deepcopy(spec)
+            reversed_spec["layers"][0]["order"] = "ffn_attn"
+            a, b = tiny_model(spec), tiny_model(reversed_spec)
+            torch.testing.assert_close(a(batch[0], batch[3], batch[2]), b(batch[0], batch[3], batch[2]), atol=0, rtol=0)
+    for order in ("attn_ffn", "ffn_attn"):
+        spec = copy.deepcopy(normal)
+        spec["layers"][0].update(order=order, attn_scale=0., ffn_scale=0.)
+        model = tiny_model(spec)
+        expected = model.ln_f(model.tok(batch[0]) + model.pos(batch[3]))
+        torch.testing.assert_close(model.hidden_states(batch[0], batch[3], batch[2]), expected, atol=0, rtol=0)
+
+
+def composite_scaled_spec():
+    return {"layers": [
+        {"attn": "A0", "ffn": "F0", "loop": 2, "inject": True, "order": "ffn_attn",
+         "attn_scale": {"init": .5, "learned": True}, "ffn_scale": {"init": .75, "learned": True}},
+        {"attn": None, "ffn": "F1", "ffn_scale": {"init": .7, "learned": True}},
+        {"attn": "A0", "ffn": "F0", "order": "ffn_attn",
+         "attn_scale": {"init": 1.25, "learned": True}, "ffn_scale": .5},
+    ], "ffns": {"F0": {"act": "relu2", "hidden": 32},
+                "F1": {"act": "gelu_tanh", "hidden": 24, "transpose_tie": True}}}
+
+
+def test_composite_loop_sharing_reverse_scales_and_gradients():
+    spec = composite_scaled_spec()
+    model = tiny_model(spec).double()
+    reference = copy.deepcopy(model)
+    batch = packed_batch()
+    assert model.n_applications == 4 and len(model.attns) == 1 and len(model.ffns) == 2
+    assert learned_scale_count(spec) == len(model.branch_scales) == 4
+    assert model.branch_scales["L0_attn"] is not model.branch_scales["L2_attn"]
+    assert count_parameters(model) == spec_parameter_count(spec, tiny_config())
+    scaleless = copy.deepcopy(spec)
+    for layer in scaleless["layers"]:
+        for kind in ("attn", "ffn"):
+            if isinstance(layer.get(f"{kind}_scale"), dict):
+                layer[f"{kind}_scale"]["learned"] = False
+    assert count_parameters(model) == count_parameters(tiny_model(scaleless)) + 4
+
+    # Explicit unrolling is an independent reference for input injection,
+    # reverse order, per-entry scales, and accumulation into shared weights.
+    scalars = reference.branch_scales
+    mask = reference.attention_mask(batch[2])
+    x = reference.tok(batch[0]) + reference.pos(batch[3])
+    loop_input = x
+    x = x + scalars["L0_ffn"] * reference.ffns["F0"](x)
+    x = x + scalars["L0_attn"] * reference.attns["A0"](x, mask)
+    x = x + loop_input
+    x = x + scalars["L0_ffn"] * reference.ffns["F0"](x)
+    x = x + scalars["L0_attn"] * reference.attns["A0"](x, mask)
+    x = x + scalars["L1_ffn"] * reference.ffns["F1"](x)
+    x = x + .5 * reference.ffns["F0"](x)
+    x = x + scalars["L2_attn"] * reference.attns["A0"](x, mask)
+    logits = F.linear(reference.ln_f(x), reference.tok.weight)
+    actual_logits = model(batch[0], batch[3], batch[2])
+    torch.testing.assert_close(actual_logits, logits, atol=0, rtol=0)
+    reference_ce = F.cross_entropy(logits.flatten(0, 1), batch[1].flatten(), reduction="none").view_as(batch[4])
+    reference_loss = (reference_ce * batch[4]).sum() / batch[4].sum()
+    actual_loss = weighted_loss(model, batch)
+    actual_loss.backward()
+    reference_loss.backward()
+    assert_common_parameter_gradients(reference, model, atol=1e-12, rtol=1e-10)
+    # The scalar used twice in a loop must collect both uses' derivatives.
+    scalar = model.branch_scales["L0_attn"]
+    analytic, initial, epsilon = scalar.grad.item(), scalar.item(), 1e-5
+    with torch.no_grad():
+        scalar.fill_(initial + epsilon)
+        high = weighted_loss(model, batch).item()
+        scalar.fill_(initial - epsilon)
+        low = weighted_loss(model, batch).item()
+        scalar.fill_(initial)
+    assert abs((high - low) / (2 * epsilon) - analytic) < 1e-8
+    assert abs(analytic) > 1e-9
+    # Exact save/load must include independent scalars and their learned values.
+    clone = tiny_model(spec).double()
+    clone.load_state_dict(model.state_dict(), strict=True)
+    torch.testing.assert_close(clone(batch[0], batch[3], batch[2]), actual_logits, atol=0, rtol=0)
+
+
+def test_scaled_reversed_packed_loss_and_gradients():
+    model = tiny_model(composite_scaled_spec())
+    reference = copy.deepcopy(model)
+    batch = packed_batch()
+    packed_loss = weighted_loss(model, batch)
+    packed_loss.backward()
+    separate_sum = sum(weighted_loss(reference, tuple(x[:, start:end] for x in batch)) * batch[4][:, start:end].sum()
+                       for start, end in ((0, 5), (5, 9)))
+    separate_loss = separate_sum / batch[4].sum()
+    separate_loss.backward()
+    torch.testing.assert_close(packed_loss, separate_loss, atol=1e-6, rtol=1e-6)
+    assert_common_parameter_gradients(reference, model, atol=3e-6, rtol=5e-5)
+
+
+def test_scalar_allowance_counts_and_no_other_weights():
+    spec = scaled_spec(True)
+    model = tiny_model(spec)
+    assert count_parameters(model) == baseline_parameter_count(tiny_config()) + 8
+    assert spec_parameter_count(spec, tiny_config()) == count_parameters(model)
+    scalar_names = {name for name, _ in model.named_parameters() if name.startswith("branch_scales.")}
+    assert scalar_names == {f"branch_scales.L{index}_{kind}" for index in range(4) for kind in ("attn", "ffn")}
+    expected_existing = set(dict(tiny_model().named_parameters()))
+    assert set(dict(model.named_parameters())) - scalar_names == expected_existing
+    # Extra scalar allowance never licenses a wider FFN or another layer.
+    for edit in ("width", "depth"):
+        bad = copy.deepcopy(spec)
+        if edit == "width":
+            bad["ffns"]["F0"] = {"hidden": 65}
+        else:
+            bad["layers"][0]["loop"] = 2
+        try:
+            validate(bad, tiny_config())
+        except ValueError:
+            continue
+        raise AssertionError(f"scalar allowance accepted forbidden {edit}")
+
+
 def test_whitelist_rejects_invalid_specs():
     bad = []
     spec = baseline_spec(4); spec["layers"][1]["attn"] = "A0"; bad.append(spec)
@@ -167,6 +382,14 @@ def test_whitelist_rejects_invalid_specs():
     spec = baseline_spec(4); spec["layers"][0].update(attn=None, ffn=None); bad.append(spec)
     spec = baseline_spec(4); spec["layers"][0]["inject"] = True; bad.append(spec)
     spec = baseline_spec(4); spec["ffns"] = {"F0": {"bias": True}}; bad.append(spec)
+    for value in (True, "1", float("nan"), float("inf"), [1.], {},
+                  {"init": 1.}, {"learned": True}, {"init": 1., "learned": 1},
+                  {"init": float("nan"), "learned": True},
+                  {"init": .5, "learned": True, "per_loop": True}):
+        spec = baseline_spec(4); spec["layers"][0]["attn_scale"] = value; bad.append(spec)
+    for value in ("parallel", "ffn", None, True):
+        spec = baseline_spec(4); spec["layers"][0]["order"] = value; bad.append(spec)
+    spec = baseline_spec(4); spec["layers"][0].update(attn=None, attn_scale=1.); bad.append(spec)
     for spec in bad:
         try:
             validate(spec, config=tiny_config())

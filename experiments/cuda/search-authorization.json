@@ -1,0 +1,29 @@
+{
+  "authorized_at_utc": "2026-11-11T08:34:17+00:00",
+  "result_deadline_utc": "2026-11-11T16:15:00+00:00",
+  "training_deadline_utc": "2026-11-11T15:45:00+00:00",
+  "budget_usd": 200,
+  "baseline_parameters": 27144960,
+  "steps": 5000,
+  "allowed_primitives": [
+    "loop_optional_input_injection",
+    "nonadjacent_attention_sharing",
+    "nonadjacent_ffn_sharing",
+    "activation_relu_relu2_silu_gelu_tanh",
+    "delete_attention",
+    "delete_ffn",
+    "ffn_transpose_tie",
+    "narrow_ffn",
+    "fixed_or_learned_residual_scalar",
+    "reverse_sublayer_order"
+  ],
+  "objective": "Lower held-out loss first; final winner must also have fewer total parameters, including learned residual scalars.",
+  "logging": "Every architecture and every run, including host, GPU, seed, train/dev curves, timings, status and artifacts.",
+  "independence": {
+    "requested_by_user": true,
+    "ongoing_local_MLX_results_used_for_future_search": false,
+    "search_scheduler_host": "192.222.53.120",
+    "data_and_training_code_frozen": true,
+    "training_and_adaptation_survive_local_disconnect": true
+  }
+}

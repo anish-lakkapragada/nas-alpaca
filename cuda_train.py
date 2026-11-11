@@ -1,6 +1,6 @@
 """Train the fixed Alpaca answer-token objective with PyTorch/CUDA.
 
-Default frame: 10 layers, width 512, 8 heads, FFN 2048, tied vocabulary,
+Default frame: 8 layers, width 384, 6 heads, FFN 1536, tied vocabulary,
 context 1024. data.py remains the authority for encoding, split and packing.
 Validation is intentionally unavailable from this training entry point.
 """
@@ -14,6 +14,7 @@ import math
 import os
 from pathlib import Path
 import random
+import socket
 import time
 
 import numpy as np
@@ -21,9 +22,9 @@ import torch
 import torch.nn.functional as F
 
 import data
-from cuda_model import Config, SpecGPT, count_parameters
+from cuda_model import Config, SpecGPT, count_parameters, learned_scale_count
 
-FORMAT_VERSION = 1
+FORMAT_VERSION = 2
 
 
 class AdamWNoBiasCorrection(torch.optim.AdamW):
@@ -143,7 +144,7 @@ def evaluate(model, packed, batch_rows=8, precision="bf16", chunk_size=0):
             count += batch["n_targets"]
         result = float((total / count).cpu())
         if not math.isfinite(result):
-            raise FloatingPointError("nonfinite dev loss")
+            raise FloatingPointError("nonfinite evaluation loss")
         return result
     finally:
         model.train(previous_mode)
@@ -170,14 +171,25 @@ def provenance():
     return hashes
 
 
+def training_evaluation_subset(examples, conversations=256, seed=20261111):
+    """A fixed training-only diagnostic, independent of every training RNG."""
+    indices = sorted(random.Random(seed).sample(range(len(examples)), min(conversations, len(examples))))
+    packed = data.pack([examples[i] for i in indices], rng=None)
+    metadata = {"split": "train", "conversations": len(indices), "seed": seed,
+                "selection": "sorted random.Random(seed).sample over fixed training split",
+                "indices_sha256": hashlib.sha256(json.dumps(indices).encode()).hexdigest(),
+                "answer_tokens": int(packed[4].sum()), "dropout": False}
+    return packed, metadata
+
+
 def make_parser():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--spec", type=Path)
-    p.add_argument("--layers", type=int, default=10)
-    p.add_argument("--d-model", type=int, default=512)
-    p.add_argument("--heads", type=int, default=8)
-    p.add_argument("--d-ff", type=int, default=2048)
+    p.add_argument("--layers", type=int, default=8)
+    p.add_argument("--d-model", type=int, default=384)
+    p.add_argument("--heads", type=int, default=6)
+    p.add_argument("--d-ff", type=int, default=1536)
     p.add_argument("--dropout", type=float, default=0.1)
     p.add_argument("--steps", type=int, default=5000)
     p.add_argument("--batch-rows", type=int, default=8)
@@ -189,6 +201,10 @@ def make_parser():
     p.add_argument("--eval-every", type=int, default=250)
     p.add_argument("--log-every", type=int, default=25)
     p.add_argument("--checkpoint-every", type=int, default=1000)
+    p.add_argument("--final-checkpoint", choices=["weights", "full"], default="weights",
+                   help="weights limits disk use; full also retains optimizer/RNG for resume")
+    p.add_argument("--train-eval-conversations", type=int, default=256)
+    p.add_argument("--train-eval-seed", type=int, default=20261111)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--max-params", type=int, default=0)
     p.add_argument("--precision", choices=["bf16", "fp32"], default="bf16")
@@ -205,8 +221,8 @@ def make_parser():
 
 def main():
     a = make_parser().parse_args()
-    if min(a.steps, a.batch_rows, a.eval_every, a.log_every, a.cpu_threads) < 1:
-        raise SystemExit("steps, batch rows, eval/log intervals and CPU threads must be positive")
+    if min(a.steps, a.batch_rows, a.eval_every, a.log_every, a.cpu_threads, a.train_eval_conversations) < 1:
+        raise SystemExit("steps, batch rows, eval/log intervals, train subset size and CPU threads must be positive")
     if min(a.benchmark_steps, a.benchmark_warmup, a.projection_chunk_size, a.checkpoint_every) < 0:
         raise SystemExit("benchmark, projection and checkpoint settings cannot be negative")
     device = torch.device(a.device)
@@ -228,29 +244,40 @@ def main():
     spec = json.loads(a.spec.read_text()) if a.spec else None
     model = SpecGPT(spec=spec, config=cfg).to(device)
     n_params = count_parameters(model)
+    scale_params = learned_scale_count(model.spec)
+    structural_params = n_params - scale_params
     if a.max_params and n_params > a.max_params:
-        raise SystemExit(f"{n_params:,} parameters exceed --max-params {a.max_params:,}")
+        raise SystemExit(f"{n_params:,} total parameters exceed --max-params {a.max_params:,}; "
+                         f"total includes {scale_params} authorized learned scalars")
     if a.resume:
         if a.benchmark_steps:
             raise SystemExit("benchmark runs cannot resume")
         if not a.out.is_dir():
             raise SystemExit("--resume requires the original existing --out directory")
         old = json.loads((a.out / "config.json").read_text())
-        recipe_keys = ["steps", "batch_rows", "lr", "warmup", "min_lr_frac", "weight_decay", "clip", "seed", "precision"]
+        recipe_keys = ["steps", "batch_rows", "lr", "warmup", "min_lr_frac", "weight_decay", "clip", "seed", "precision",
+                       "compile", "train_eval_conversations", "train_eval_seed"]
+        if any(k not in old["args"] for k in recipe_keys):
+            raise SystemExit("resume requires a checkpoint from the current train-evaluation log schema")
         if old["model"] != model.config.to_dict() or old["spec"] != model.spec or any(old["args"][k] != vars(a)[k] for k in recipe_keys):
             raise SystemExit("resume configuration differs from the saved model/recipe")
     else:
         a.out.mkdir(parents=True, exist_ok=False)
 
     hardware = {"torch": torch.__version__, "cuda": torch.version.cuda, "device": str(device),
+                "hostname": socket.gethostname(), "physical_gpu_ids": os.environ.get("CUDA_VISIBLE_DEVICES"),
                 "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
                 "gpu_memory_bytes": torch.cuda.get_device_properties(device).total_memory if device.type == "cuda" else None,
                 "cpu_threads": a.cpu_threads, "pid": os.getpid()}
     metadata = {"format_version": FORMAT_VERSION, "backend": "pytorch", "model": model.config.to_dict(),
-                "spec": model.spec, "parameters": n_params,
+                "spec": model.spec, "parameters": n_params, "structural_parameters": structural_params,
+                "learned_scale_parameters": scale_params,
                 "args": {k: str(v) if isinstance(v, Path) else v for k, v in vars(a).items()},
                 "hardware": hardware, "sha256": provenance(),
                 "objective": "mean CE over answer tokens and answer EOS; dev selection only",
+                "metrics": {"train_loss": "answer-token-weighted minibatch window mean with dropout on",
+                            "train_eval_loss": "fixed training subset answer-token mean with dropout off",
+                            "dev_loss": "entire dev split answer-token mean with dropout off"},
                 "optimizer": {"name": "AdamWNoBiasCorrection", "bias_correction": False,
                               "betas": [0.9, 0.95], "eps": 1e-8,
                               "implementation": "fused AdamW with algebraic bias-correction cancellation"}}
@@ -264,15 +291,22 @@ def main():
     dev_packed = data.pack(data.encode_split(tok, data.load_split("dev")), rng=None)
     if not train_ex:
         raise SystemExit("empty training data")
+    train_eval_packed, train_eval_metadata = training_evaluation_subset(train_ex, a.train_eval_conversations, a.train_eval_seed)
+    metadata["train_evaluation"] = train_eval_metadata
+    if not a.resume:
+        atomic_json(a.out / "config.json", metadata)
     opt = AdamWNoBiasCorrection(model.parameters(), lr=lr_at(0, a.steps, a.lr, a.warmup, a.min_lr_frac),
                                betas=(0.9, 0.95), eps=1e-8, weight_decay=a.weight_decay,
                                fused=device.type == "cuda")
     rng = random.Random(a.seed)
     epoch, cursor, buf, pack_rng_state = 0, 0, None, None
     start_step, best, seen_targets, previous_elapsed = 0, float("inf"), 0, 0.0
+    best_step, best_train_eval, final_train_eval, final_dev = None, None, None, None
     if a.resume:
         # Full optimizer/RNG checkpoints are trusted files generated by this program.
         ckpt = torch.load(a.resume, map_location=device, weights_only=False)
+        if "optimizer" not in ckpt:
+            raise SystemExit("checkpoint contains weights only; resume from latest.pt or --final-checkpoint full")
         model.load_state_dict(ckpt["model"])
         opt.load_state_dict(ckpt["optimizer"])
         start_step, best, seen_targets = ckpt["step"], ckpt["best_dev_loss"], ckpt["answer_tokens_seen"]
@@ -283,6 +317,7 @@ def main():
         if device.type == "cuda":
             torch.cuda.set_rng_state_all([s.cpu() for s in ckpt["cuda_rng"]])
         previous_elapsed = ckpt["elapsed_seconds"]
+        best_step, best_train_eval = ckpt.get("best_step"), ckpt.get("train_eval_loss_at_best_dev")
     hidden_fn = model.hidden_states
     if a.compile:
         hidden_fn = torch.compile(hidden_fn, dynamic=False, mode=a.compile_mode)
@@ -293,8 +328,9 @@ def main():
     measured_start = None
     measured_seconds = None
     training_seconds, eval_seconds, checkpoint_seconds, pack_seconds = 0.0, 0.0, 0.0, 0.0
+    train_eval_seconds = 0.0
     train_batches, train_tokens = 0, 0
-    window_loss, window_count = torch.zeros((), device=device), 0
+    window_loss, window_count, window_steps = torch.zeros((), device=device), 0, 0
     interval_start = time.perf_counter()
     interval_steps, interval_tokens = 0, 0
     end_step = a.benchmark_warmup + a.benchmark_steps if a.benchmark_steps else a.steps
@@ -307,7 +343,9 @@ def main():
     def checkpoint(step, full=False):
         payload = {"format_version": FORMAT_VERSION, "model": model.state_dict(),
                    "step": step, "model_config": model.config.to_dict(), "spec": model.spec,
-                   "best_dev_loss": best, "answer_tokens_seen": seen_targets}
+                   "best_dev_loss": best, "best_step": best_step,
+                   "train_eval_loss_at_best_dev": best_train_eval, "answer_tokens_seen": seen_targets,
+                   "checkpoint_kind": "full" if full else "weights"}
         if full:
             payload.update(optimizer=opt.state_dict(), epoch=epoch, cursor=cursor,
                            pack_rng_state=pack_rng_state, torch_rng=torch.get_rng_state(),
@@ -326,11 +364,23 @@ def main():
                 synchronize(device)
                 ev_time = time.perf_counter() - ev_start
                 eval_seconds += ev_time
+                train_ev_start = time.perf_counter()
+                train_eval_loss = evaluate(model, train_eval_packed, a.batch_rows, a.precision, a.projection_chunk_size)
+                synchronize(device)
+                train_ev_time = time.perf_counter() - train_ev_start
+                train_eval_seconds += train_ev_time
+                final_train_eval, final_dev = train_eval_loss, dev
                 rec = {"event": "evaluation", "step": step, "epoch": epoch, "dev_loss": dev,
+                       "train_eval_loss": train_eval_loss, "generalization_gap": dev - train_eval_loss,
+                       "train_eval_conversations": train_eval_metadata["conversations"],
+                       "train_eval_answer_tokens": train_eval_metadata["answer_tokens"],
+                       "train_eval_seconds": train_ev_time,
+                       "lr": lr_at(max(0, step - 1), a.steps, a.lr, a.warmup, a.min_lr_frac),
                        "elapsed": previous_elapsed + time.perf_counter() - t0,
                        "eval_seconds": ev_time, "answer_tokens_seen": seen_targets}
                 if dev < best:
                     best = dev
+                    best_step, best_train_eval = step, train_eval_loss
                     ck_start = time.perf_counter()
                     atomic_checkpoint(a.out / "best.pt", checkpoint(step))
                     checkpoint_seconds += time.perf_counter() - ck_start
@@ -366,6 +416,7 @@ def main():
             opt.step()
             window_loss += loss_sum.detach()
             window_count += batch["n_targets"]
+            window_steps += 1
             seen_targets += batch["n_targets"]
             train_tokens += batch["n_targets"]
             train_batches += 1
@@ -383,6 +434,8 @@ def main():
                     raise FloatingPointError(f"nonfinite training loss at step {step + 1}")
                 emit({"event": "training", "step": step + 1, "epoch": epoch, "lr": rate,
                       "train_loss": value, "grad_norm": float(grad_norm.detach().cpu()),
+                      "train_loss_answer_tokens": window_count, "train_loss_steps": window_steps,
+                      "train_loss_first_step": step + 2 - window_steps,
                       "answer_tokens_seen": seen_targets,
                       "seconds_per_step": interval / max(1, interval_steps),
                       "packed_tokens_per_second": interval_steps * a.batch_rows * data.SEQ_LEN / interval,
@@ -391,6 +444,7 @@ def main():
                       "elapsed": previous_elapsed + time.perf_counter() - t0})
                 window_loss.zero_()
                 window_count = 0
+                window_steps = 0
                 interval_start = time.perf_counter()
                 interval_steps, interval_tokens = 0, 0
             if not a.benchmark_steps and a.checkpoint_every and (step + 1) % a.checkpoint_every == 0:
@@ -400,13 +454,19 @@ def main():
 
         if not a.benchmark_steps:
             ck_start = time.perf_counter()
-            atomic_checkpoint(a.out / "final.pt", checkpoint(end_step, full=True))
+            atomic_checkpoint(a.out / "final.pt", checkpoint(end_step, full=a.final_checkpoint == "full"))
             checkpoint_seconds += time.perf_counter() - ck_start
         total = previous_elapsed + time.perf_counter() - t0
         summary = {"format_version": FORMAT_VERSION, "parameters": n_params, "best_dev_loss": best,
+                   "structural_parameters": structural_params, "learned_scale_parameters": scale_params,
+                   "best_step": best_step, "train_eval_loss_at_best_dev": best_train_eval,
+                   "generalization_gap_at_best_dev": best - best_train_eval,
+                   "final_train_eval_loss": final_train_eval, "final_dev_loss": final_dev,
+                   "train_evaluation": train_eval_metadata,
                    "steps": end_step, "schedule_steps": a.steps, "epochs_started": epoch + 1,
                    "train_seconds": total, "preparation_seconds": prep_seconds,
                    "training_compute_seconds": training_seconds, "evaluation_seconds": eval_seconds,
+                   "train_evaluation_seconds": train_eval_seconds,
                    "checkpoint_seconds": checkpoint_seconds, "packing_seconds": pack_seconds,
                    "answer_tokens_seen": seen_targets, "hardware": hardware,
                    "peak_gpu_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None}
@@ -419,6 +479,7 @@ def main():
                            estimated_5000_training_seconds=seconds_per_step * 5000,
                            estimated_schedule_training_seconds=seconds_per_step * a.steps,
                            estimated_schedule_with_dev_seconds=seconds_per_step * a.steps + expected_evals * eval_seconds,
+                           estimated_schedule_with_evaluations_seconds=seconds_per_step * a.steps + expected_evals * (eval_seconds + train_eval_seconds),
                            estimate_excludes="startup/compilation, epoch repacking variance and checkpoint overhead")
         atomic_json(a.out / "summary.json", summary)
         emit({"event": "summary", **summary})

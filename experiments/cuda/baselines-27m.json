@@ -1,0 +1,1025 @@
+{
+  "measured_at_utc": "2026-11-11T08:11:21.909809+00:00",
+  "protocol": {
+    "authorized_scope": "Original 27,144,960-parameter baseline only; four independent seeds, one GPU per run; no architecture search.",
+    "created_utc": "2026-11-11T08:08:27.348954+00:00",
+    "steps": 5000,
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "batch_rows_per_run": 8,
+    "architecture": {
+      "n_layers": 8,
+      "d_model": 384,
+      "n_heads": 6,
+      "d_ff": 1536,
+      "dropout": 0.1,
+      "max_len": 1024,
+      "vocab_size": 32768
+    },
+    "precision": "bf16 autocast, fp32 parameters and optimizer",
+    "optimizer": "AdamW, bias_correction=False, betas=(0.9,0.95), lr=1e-3, wd=0.1",
+    "schedule": "100-step warmup, cosine decay to 10% of peak LR",
+    "compile": true,
+    "runs": [
+      {
+        "name": "baseline-n8-d384-k5000-s0",
+        "seed": 0,
+        "gpu": 0,
+        "wrapper_pid": 9490,
+        "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s0"
+      },
+      {
+        "name": "baseline-n8-d384-k5000-s1",
+        "seed": 1,
+        "gpu": 1,
+        "wrapper_pid": 9491,
+        "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s1"
+      },
+      {
+        "name": "baseline-n8-d384-k5000-s2",
+        "seed": 2,
+        "gpu": 2,
+        "wrapper_pid": 9492,
+        "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s2"
+      },
+      {
+        "name": "baseline-n8-d384-k5000-s3",
+        "seed": 3,
+        "gpu": 3,
+        "wrapper_pid": 9493,
+        "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s3"
+      }
+    ]
+  },
+  "held_out_validation_used": false,
+  "timing_note": "Four independent runs started concurrently on four H100s. Wall times include Python startup, data preparation, compilation/cache lookup, training, dev evaluation and checkpoint writes.",
+  "runs": [
+    {
+      "name": "baseline-n8-d384-k5000-s0",
+      "seed": 0,
+      "gpu": 0,
+      "best_dev_step": 4750,
+      "best_dev_loss": 3.4069643157520932,
+      "final_dev_loss": 3.41881838341492,
+      "wall_seconds": 98.11159640399978,
+      "summary": {
+        "format_version": 1,
+        "parameters": 27144960,
+        "best_dev_loss": 3.4069643157520932,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 85.98043425699984,
+        "preparation_seconds": 7.800588858000083,
+        "training_compute_seconds": 72.60980695899548,
+        "evaluation_seconds": 1.4829878260004534,
+        "checkpoint_seconds": 4.418257525000627,
+        "packing_seconds": 5.36525593500005,
+        "answer_tokens_seen": 27974610,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9494
+        },
+        "peak_gpu_memory_bytes": 3921590272
+      },
+      "config": {
+        "format_version": 1,
+        "backend": "pytorch",
+        "model": {
+          "vocab_size": 32768,
+          "max_len": 1024,
+          "n_layers": 8,
+          "d_model": 384,
+          "n_heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1
+        },
+        "spec": {
+          "name": "baseline-n8",
+          "description": "standard GPT-2-style decoder",
+          "layers": [
+            {
+              "attn": "A0",
+              "ffn": "F0"
+            },
+            {
+              "attn": "A1",
+              "ffn": "F1"
+            },
+            {
+              "attn": "A2",
+              "ffn": "F2"
+            },
+            {
+              "attn": "A3",
+              "ffn": "F3"
+            },
+            {
+              "attn": "A4",
+              "ffn": "F4"
+            },
+            {
+              "attn": "A5",
+              "ffn": "F5"
+            },
+            {
+              "attn": "A6",
+              "ffn": "F6"
+            },
+            {
+              "attn": "A7",
+              "ffn": "F7"
+            }
+          ],
+          "ffns": {}
+        },
+        "parameters": 27144960,
+        "args": {
+          "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s0",
+          "spec": null,
+          "layers": 8,
+          "d_model": 384,
+          "heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1,
+          "steps": 5000,
+          "batch_rows": 8,
+          "lr": 0.001,
+          "warmup": 100,
+          "min_lr_frac": 0.1,
+          "weight_decay": 0.1,
+          "clip": 1.0,
+          "eval_every": 250,
+          "log_every": 25,
+          "checkpoint_every": 1000,
+          "seed": 0,
+          "max_params": 27144960,
+          "precision": "bf16",
+          "device": "cuda",
+          "compile": true,
+          "compile_mode": "default",
+          "projection_chunk_size": 0,
+          "benchmark_steps": 0,
+          "benchmark_warmup": 10,
+          "resume": null,
+          "cpu_threads": 4
+        },
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9494
+        },
+        "sha256": {
+          "cuda_train.py": "65a748166318f485ba451e9893dc35f46f62e2507ddb09bc775924ec519208d7",
+          "cuda_model.py": "e5d92117c3e4a151b586f7e5e6340026be2e632e168638e2f045284c14d09e46",
+          "data.py": "9d3a4ea3b03d110e4179bce99db8bbc8dccb7129f080fdc9020074da2d41bd59",
+          "data/train.json": "7d3ad84b50f76a6a973d4b640c337fffd7a57cdb05956e71d1c587fc20c109ad",
+          "data/tokenizer.json": "f1d3bcbb41fb9539124133e73c53787de299378269f329beee9fae8037fde268"
+        },
+        "objective": "mean CE over answer tokens and answer EOS; dev selection only",
+        "optimizer": {
+          "name": "AdamWNoBiasCorrection",
+          "bias_correction": false,
+          "betas": [
+            0.9,
+            0.95
+          ],
+          "eps": 1e-08,
+          "implementation": "fused AdamW with algebraic bias-correction cancellation"
+        }
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "0b907df8bc91beb03c28c39628df434aee8a2af7e5725d27308e0dd57beb813a",
+        "final.pt": "7d9c3cb9e96180899998c1e28335b58baaf0822c87f908febf2a2c31225fde51",
+        "config.json": "723d39c7b64f99fb0fd3a414e50d702054bc488c2b1b567005ad4dc4380edf0b",
+        "summary.json": "2e23fd22605d0b03f7d2854518470b697b5395dc6f3b0707e7aa44e792b2a8a3",
+        "log.jsonl": "e214142e05ce7b5db07455a3b188ec76b570efc8d52f504ed3a0480c54bfe04c"
+      },
+      "dev_curve": [
+        {
+          "step": 0,
+          "dev_loss": 10.456703308245137
+        },
+        {
+          "step": 250,
+          "dev_loss": 5.396467343901689
+        },
+        {
+          "step": 500,
+          "dev_loss": 4.826512979457584
+        },
+        {
+          "step": 750,
+          "dev_loss": 4.493125877964969
+        },
+        {
+          "step": 1000,
+          "dev_loss": 4.2476341163440035
+        },
+        {
+          "step": 1250,
+          "dev_loss": 4.067615339473468
+        },
+        {
+          "step": 1500,
+          "dev_loss": 3.9111024832627983
+        },
+        {
+          "step": 1750,
+          "dev_loss": 3.8193118467913547
+        },
+        {
+          "step": 2000,
+          "dev_loss": 3.711411670494093
+        },
+        {
+          "step": 2250,
+          "dev_loss": 3.6509019388635715
+        },
+        {
+          "step": 2500,
+          "dev_loss": 3.590786402669068
+        },
+        {
+          "step": 2750,
+          "dev_loss": 3.538586670412831
+        },
+        {
+          "step": 3000,
+          "dev_loss": 3.5074313910838577
+        },
+        {
+          "step": 3250,
+          "dev_loss": 3.469712815728798
+        },
+        {
+          "step": 3500,
+          "dev_loss": 3.457190040443949
+        },
+        {
+          "step": 3750,
+          "dev_loss": 3.440063002535907
+        },
+        {
+          "step": 4000,
+          "dev_loss": 3.423655096828735
+        },
+        {
+          "step": 4250,
+          "dev_loss": 3.4122050098651706
+        },
+        {
+          "step": 4500,
+          "dev_loss": 3.4140739951448844
+        },
+        {
+          "step": 4750,
+          "dev_loss": 3.4069643157520932
+        },
+        {
+          "step": 5000,
+          "dev_loss": 3.41881838341492
+        }
+      ]
+    },
+    {
+      "name": "baseline-n8-d384-k5000-s1",
+      "seed": 1,
+      "gpu": 1,
+      "best_dev_step": 4750,
+      "best_dev_loss": 3.417966286754668,
+      "final_dev_loss": 3.422797447285534,
+      "wall_seconds": 98.50462276200005,
+      "summary": {
+        "format_version": 1,
+        "parameters": 27144960,
+        "best_dev_loss": 3.417966286754668,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 86.29988406100006,
+        "preparation_seconds": 7.823031551999975,
+        "training_compute_seconds": 72.6027963860015,
+        "evaluation_seconds": 1.4972440789999837,
+        "checkpoint_seconds": 4.725141620999693,
+        "packing_seconds": 5.362027001999422,
+        "answer_tokens_seen": 27976370,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9495
+        },
+        "peak_gpu_memory_bytes": 3905805312
+      },
+      "config": {
+        "format_version": 1,
+        "backend": "pytorch",
+        "model": {
+          "vocab_size": 32768,
+          "max_len": 1024,
+          "n_layers": 8,
+          "d_model": 384,
+          "n_heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1
+        },
+        "spec": {
+          "name": "baseline-n8",
+          "description": "standard GPT-2-style decoder",
+          "layers": [
+            {
+              "attn": "A0",
+              "ffn": "F0"
+            },
+            {
+              "attn": "A1",
+              "ffn": "F1"
+            },
+            {
+              "attn": "A2",
+              "ffn": "F2"
+            },
+            {
+              "attn": "A3",
+              "ffn": "F3"
+            },
+            {
+              "attn": "A4",
+              "ffn": "F4"
+            },
+            {
+              "attn": "A5",
+              "ffn": "F5"
+            },
+            {
+              "attn": "A6",
+              "ffn": "F6"
+            },
+            {
+              "attn": "A7",
+              "ffn": "F7"
+            }
+          ],
+          "ffns": {}
+        },
+        "parameters": 27144960,
+        "args": {
+          "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s1",
+          "spec": null,
+          "layers": 8,
+          "d_model": 384,
+          "heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1,
+          "steps": 5000,
+          "batch_rows": 8,
+          "lr": 0.001,
+          "warmup": 100,
+          "min_lr_frac": 0.1,
+          "weight_decay": 0.1,
+          "clip": 1.0,
+          "eval_every": 250,
+          "log_every": 25,
+          "checkpoint_every": 1000,
+          "seed": 1,
+          "max_params": 27144960,
+          "precision": "bf16",
+          "device": "cuda",
+          "compile": true,
+          "compile_mode": "default",
+          "projection_chunk_size": 0,
+          "benchmark_steps": 0,
+          "benchmark_warmup": 10,
+          "resume": null,
+          "cpu_threads": 4
+        },
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9495
+        },
+        "sha256": {
+          "cuda_train.py": "65a748166318f485ba451e9893dc35f46f62e2507ddb09bc775924ec519208d7",
+          "cuda_model.py": "e5d92117c3e4a151b586f7e5e6340026be2e632e168638e2f045284c14d09e46",
+          "data.py": "9d3a4ea3b03d110e4179bce99db8bbc8dccb7129f080fdc9020074da2d41bd59",
+          "data/train.json": "7d3ad84b50f76a6a973d4b640c337fffd7a57cdb05956e71d1c587fc20c109ad",
+          "data/tokenizer.json": "f1d3bcbb41fb9539124133e73c53787de299378269f329beee9fae8037fde268"
+        },
+        "objective": "mean CE over answer tokens and answer EOS; dev selection only",
+        "optimizer": {
+          "name": "AdamWNoBiasCorrection",
+          "bias_correction": false,
+          "betas": [
+            0.9,
+            0.95
+          ],
+          "eps": 1e-08,
+          "implementation": "fused AdamW with algebraic bias-correction cancellation"
+        }
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "2b5b300c2d69d6466e17c11374c3bbda12bb4b5524cd8fab5b54b6db7f88cda3",
+        "final.pt": "0e97fc8b71867332c4012c2b24f09efd8bb5247fcfd2bfc1eb32e931f02a3397",
+        "config.json": "b9806bee2efea323bc3055485fac7a0619ad66e52dbaad0212dcf2f37785f551",
+        "summary.json": "e6f6e001d57047ba0b76ece02d98843a37b372aee295c8029270dfdd0104d1b2",
+        "log.jsonl": "6f60b18fbefe739bdaf4f81eae1974621f186bde4e17628066331a7c8a625528"
+      },
+      "dev_curve": [
+        {
+          "step": 0,
+          "dev_loss": 10.448017515824363
+        },
+        {
+          "step": 250,
+          "dev_loss": 5.411240890563241
+        },
+        {
+          "step": 500,
+          "dev_loss": 4.857777547310563
+        },
+        {
+          "step": 750,
+          "dev_loss": 4.52697067414166
+        },
+        {
+          "step": 1000,
+          "dev_loss": 4.278126240933903
+        },
+        {
+          "step": 1250,
+          "dev_loss": 4.106542352515429
+        },
+        {
+          "step": 1500,
+          "dev_loss": 3.940306990795216
+        },
+        {
+          "step": 1750,
+          "dev_loss": 3.8524358093502964
+        },
+        {
+          "step": 2000,
+          "dev_loss": 3.7373744371272797
+        },
+        {
+          "step": 2250,
+          "dev_loss": 3.6623968467344716
+        },
+        {
+          "step": 2500,
+          "dev_loss": 3.606079499406248
+        },
+        {
+          "step": 2750,
+          "dev_loss": 3.5554161973803398
+        },
+        {
+          "step": 3000,
+          "dev_loss": 3.5165682198080273
+        },
+        {
+          "step": 3250,
+          "dev_loss": 3.487852729959781
+        },
+        {
+          "step": 3500,
+          "dev_loss": 3.462710147839414
+        },
+        {
+          "step": 3750,
+          "dev_loss": 3.434632994052185
+        },
+        {
+          "step": 4000,
+          "dev_loss": 3.436913417485243
+        },
+        {
+          "step": 4250,
+          "dev_loss": 3.4198162178582883
+        },
+        {
+          "step": 4500,
+          "dev_loss": 3.4250208774855246
+        },
+        {
+          "step": 4750,
+          "dev_loss": 3.417966286754668
+        },
+        {
+          "step": 5000,
+          "dev_loss": 3.422797447285534
+        }
+      ]
+    },
+    {
+      "name": "baseline-n8-d384-k5000-s2",
+      "seed": 2,
+      "gpu": 2,
+      "best_dev_step": 4500,
+      "best_dev_loss": 3.439195246068559,
+      "final_dev_loss": 3.4435381422789466,
+      "wall_seconds": 98.66740348599978,
+      "summary": {
+        "format_version": 1,
+        "parameters": 27144960,
+        "best_dev_loss": 3.439195246068559,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 86.45252069899993,
+        "preparation_seconds": 7.827928230999987,
+        "training_compute_seconds": 72.71073847600996,
+        "evaluation_seconds": 1.4931384280007478,
+        "checkpoint_seconds": 4.75982711000006,
+        "packing_seconds": 5.348007927000026,
+        "answer_tokens_seen": 27989048,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9496
+        },
+        "peak_gpu_memory_bytes": 3944285696
+      },
+      "config": {
+        "format_version": 1,
+        "backend": "pytorch",
+        "model": {
+          "vocab_size": 32768,
+          "max_len": 1024,
+          "n_layers": 8,
+          "d_model": 384,
+          "n_heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1
+        },
+        "spec": {
+          "name": "baseline-n8",
+          "description": "standard GPT-2-style decoder",
+          "layers": [
+            {
+              "attn": "A0",
+              "ffn": "F0"
+            },
+            {
+              "attn": "A1",
+              "ffn": "F1"
+            },
+            {
+              "attn": "A2",
+              "ffn": "F2"
+            },
+            {
+              "attn": "A3",
+              "ffn": "F3"
+            },
+            {
+              "attn": "A4",
+              "ffn": "F4"
+            },
+            {
+              "attn": "A5",
+              "ffn": "F5"
+            },
+            {
+              "attn": "A6",
+              "ffn": "F6"
+            },
+            {
+              "attn": "A7",
+              "ffn": "F7"
+            }
+          ],
+          "ffns": {}
+        },
+        "parameters": 27144960,
+        "args": {
+          "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s2",
+          "spec": null,
+          "layers": 8,
+          "d_model": 384,
+          "heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1,
+          "steps": 5000,
+          "batch_rows": 8,
+          "lr": 0.001,
+          "warmup": 100,
+          "min_lr_frac": 0.1,
+          "weight_decay": 0.1,
+          "clip": 1.0,
+          "eval_every": 250,
+          "log_every": 25,
+          "checkpoint_every": 1000,
+          "seed": 2,
+          "max_params": 27144960,
+          "precision": "bf16",
+          "device": "cuda",
+          "compile": true,
+          "compile_mode": "default",
+          "projection_chunk_size": 0,
+          "benchmark_steps": 0,
+          "benchmark_warmup": 10,
+          "resume": null,
+          "cpu_threads": 4
+        },
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9496
+        },
+        "sha256": {
+          "cuda_train.py": "65a748166318f485ba451e9893dc35f46f62e2507ddb09bc775924ec519208d7",
+          "cuda_model.py": "e5d92117c3e4a151b586f7e5e6340026be2e632e168638e2f045284c14d09e46",
+          "data.py": "9d3a4ea3b03d110e4179bce99db8bbc8dccb7129f080fdc9020074da2d41bd59",
+          "data/train.json": "7d3ad84b50f76a6a973d4b640c337fffd7a57cdb05956e71d1c587fc20c109ad",
+          "data/tokenizer.json": "f1d3bcbb41fb9539124133e73c53787de299378269f329beee9fae8037fde268"
+        },
+        "objective": "mean CE over answer tokens and answer EOS; dev selection only",
+        "optimizer": {
+          "name": "AdamWNoBiasCorrection",
+          "bias_correction": false,
+          "betas": [
+            0.9,
+            0.95
+          ],
+          "eps": 1e-08,
+          "implementation": "fused AdamW with algebraic bias-correction cancellation"
+        }
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "af661d69d185bade2df844e2671da9a4002bb8cb80d5f985969dc0eed885baa6",
+        "final.pt": "e46936a9c5a6039658ba61413b6c6c5a6a85339b1d0a7ad2ae8510a607e84b88",
+        "config.json": "d44de495f6b8489b597a427eedf54e2a8fadcdbf3c155389501a84117c619d41",
+        "summary.json": "1f57b948228bbd0d7205bb54c7c0144644cdd7cb8a56f8c044efe8f1e8bbdd58",
+        "log.jsonl": "d7d3d641129f6583cd3530b7e1eeca02c37b8bd468129b4d70e19247501990d1"
+      },
+      "dev_curve": [
+        {
+          "step": 0,
+          "dev_loss": 10.480760090130062
+        },
+        {
+          "step": 250,
+          "dev_loss": 5.403635455536848
+        },
+        {
+          "step": 500,
+          "dev_loss": 4.83939890990136
+        },
+        {
+          "step": 750,
+          "dev_loss": 4.499967393742199
+        },
+        {
+          "step": 1000,
+          "dev_loss": 4.3028914555623095
+        },
+        {
+          "step": 1250,
+          "dev_loss": 4.103940632164574
+        },
+        {
+          "step": 1500,
+          "dev_loss": 3.9625940451831316
+        },
+        {
+          "step": 1750,
+          "dev_loss": 3.860942699055956
+        },
+        {
+          "step": 2000,
+          "dev_loss": 3.7547644920764425
+        },
+        {
+          "step": 2250,
+          "dev_loss": 3.689268102262976
+        },
+        {
+          "step": 2500,
+          "dev_loss": 3.628479871544211
+        },
+        {
+          "step": 2750,
+          "dev_loss": 3.5754764864525908
+        },
+        {
+          "step": 3000,
+          "dev_loss": 3.540526175613038
+        },
+        {
+          "step": 3250,
+          "dev_loss": 3.5027424723899827
+        },
+        {
+          "step": 3500,
+          "dev_loss": 3.4824849205368906
+        },
+        {
+          "step": 3750,
+          "dev_loss": 3.4623939043836898
+        },
+        {
+          "step": 4000,
+          "dev_loss": 3.4523335872084333
+        },
+        {
+          "step": 4250,
+          "dev_loss": 3.4414999972235587
+        },
+        {
+          "step": 4500,
+          "dev_loss": 3.439195246068559
+        },
+        {
+          "step": 4750,
+          "dev_loss": 3.440491962743677
+        },
+        {
+          "step": 5000,
+          "dev_loss": 3.4435381422789466
+        }
+      ]
+    },
+    {
+      "name": "baseline-n8-d384-k5000-s3",
+      "seed": 3,
+      "gpu": 3,
+      "best_dev_step": 4750,
+      "best_dev_loss": 3.4040215332674575,
+      "final_dev_loss": 3.411276163220629,
+      "wall_seconds": 98.77140149900015,
+      "summary": {
+        "format_version": 1,
+        "parameters": 27144960,
+        "best_dev_loss": 3.4040215332674575,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 86.52015996199998,
+        "preparation_seconds": 7.795917656000029,
+        "training_compute_seconds": 72.67076627600159,
+        "evaluation_seconds": 1.4942619130004005,
+        "checkpoint_seconds": 4.832693007000898,
+        "packing_seconds": 5.392546394000192,
+        "answer_tokens_seen": 27972084,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9497
+        },
+        "peak_gpu_memory_bytes": 3931475456
+      },
+      "config": {
+        "format_version": 1,
+        "backend": "pytorch",
+        "model": {
+          "vocab_size": 32768,
+          "max_len": 1024,
+          "n_layers": 8,
+          "d_model": 384,
+          "n_heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1
+        },
+        "spec": {
+          "name": "baseline-n8",
+          "description": "standard GPT-2-style decoder",
+          "layers": [
+            {
+              "attn": "A0",
+              "ffn": "F0"
+            },
+            {
+              "attn": "A1",
+              "ffn": "F1"
+            },
+            {
+              "attn": "A2",
+              "ffn": "F2"
+            },
+            {
+              "attn": "A3",
+              "ffn": "F3"
+            },
+            {
+              "attn": "A4",
+              "ffn": "F4"
+            },
+            {
+              "attn": "A5",
+              "ffn": "F5"
+            },
+            {
+              "attn": "A6",
+              "ffn": "F6"
+            },
+            {
+              "attn": "A7",
+              "ffn": "F7"
+            }
+          ],
+          "ffns": {}
+        },
+        "parameters": 27144960,
+        "args": {
+          "out": "/home/ubuntu/nas-cuda/runs/cuda/baseline-27m-k5000-four-seeds/baseline-n8-d384-k5000-s3",
+          "spec": null,
+          "layers": 8,
+          "d_model": 384,
+          "heads": 6,
+          "d_ff": 1536,
+          "dropout": 0.1,
+          "steps": 5000,
+          "batch_rows": 8,
+          "lr": 0.001,
+          "warmup": 100,
+          "min_lr_frac": 0.1,
+          "weight_decay": 0.1,
+          "clip": 1.0,
+          "eval_every": 250,
+          "log_every": 25,
+          "checkpoint_every": 1000,
+          "seed": 3,
+          "max_params": 27144960,
+          "precision": "bf16",
+          "device": "cuda",
+          "compile": true,
+          "compile_mode": "default",
+          "projection_chunk_size": 0,
+          "benchmark_steps": 0,
+          "benchmark_warmup": 10,
+          "resume": null,
+          "cpu_threads": 4
+        },
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 9497
+        },
+        "sha256": {
+          "cuda_train.py": "65a748166318f485ba451e9893dc35f46f62e2507ddb09bc775924ec519208d7",
+          "cuda_model.py": "e5d92117c3e4a151b586f7e5e6340026be2e632e168638e2f045284c14d09e46",
+          "data.py": "9d3a4ea3b03d110e4179bce99db8bbc8dccb7129f080fdc9020074da2d41bd59",
+          "data/train.json": "7d3ad84b50f76a6a973d4b640c337fffd7a57cdb05956e71d1c587fc20c109ad",
+          "data/tokenizer.json": "f1d3bcbb41fb9539124133e73c53787de299378269f329beee9fae8037fde268"
+        },
+        "objective": "mean CE over answer tokens and answer EOS; dev selection only",
+        "optimizer": {
+          "name": "AdamWNoBiasCorrection",
+          "bias_correction": false,
+          "betas": [
+            0.9,
+            0.95
+          ],
+          "eps": 1e-08,
+          "implementation": "fused AdamW with algebraic bias-correction cancellation"
+        }
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "8b56765e323fab6c476178008837e17b9126c7208285950c8f05e52629bd689f",
+        "final.pt": "b39a182d4db7c56bc481b78140262ab705d816f48e592f16fc8682868b7bc050",
+        "config.json": "72fa2c591d9d83e62308e930e8ba2a17f3f25e118e963dfe84603354e230ce03",
+        "summary.json": "92fce7cad34fc259c2c4244f64f11c509c40bf3c79d00fd1a9c3ff44c1df373a",
+        "log.jsonl": "1f4010ad9fc2e74fae1abb5aaf8a9741bc36b42f66b524aefbc44cddcae60a53"
+      },
+      "dev_curve": [
+        {
+          "step": 0,
+          "dev_loss": 10.475090528921582
+        },
+        {
+          "step": 250,
+          "dev_loss": 5.383871847858591
+        },
+        {
+          "step": 500,
+          "dev_loss": 4.846220321872183
+        },
+        {
+          "step": 750,
+          "dev_loss": 4.498756899118473
+        },
+        {
+          "step": 1000,
+          "dev_loss": 4.252631220041519
+        },
+        {
+          "step": 1250,
+          "dev_loss": 4.086321952496577
+        },
+        {
+          "step": 1500,
+          "dev_loss": 3.946242421669137
+        },
+        {
+          "step": 1750,
+          "dev_loss": 3.82349961779913
+        },
+        {
+          "step": 2000,
+          "dev_loss": 3.7215832484825735
+        },
+        {
+          "step": 2250,
+          "dev_loss": 3.651100073514753
+        },
+        {
+          "step": 2500,
+          "dev_loss": 3.5920185247561065
+        },
+        {
+          "step": 2750,
+          "dev_loss": 3.532269055598173
+        },
+        {
+          "step": 3000,
+          "dev_loss": 3.5044003719348087
+        },
+        {
+          "step": 3250,
+          "dev_loss": 3.4749060394644746
+        },
+        {
+          "step": 3500,
+          "dev_loss": 3.44862340645803
+        },
+        {
+          "step": 3750,
+          "dev_loss": 3.4310039395672978
+        },
+        {
+          "step": 4000,
+          "dev_loss": 3.4231436052051913
+        },
+        {
+          "step": 4250,
+          "dev_loss": 3.4096009532403917
+        },
+        {
+          "step": 4500,
+          "dev_loss": 3.4093937866896584
+        },
+        {
+          "step": 4750,
+          "dev_loss": 3.4040215332674575
+        },
+        {
+          "step": 5000,
+          "dev_loss": 3.411276163220629
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "best_dev_loss_mean": 3.4170368454606943,
+    "best_dev_loss_sample_std": 0.015944829724559993,
+    "best_dev_loss_min": 3.4040215332674575,
+    "best_dev_loss_max": 3.439195246068559,
+    "final_dev_loss_mean": 3.4241075340500076,
+    "wall_seconds_mean": 98.51375603774994
+  },
+  "local_backup_verified": true,
+  "local_backup_path": "/Users/anish/Documents/git-repos/nas/.lambda/artifacts/5c07904125d442d8a43d41a1fd085ef3/cuda/baseline-27m-k5000-four-seeds",
+  "original_mlx_reference": {
+    "parameters": 27144960,
+    "best_dev_loss": 3.4020702535852663,
+    "source": "../nas/experiments/baseline-depth/n8/summary.json"
+  }
+}

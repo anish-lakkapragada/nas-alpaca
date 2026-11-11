@@ -4,7 +4,40 @@ This branch adds a PyTorch/CUDA path beside the original MLX experiment. It
 starts from `nas` commit `317c3d4`; the original implementation and data files
 remain the reference for masking, packing, splits, and training semantics.
 
-## Baseline frame
+## Current baseline and approval boundary
+
+On 2026-11-11 the user selected the original **27,144,960-parameter** baseline:
+8 layers, width 384, 6 attention heads, and FFN width 1,536. The user authorized
+four independent 5,000-step baseline runs, one per H100, with seeds 0–3.
+All four completed in 98.1–98.8 seconds per run, concurrently. Best dev losses
+were 3.407, 3.418, 3.439, and 3.404; the measured records and full configurations
+are in `experiments/cuda/baselines-27m.json`.
+
+The user subsequently **authorized the overnight architecture search** on this
+27.14M frame, with four H100s, a total rental budget of $200, and results due
+**2026-11-11 at 08:15 PST (16:15 UTC)**. Training stops by 07:45 PST to reserve
+time for final evaluation and backups. The model/trainer defaults now use the
+original frame. The 50M records below remain historical comparisons.
+
+The exact whitelist is the original eight primitives (loop with optional input
+injection, non-adjacent attention sharing, non-adjacent FFN sharing, the four
+approved activation alternatives, delete attention, delete FFN, transpose-tie
+an FFN, narrow an FFN), plus **fixed or learned scalar residual scaling** and
+**reversing attention/FFN order**. Fixed and learned scalar variants start at
+the same scalar value. Scalars belong to a layer entry and branch, and are
+reused across that entry's loop repetitions. Learned scalars are the sole
+authorized new parameters and are included in every reported parameter count.
+At most eight layer applications are allowed; shared sublayers share their
+pre-LayerNorm. Data, width, heads, context, batch and optimizer recipe stay fixed.
+Lower loss comes first; a final winner must also have fewer total parameters.
+
+The search uses full 5,000-step trials, an append-only run ledger, canonical
+architecture specifications, train/dev curves, and confirmation with fresh
+seeds. The run root is `runs/cuda/search-27m-20261111/`; backups are under the
+main checkout's ignored `.lambda/artifacts/<instance-id>/cuda/` directory.
+No proposed primitive outside this whitelist is authorized.
+
+## Earlier 50M baseline frame
 
 | Setting | NVIDIA baseline |
 | --- | --- |
@@ -20,10 +53,9 @@ remain the reference for masking, packing, splits, and training semantics.
 | Objective | Mean answer-token cross entropy, including answer EOS |
 | Dropout | 0.1 |
 
-The user requested a roughly 50M-parameter baseline for this branch. The
-architecture search therefore has a 10-application ceiling and a 48,780,288
-parameter ceiling. The eight allowed modifications are unchanged. Loss is the
-primary objective; the final candidate must also reduce parameters.
+The initial request was a roughly 50M-parameter baseline for this branch.
+Those measurements are historical. The active scheduler enforces the original
+eight-application, 27,144,960-parameter frame and the ten approved primitives.
 
 The optimizer matches the installed MLX AdamW defaults: betas `(0.9, 0.95)`,
 epsilon `1e-8`, weight decay `0.1`, **bias correction disabled**, clipping norm
@@ -61,10 +93,12 @@ objective and its gradients with the full masked objective.
 ```bash
 CUDA_VISIBLE_DEVICES=0 .venv-cuda/bin/python cuda_train.py \
   --out runs/cuda/benchmark-eager --steps 5000 \
+  --layers 8 --d-model 384 --heads 6 --d-ff 1536 \
   --benchmark-warmup 20 --benchmark-steps 100
 
 CUDA_VISIBLE_DEVICES=0 .venv-cuda/bin/python cuda_train.py \
   --out runs/cuda/benchmark-compiled --steps 5000 --compile \
+  --layers 8 --d-model 384 --heads 6 --d-ff 1536 \
   --benchmark-warmup 20 --benchmark-steps 100
 ```
 
@@ -79,11 +113,13 @@ have the same throughput as one.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 .venv-cuda/bin/python cuda_train.py \
-  --out runs/cuda/baseline-k5000-s0 --steps 5000 --seed 0
+  --out runs/cuda/baseline-n8-d384-k5000-s0 --steps 5000 --seed 0 \
+  --layers 8 --d-model 384 --heads 6 --d-ff 1536 \
+  --max-params 27144960 --batch-rows 8 --compile
 ```
 
-Use another visible GPU and distinct output directory for seed 1. Add
-`--compile` only if the measured end-to-end benefit justifies its startup time.
+Use another visible GPU and distinct output directory for each additional seed.
+The completed four-seed measurement above used `--compile`.
 Do not increase batch size to improve throughput: that would change the
 number of training tokens at the fixed step budget.
 
@@ -95,12 +131,14 @@ same original recipe and output directory.
 
 ## Search and final evaluation
 
-`cuda_search.py` manages one process per GPU, distinct attempt directories,
-baseline replicates, 2,000-step screens with their own baseline, full-length
-finalists, and a fresh-seed confirmation. It never opens `validation.json`.
-Short screens can underrate sharing/regularization, so the shortlist includes
-a reserved regularization candidate. Rank on loss first; parameter savings
-break ties, and final eligible candidates must be smaller than the baseline.
+`cuda_search.py` manages one process per GPU and distinct attempt directories.
+Every search trial runs for 5,000 steps. It begins with matching CUDA baseline
+replicates and a broad set of approved changes, then mutates promising models
+and confirms a shortlist with seeds 0, 1 and 2. Lower loss comes first;
+parameter savings break ties. It freezes a primary and runner-up before fresh
+confirmation seeds 10, 11 and 12. The primary must be smaller than the baseline.
+The search never opens `validation.json` or consumes ongoing local MLX results.
+Historical imported CUDA baselines are reference records, excluded from ranking.
 
 Only after choosing the final baseline/winner pair:
 
@@ -110,23 +148,48 @@ Only after choosing the final baseline/winner pair:
   --split validation --out experiments/cuda/final-validation.json
 ```
 
-The final scorer produces token-weighted losses and a paired conversation
-bootstrap. Validation is never a search or early-stopping signal.
+The autonomous `cuda_overnight.py` controller invokes `cuda_finalize.py` after
+successful fresh-seed confirmation. The finalizer checks the frozen selection,
+recipe, provenance and checkpoints, then evaluates exactly three baseline and
+three primary checkpoints on validation. It reports token-weighted losses and
+a paired bootstrap over seeds and conversations. Validation is never a search,
+early-stopping or candidate-reselection signal.
+
+Every run has train/dev samples every 250 steps, with a fixed dropout-free
+training subset for a comparable generalization curve. Minibatch training loss
+is logged separately every 25 steps. `cuda_report.py` renders PNG/SVG curves;
+`cuda_inventory.py` indexes historical, completed, failed and queued runs with
+their locations, GPUs and seeds. Engineering smoke tests are explicitly
+ineligible for ranking. The final report separates registered jobs from
+architectures with completed training runs.
 
 ## Cloud access and rental limits
 
-The Lambda credential is in the main checkout's ignored `.env`, mode `0600`.
-It is not copied to this worktree's tracked files or to the GPU host. The SSH
-key and local rental state are under the main checkout's ignored `.lambda/`.
+The original Lambda credential is in the main checkout's ignored `.env`, mode
+`0600`. It is not copied to tracked files or to either GPU host. SSH keys and
+local rental state are under the main checkout's ignored `.lambda/`.
 
-The user approved up to **$200 and 12 hours**. At the console prices provided
-by the user, the selected 4x H100 SXM5 instance costs **$16.36/hour**. Cap that
-rental at **10 hours ($163.60 before taxes)** and finish within the overall
-12-hour deadline. The hard deadline is the earlier of those two limits.
+The user approved up to **$200 and 12 hours**. The selected 4x H100 SXM5 costs
+**$16.36/hour**. The absolute cutoff is **2026-11-11 16:15 UTC**. A dedicated
+**$1.29/hour A10 helper** in `us-east-1` was added for durable backups after the
+user requested independence from the laptop. Its `nas-backup-20261111`
+filesystem remains after compute termination. Both exact task instance IDs
+are registered with the local fallback cutoff; projected compute through the
+deadline is about $156 before storage and taxes.
 
-`lambda_watchdog.py` can copy results periodically and terminate only the
-exact task instance IDs recorded in the local state file. It needs working
-Lambda API access and a running local host. **Do not treat that cutoff as
-armed until its API access and background process have been verified.**
+`lambda_watchdog.py` copies local fallback results and terminates only the
+exact task instance IDs recorded in local state. It requires a running local
+host and working API access. The detached training and adaptation already run
+entirely on Lambda, using frozen inputs and their own CUDA results.
+
+`lambda_filesystem_backup.py` provides direct server-to-server backups with
+SHA-256 verification and completion receipts. `lambda_remote_watchdog.py` and
+the helper watchdog provide independent API termination once their private
+credentials and services are installed. Automatic approval review required
+explicit user approval for the proposed eight-hour, workspace-scoped
+read/termination credential. **The remote cutoff is not armed while that
+approval is pending.** Verify the deployed service state before claiming full
+laptop independence. The original account-wide API key stays local.
+
 Stopping training or powering down the guest alone does not establish that
 cloud billing has ended; confirm termination in Lambda.

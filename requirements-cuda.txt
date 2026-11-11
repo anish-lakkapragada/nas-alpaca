@@ -5,3 +5,4 @@ numpy>=1.26,<2
 tokenizers==0.22.2
 # Older system NetworkX releases use NumPy aliases removed in 1.24.
 networkx>=3.2,<4
+matplotlib>=3.5,<4

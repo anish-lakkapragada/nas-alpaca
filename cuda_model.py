@@ -1,12 +1,23 @@
-"""PyTorch/CUDA version of the eight-primitive MLX architecture search model.
+"""PyTorch/CUDA architecture search model: the original eight plus two primitives.
 
-The default frame is a 48,780,288-parameter GPT: 10 layers, width 512,
-8 attention heads and an FFN width of 2048. The original 8 x 384 frame
-can be selected through Config without changing the architecture spec schema.
+The default frame is the original 27,144,960-parameter GPT: 8 layers, width
+384, 6 attention heads and FFN width 1536. Archived 50M experiments remain
+loadable by explicitly selecting Config(n_layers=10, d_model=512, n_heads=8,
+d_ff=2048).
 
 Attention and FFN IDs identify the entire sublayer, including its LayerNorm.
 Attention is causal and restricted to equal conversation segment IDs. In
 particular, padding segment -1 is handled exactly like in the MLX model.
+
+Two additional authorized primitives are layer-local residual branch scaling
+and sublayer reversal. A layer's ``order`` is ``attn_ffn`` (default) or
+``ffn_attn``. Its ``attn_scale``/``ffn_scale`` is a finite fixed number, or
+``{"init": number, "learned": bool}``; omission means fixed 1.0. The branch
+update is ``x + scale * dropout(sublayer(x))``. Scalars belong to layer list
+entries, remain independent when sublayer weights are shared, and are reused
+across that entry's loop repetitions. No per-loop scalar copies are created.
+Each learned scalar is counted and is an explicit +1 exception to the original
+parameter ceiling; fixed scalars add no parameters or persistent buffers.
 """
 from __future__ import annotations
 
@@ -23,10 +34,10 @@ from torch.nn import functional as F
 class Config:
     vocab_size: int = 32768
     max_len: int = 1024
-    n_layers: int = 10
-    d_model: int = 512
-    n_heads: int = 8
-    d_ff: int = 2048
+    n_layers: int = 8
+    d_model: int = 384
+    n_heads: int = 6
+    d_ff: int = 1536
     dropout: float = 0.1
 
     def __post_init__(self):
@@ -52,7 +63,7 @@ ACTIVATIONS = {
 }
 
 
-def baseline_spec(n_layers: int = 10) -> dict:
+def baseline_spec(n_layers: int = 8) -> dict:
     return {
         "name": f"baseline-n{n_layers}",
         "description": "standard GPT-2-style decoder",
@@ -77,8 +88,33 @@ def baseline_parameter_count(config: Config | None = None) -> int:
     )
 
 
+def residual_scale_options(layer: dict, kind: str) -> dict:
+    """Parse one branch scalar without constructing tensors or adding weights."""
+    field = f"{kind}_scale"
+    value = layer.get(field, 1.0)
+    if isinstance(value, dict):
+        if set(value) != {"init", "learned"}:
+            raise ValueError(f"{field}: object must contain exactly 'init' and 'learned'")
+        initial, learned = value["init"], value["learned"]
+        if not isinstance(learned, bool):
+            raise ValueError(f"{field}: learned must be boolean")
+    else:
+        initial, learned = value, False
+    if (not isinstance(initial, (int, float)) or isinstance(initial, bool)
+            or not math.isfinite(initial)):
+        raise ValueError(f"{field}: initial scale must be a finite real number")
+    return {"init": float(initial), "learned": learned}
+
+
+def learned_scale_count(spec: dict) -> int:
+    """One learned scalar per present branch/layer entry, shared across loops."""
+    return sum(int(residual_scale_options(layer, kind)["learned"])
+               for layer in spec["layers"] for kind in ("attn", "ffn")
+               if layer.get(kind) is not None)
+
+
 def spec_parameter_count(spec: dict, config: Config | None = None) -> int:
-    """Count unique trainable weights; tied uses never add parameters."""
+    """Count unique weights, shared norms, and every learned branch scalar."""
     c = config if config is not None else Config()
     count = (c.vocab_size + c.max_len) * c.d_model + 2 * c.d_model
     attentions = {layer.get("attn") for layer in spec["layers"]} - {None}
@@ -88,11 +124,11 @@ def spec_parameter_count(spec: dict, config: Config | None = None) -> int:
         options = ffn_options(spec, fid, c)
         matrices = 1 if options["transpose_tie"] else 2
         count += matrices * c.d_model * options["hidden"] + 2 * c.d_model
-    return count
+    return count + learned_scale_count(spec)
 
 
 def validate(spec: dict, config: Config | None = None) -> None:
-    """Enforce the original eight primitives inside the selected baseline frame."""
+    """Enforce ten primitives; only declared learned scalars exceed the ceiling."""
     c = config if config is not None else Config()
     layers = spec.get("layers")
     if not isinstance(layers, list) or not layers:
@@ -103,15 +139,21 @@ def validate(spec: dict, config: Config | None = None) -> None:
     for i, layer in enumerate(layers):
         if not isinstance(layer, dict):
             raise ValueError(f"layer {i}: expected a dictionary")
-        extra = set(layer) - {"attn", "ffn", "loop", "inject"}
+        extra = set(layer) - {"attn", "ffn", "loop", "inject", "order", "attn_scale", "ffn_scale"}
         if extra:
             raise ValueError(f"layer {i}: unsupported keys {extra}")
         if layer.get("attn") is None and layer.get("ffn") is None:
             raise ValueError(f"layer {i}: deleting both sublayers removes the layer entirely; omit it instead")
+        if layer.get("order", "attn_ffn") not in ("attn_ffn", "ffn_attn"):
+            raise ValueError(f"layer {i}: order must be 'attn_ffn' or 'ffn_attn'")
         for kind in ("attn", "ffn"):
             key = layer.get(kind)
             if key is not None and (not isinstance(key, str) or not key or "." in key):
                 raise ValueError(f"layer {i}: {kind} ID must be a nonempty string without '.'")
+            if key is None and f"{kind}_scale" in layer:
+                raise ValueError(f"layer {i}: cannot scale a deleted {kind} branch")
+            if key is not None:
+                residual_scale_options(layer, kind)
         repeats = layer.get("loop", 1)
         if not isinstance(repeats, int) or isinstance(repeats, bool) or repeats < 1:
             raise ValueError(f"layer {i}: loop must be a positive integer")
@@ -142,9 +184,9 @@ def validate(spec: dict, config: Config | None = None) -> None:
         if not isinstance(options["transpose_tie"], bool):
             raise ValueError(f"ffn {fid}: transpose_tie must be boolean")
     parameters = spec_parameter_count(spec, c)
-    ceiling = baseline_parameter_count(c)
+    ceiling = baseline_parameter_count(c) + learned_scale_count(spec)
     if parameters > ceiling:
-        raise ValueError(f"{parameters:,} parameters exceed the baseline's {ceiling:,}")
+        raise ValueError(f"{parameters:,} parameters exceed baseline plus authorized scalar allowance {ceiling:,}")
 
 
 class Attention(nn.Module):
@@ -215,6 +257,18 @@ class SpecGPT(nn.Module):
                 self.ffns[ffn_id] = SharedFFN(c, **ffn_options(self.spec, ffn_id, c))
         self.ln_f = nn.LayerNorm(c.d_model, eps=1e-5)
         self.drop = nn.Dropout(c.dropout)
+        self.branch_scales = nn.ParameterDict()
+        self._fixed_branch_scales = {}
+        for index, layer in enumerate(self.spec["layers"]):
+            for kind in ("attn", "ffn"):
+                if layer.get(kind) is None:
+                    continue
+                key = f"L{index}_{kind}"
+                options = residual_scale_options(layer, kind)
+                if options["learned"]:
+                    self.branch_scales[key] = nn.Parameter(torch.tensor(options["init"]))
+                else:
+                    self._fixed_branch_scales[key] = options["init"]
         self.register_buffer("_causal_mask", torch.ones(c.max_len, c.max_len, dtype=torch.bool).tril(), persistent=False)
         self._init()
         assert count_parameters(self) == spec_parameter_count(self.spec, c)
@@ -248,12 +302,21 @@ class SpecGPT(nn.Module):
         same_conversation = segments[:, :, None] == segments[:, None, :]
         return (same_conversation & causal)[:, None, :, :]
 
-    def _layer(self, layer: dict, x: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
-        attention_id, ffn_id = layer.get("attn"), layer.get("ffn")
-        if attention_id is not None:
-            x = x + self.drop(self.attns[attention_id](x, mask))
-        if ffn_id is not None:
-            x = x + self.drop(self.ffns[ffn_id](x))
+    def _layer(self, layer: dict, x: torch.Tensor, mask: torch.Tensor, index: int) -> torch.Tensor:
+        order = ("ffn", "attn") if layer.get("order", "attn_ffn") == "ffn_attn" else ("attn", "ffn")
+        for kind in order:
+            sublayer_id = layer.get(kind)
+            if sublayer_id is None:
+                continue
+            branch = self.attns[sublayer_id](x, mask) if kind == "attn" else self.ffns[sublayer_id](x)
+            branch = self.drop(branch)
+            key = f"L{index}_{kind}"
+            scale = self.branch_scales[key] if key in self.branch_scales else self._fixed_branch_scales[key]
+            # The omitted/default fixed-1 case preserves the original graph.
+            # Learned-1 still multiplies so the new scalar receives a gradient.
+            if not isinstance(scale, float) or scale != 1.0:
+                branch = branch * scale
+            x = x + branch
         return x
 
     def hidden_states(self, inputs: torch.Tensor, positions: torch.Tensor, segments: torch.Tensor) -> torch.Tensor:
@@ -269,12 +332,12 @@ class SpecGPT(nn.Module):
             raise ValueError("sequence length exceeds config.max_len")
         mask = self.attention_mask(segments)
         x = self.drop(self.tok(inputs) + self.pos(positions))
-        for layer in self.spec["layers"]:
+        for index, layer in enumerate(self.spec["layers"]):
             repeats, inject = layer.get("loop", 1), layer.get("inject", False)
             layer_input = x
-            x = self._layer(layer, x, mask)
+            x = self._layer(layer, x, mask, index)
             for _ in range(repeats - 1):
-                x = self._layer(layer, x + layer_input if inject else x, mask)
+                x = self._layer(layer, x + layer_input if inject else x, mask, index)
         return self.ln_f(x)
 
     def forward(self, inputs: torch.Tensor, positions: torch.Tensor, segments: torch.Tensor) -> torch.Tensor:

@@ -1,0 +1,252 @@
+{
+  "measured_at_utc": "2026-11-11T07:55:02.842940+00:00",
+  "hardware": "4x NVIDIA H100 SXM5 80GB; one experiment per GPU",
+  "pytorch": "2.7.0",
+  "cuda": "12.8",
+  "precision": "bf16 autocast / fp32 parameters, optimizer moments and CE",
+  "compile": true,
+  "timing_note": "Actual scheduler wall time includes process startup, data preparation, compilation/cache lookup, training, dev evaluation, and checkpoint writes. Kernels had been warmed by the preceding benchmark. Other trials ran concurrently on the other GPUs.",
+  "architecture": {
+    "layers": 10,
+    "width": 512,
+    "heads": 8,
+    "ffn_width": 2048,
+    "vocabulary": 32768,
+    "context": 1024,
+    "parameters": 48780288
+  },
+  "batch_rows": 8,
+  "steps": 5000,
+  "learning_rate": 0.001,
+  "warmup": 100,
+  "adamw_bias_correction": false,
+  "held_out_validation_used": false,
+  "runs": [
+    {
+      "name": "baseline-k5000-s0",
+      "seed": 0,
+      "steps": 5000,
+      "wall_seconds": 123.13811716500004,
+      "best_dev_step": 4250,
+      "final_dev_loss": 3.461090805279085,
+      "summary": {
+        "format_version": 1,
+        "parameters": 48780288,
+        "best_dev_loss": 3.4289008613334073,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 111.0617727120001,
+        "preparation_seconds": 7.752586268000073,
+        "training_compute_seconds": 94.27861396099922,
+        "evaluation_seconds": 1.858783157000289,
+        "checkpoint_seconds": 7.390478411999652,
+        "packing_seconds": 5.33096388000024,
+        "answer_tokens_seen": 27974610,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 5867
+        },
+        "peak_gpu_memory_bytes": 4866616832
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "88842de6af9ac2e58e695e2be4e91b6c849efa705915654d1e7a3fe8688615f6",
+        "config.json": "d6fd746f1ae20b4c6164c22a35da2b2c3c65ea6338f8c310ea7fbc309e0e106f",
+        "summary.json": "53ac8063e64780267f364b3c31f27942268ffac531ad1d30a4444b372f95836a",
+        "log.jsonl": "85eaf7b5f9b49844a18dc6444d3fcd06830aaaffe9863c18449f2c6bfefa47a1"
+      }
+    },
+    {
+      "name": "baseline-k5000-s1",
+      "seed": 1,
+      "steps": 5000,
+      "wall_seconds": 123.13795947400001,
+      "best_dev_step": 4250,
+      "final_dev_loss": 3.447666042035053,
+      "summary": {
+        "format_version": 1,
+        "parameters": 48780288,
+        "best_dev_loss": 3.420850450772203,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 111.313761623,
+        "preparation_seconds": 7.673973784000054,
+        "training_compute_seconds": 94.43393153799855,
+        "evaluation_seconds": 1.8726708780001218,
+        "checkpoint_seconds": 7.543924687999947,
+        "packing_seconds": 5.312103274999799,
+        "answer_tokens_seen": 27976370,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 5868
+        },
+        "peak_gpu_memory_bytes": 4851386880
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "824b7d1be9df7dec1bf3f55cc4ab9050b0a5781d17f0e0faa5f2515cb5eca674",
+        "config.json": "11925c7f9a213221bddeeb620df4a1d2bc0a88ee37e00ea7acfb1bea0f5a004f",
+        "summary.json": "43ea9ca14e618c9b54e4ab9fd3f379ac8eb36d53633f768fda7af5f519f948a2",
+        "log.jsonl": "2d4cd268d81be0a3003f664e4cc219c3b1d9a0617d028f7fe6b4ad0ad1856955"
+      }
+    },
+    {
+      "name": "screen-baseline-k2000-s0",
+      "seed": 0,
+      "steps": 2000,
+      "wall_seconds": 58.06410774599999,
+      "best_dev_step": 2000,
+      "final_dev_loss": 3.731734951213183,
+      "summary": {
+        "format_version": 1,
+        "parameters": 48780288,
+        "best_dev_loss": 3.731734951213183,
+        "steps": 2000,
+        "schedule_steps": 2000,
+        "epochs_started": 5,
+        "train_seconds": 46.278586795000024,
+        "preparation_seconds": 7.756373845999974,
+        "training_compute_seconds": 38.433337047002965,
+        "evaluation_seconds": 0.933716247000234,
+        "checkpoint_seconds": 3.6233504760000415,
+        "packing_seconds": 2.4173093130000325,
+        "answer_tokens_seen": 11191773,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 5869
+        },
+        "peak_gpu_memory_bytes": 4866616832
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "589c8d053b6ba1551f8e631ba26ead54a985758fb82d306bc446c4c74b80fa31",
+        "config.json": "95dbcfc75087979fa2c13b6d9616f49877197e520750b571e10aa54fb2044704",
+        "summary.json": "05a4491ed1ec543265535d3484ee3e7f9928849e400ec2962cd93a4f4aae7247",
+        "log.jsonl": "42e212e824fd96bf546d9af0ca15049474038a8eb05d7b0a54bc56a569c8f9d7"
+      }
+    },
+    {
+      "name": "anchor-relu2-k5000-s0",
+      "seed": 0,
+      "steps": 5000,
+      "wall_seconds": 129.14355470600003,
+      "best_dev_step": 3750,
+      "final_dev_loss": 3.4283121287694596,
+      "summary": {
+        "format_version": 1,
+        "parameters": 48780288,
+        "best_dev_loss": 3.3885510997958708,
+        "steps": 5000,
+        "schedule_steps": 5000,
+        "epochs_started": 11,
+        "train_seconds": 117.123137337,
+        "preparation_seconds": 7.739212393999992,
+        "training_compute_seconds": 100.82200914199541,
+        "evaluation_seconds": 2.202072029000533,
+        "checkpoint_seconds": 6.521474029000501,
+        "packing_seconds": 5.380069696000078,
+        "answer_tokens_seen": 27974610,
+        "hardware": {
+          "torch": "2.7.0",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "gpu_memory_bytes": 85017624576,
+          "cpu_threads": 4,
+          "pid": 5870
+        },
+        "peak_gpu_memory_bytes": 4868720128
+      },
+      "checkpoint_and_record_sha256": {
+        "best.pt": "5360b6f3d6c68f8edf415cff239a4e0e5c741429476329ac554df30bed75d4ba",
+        "config.json": "8beeebd426b2d5b7e5bf929290b2969cb7628cbe8c6c227760f63443334e0b84",
+        "summary.json": "fd0ee91012ae8b1aae52eeb252cbecbb7894a8cce0e1edcc635356b07f4f40b8",
+        "log.jsonl": "61551e44006f4a5e83cad4bafa83621839c60aaf2df20ceede224c2fc1dea0dc"
+      }
+    }
+  ],
+  "benchmarks": {
+    "benchmark-eager": {
+      "format_version": 1,
+      "parameters": 48780288,
+      "best_dev_loss": 10.449051249317401,
+      "steps": 120,
+      "schedule_steps": 5000,
+      "epochs_started": 1,
+      "train_seconds": 3.802020698999968,
+      "preparation_seconds": 6.924560259999964,
+      "training_compute_seconds": 2.749832141999832,
+      "evaluation_seconds": 0.3319690320000177,
+      "checkpoint_seconds": 0.18611017899996796,
+      "packing_seconds": 0.47627798400003485,
+      "answer_tokens_seen": 667543,
+      "hardware": {
+        "torch": "2.7.0",
+        "cuda": "12.8",
+        "device": "cuda",
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_memory_bytes": 85017624576,
+        "cpu_threads": 4,
+        "pid": 4648
+      },
+      "peak_gpu_memory_bytes": 4950091264,
+      "benchmark": true,
+      "warmup_steps": 20,
+      "measured_steps": 100,
+      "measured_seconds": 2.2064211830000886,
+      "measured_seconds_per_step": 0.022064211830000888,
+      "estimated_5000_training_seconds": 110.32105915000444,
+      "estimated_schedule_training_seconds": 110.32105915000444,
+      "estimated_schedule_with_dev_seconds": 117.29240882200482,
+      "estimate_excludes": "startup/compilation, epoch repacking variance and checkpoint overhead"
+    },
+    "benchmark-compiled-retry1": {
+      "format_version": 1,
+      "parameters": 48780288,
+      "best_dev_loss": 10.449051249317401,
+      "steps": 120,
+      "schedule_steps": 5000,
+      "epochs_started": 1,
+      "train_seconds": 13.58554398299998,
+      "preparation_seconds": 7.4997244669999645,
+      "training_compute_seconds": 12.516622834999794,
+      "evaluation_seconds": 0.3105863050000153,
+      "checkpoint_seconds": 0.22746803199993337,
+      "packing_seconds": 0.47485897299998214,
+      "answer_tokens_seen": 667543,
+      "hardware": {
+        "torch": "2.7.0",
+        "cuda": "12.8",
+        "device": "cuda",
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_memory_bytes": 85017624576,
+        "cpu_threads": 4,
+        "pid": 4988
+      },
+      "peak_gpu_memory_bytes": 4795256320,
+      "benchmark": true,
+      "warmup_steps": 20,
+      "measured_steps": 100,
+      "measured_seconds": 1.9096608700000388,
+      "measured_seconds_per_step": 0.01909660870000039,
+      "estimated_5000_training_seconds": 95.48304350000194,
+      "estimated_schedule_training_seconds": 95.48304350000194,
+      "estimated_schedule_with_dev_seconds": 102.00535590500226,
+      "estimate_excludes": "startup/compilation, epoch repacking variance and checkpoint overhead"
+    }
+  }
+}

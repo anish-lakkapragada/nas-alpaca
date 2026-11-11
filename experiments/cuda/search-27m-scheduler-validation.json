@@ -1,0 +1,31 @@
+{
+  "checked_at_utc": "2026-11-11T08:54:49.235301+00:00",
+  "status": "passed",
+  "no_actual_training_launched": true,
+  "commands": [
+    "python3 cuda_search.py --out runs/plan-27m-broad --hours 6 --plan-only --no-plots",
+    "../../.venv/bin/python test_cuda_search.py",
+    "python3 -m py_compile cuda_search.py test_cuda_search.py"
+  ],
+  "scheduler_sha256": "153f085e0f34e74cc66ed17489b5a2dbe3cf7af5b454b660f1cbe4ae1f752e5a",
+  "test_sha256": "55e71109650d7b36eba37fd76641ae2ae4707f48d5c17351749ead8bf06ae4df",
+  "checks": [
+    "218 canonical-unique breadth specs match cuda_model.validate and exact parameter counts",
+    "Independent model-agent review checked 1304 mixed mutations against model schema and counts",
+    "Canonical equality ignores labels, unused FFNs and explicit defaults; learned scalars remain distinct",
+    "Two fake workers overlap without sharing a physical GPU index",
+    "Every completed fake trial records UTC times, GPU, host, source/spec hashes, metrics and checkpoint hashes",
+    "Disk pruning occurs only after hashes enter the append-only ledger and preserves logs and retained best checkpoints",
+    "All 9 fresh-seed baseline/top-two fake trials finish and produce matching ordered finalizer run paths",
+    "Frozen primary architecture remains unchanged by fresh-seed results",
+    "Nonzero exit, wrong step count and source drift are recorded as failures",
+    "Per-job timeout and explicit interruption terminate process groups and record reasons",
+    "Deferred never-launched confirmation jobs can be readmitted during the reserved final window",
+    "Retention manifest paths are relative to runs root and contain no parent traversal"
+  ],
+  "notes": [
+    "Lifecycle tests use only standard-library fake child processes and synthetic checkpoint bytes.",
+    "Torch schema verification is isolated in a separate process to avoid the local macOS OpenMP fork restriction.",
+    "The last terminal-status-only edit was syntax checked after the complete fake lifecycle test passed."
+  ]
+}

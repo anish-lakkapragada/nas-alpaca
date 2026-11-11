@@ -1,0 +1,1381 @@
+{
+  "objective": "Minimize dev answer-token cross entropy; the final winner must have strictly fewer total parameters than the original baseline.",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "dropout": 0.1
+  },
+  "baseline_parameters": 27144960,
+  "recipe": {
+    "steps": 5000,
+    "batch_rows": 8,
+    "lr": 0.001,
+    "warmup": 100,
+    "min_lr_frac": 0.1,
+    "weight_decay": 0.1,
+    "clip": 1.0,
+    "eval_every": 250
+  },
+  "optimizer": "AdamW without bias correction, betas .9/.95, epsilon 1e-8; exact MLX-compatible update.",
+  "allowed": [
+    "layer loops with optional input injection",
+    "nonadjacent attention sharing including LayerNorm",
+    "nonadjacent FFN sharing including LayerNorm",
+    "approved elementwise activations",
+    "attention deletion",
+    "FFN deletion",
+    "FFN transpose tying",
+    "FFN narrowing",
+    "fixed or learned scalar on an existing residual branch",
+    "FFN-before-attention layer order"
+  ],
+  "screen_steps": 5000,
+  "screen_seed": 0,
+  "confirmation_seeds": [
+    1,
+    2
+  ],
+  "final_seeds": [
+    10,
+    11,
+    12
+  ],
+  "final_candidates": 2,
+  "selection_metric": "Best dev loss from the unchanged every-250-step evaluations; all trials have K=5000.",
+  "confirmation": "Use seeds 0/1/2 to select and freeze two reduced architectures, then report paired fresh-seed 10/11/12 baseline/candidate results without selecting again on those fresh seeds.",
+  "adaptation": "Deterministic breadth, then balanced mutations of current low-loss parents including reserved reduced-parameter parents; stop on the time/architecture limits or sustained lack of meaningful improvement.",
+  "validation": "Never read by this scheduler. Final held-out evaluation happens separately after the architecture is frozen.",
+  "parallelism": "One subprocess per physical GPU, with OS-level GPU locks.",
+  "provenance": "Append-only architecture and run event registries include source/spec hashes, seeds, UTC times, physical GPU, host, checkpoint hashes, metrics, and failure/interruption reasons.",
+  "retention": "Never delete logs/specs/metrics. Preserve baseline/final checkpoints and leading seed-0/multiseed checkpoints; prune other checkpoint files only after their hashes enter the ledger if disk limits require it.",
+  "budget": "Cloud shutdown is enforced by the external rental controller. This scheduler enforces training cutoff, per-job timeouts, and conservative job admission.",
+  "created_utc": "2026-11-11T08:54:49.227404+00:00",
+  "scheduler_sha256": "153f085e0f34e74cc66ed17489b5a2dbe3cf7af5b454b660f1cbe4ae1f752e5a",
+  "intended_run_root": "runs/cuda/search-27m-20261111",
+  "deadline_utc": "2026-11-11T16:15:00Z",
+  "training_cutoff_utc": "2026-11-11T15:45:00Z",
+  "initial_architectures": 218,
+  "initial_runs": 220,
+  "adaptive_limits": {
+    "rounds": 8,
+    "new_candidates_per_round": 64,
+    "beam_width": 8,
+    "maximum_architectures": 800,
+    "stop_after_stagnant_rounds": 3,
+    "minimum_confirmed_loss_improvement": 0.002
+  },
+  "initial_architecture_inventory": [
+    {
+      "name": "baseline",
+      "canonical_sha256": "f7da398e9970412ea37d649d1e84e6433607160b678acbd0ee95b9478f76b9d7",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2",
+      "canonical_sha256": "35e93fc2b449aaf57999dad4fd0785bb263bac40474c7dad1da896f2a3eed18d",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow1472",
+      "canonical_sha256": "f231467c122c754875fde5c5220e48c0d4ccab9b8cf66ee9ccf111a2b53d1b19",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow1472-learned-ffn",
+      "canonical_sha256": "833bc56f98cfc9c05becdded25af300573e056a96a77d0d53c580b35a8152556",
+      "parameters": 26751752,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu",
+      "canonical_sha256": "78b6e14132d008092305ef7de7965d81078627bfa35fb97f543748b76226bf1f",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "silu",
+      "canonical_sha256": "802a0728418ee3ad6d594048aeef976709bc53cec269f309fe6841654fa4a7fa",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu_tanh",
+      "canonical_sha256": "17f574516ed47380b3066d353dc2a29b7079cc33895053acd0b8c64e558dab1a",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-narrow1472",
+      "canonical_sha256": "715d372a5fde8ad27ec22749a601c883bb20b681fa8c9f99a737bb588c55ea92",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-narrow1408",
+      "canonical_sha256": "89e462992127732fd0c93c2a52c20edcace0472e8d6bde6ce467599c326fa16b",
+      "parameters": 26358528,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-narrow1280",
+      "canonical_sha256": "fc2600511e8995b268d1953dc6972f092396eccb30cbb7c9941062e28681ddca",
+      "parameters": 25572096,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-narrow1152",
+      "canonical_sha256": "4dc566bd96a6ef28b5f690652312fe3fdd4a6b88aeb60d4eb9e59bfc84b497b1",
+      "parameters": 24785664,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-narrow1024",
+      "canonical_sha256": "8265d7117e4e3374bab78e8bc86c3feae399d95942d899fb0ed9523d7e14f4f8",
+      "parameters": 23999232,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-narrow768",
+      "canonical_sha256": "17bd3b13df139e99b4f803a9c68d34f2bf4ee88425f8700dea54986d7cc655cd",
+      "parameters": 22426368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-early-width1280",
+      "canonical_sha256": "c220f0d86525e321eb34d02151233d52846035ca207ab0a1dbb5e44dee510c0c",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-early-width1024",
+      "canonical_sha256": "75f31e7e09fa9da24a9e1b13d26eee3966a4a42f3ae52b18e151714e894adc07",
+      "parameters": 25965312,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-middle-width1280",
+      "canonical_sha256": "9af404fc63fef65f70499e35bad0bb34d300fc8486749a03ecc8e0e9a73c576e",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-middle-width1024",
+      "canonical_sha256": "bfc0c170d7079e69800e939756994e66b632073a8f5d16d61245f13c61a28891",
+      "parameters": 26358528,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-late-width1280",
+      "canonical_sha256": "9d6aa3fcfde19fdff60688b6cc637d0f4e33e9067067c7fe6c424febc087414a",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-late-width1024",
+      "canonical_sha256": "8534a287209c780bc062006f91790d354b2e0d0d6dcc1fa43c12557b4495b2fc",
+      "parameters": 25965312,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn0",
+      "canonical_sha256": "12f53024a9f8f10ac177f9e89bf8e75c7132ce391b1ab438dc4a8569bcf97906",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn1",
+      "canonical_sha256": "35c9b5a60acf805ebcdb544cce17a88520bda0eae93c6dab47431233edea7e65",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn2",
+      "canonical_sha256": "7d6325e14ec3b0e0ea9fc2db46181ed2a12760153e7cedd1d52e243d44f3ade3",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn3",
+      "canonical_sha256": "04969b15837a01ed37170f56f92e1c9822fb2504e8775d22f1ed561f8fba0a73",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn4",
+      "canonical_sha256": "11c86dcf3da2e31ffb84e7d355031e3f008d737c65d4deccd5bdbe4d351af57b",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn5",
+      "canonical_sha256": "847f79bee89dd62d5a7966437a8d0f46aad30c75cbc983740a53e22f1edc684d",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn6",
+      "canonical_sha256": "e35cd45e35ff25e635d3e6a86cb94df691f4a198515cf738d0d3aa657b1e9f9f",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-attn7",
+      "canonical_sha256": "9ec3b4e85a89a06aa7751e9ca9546f586f8e55fd5f533a110509aa0e5f30d62f",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn0",
+      "canonical_sha256": "ab01d9ad32d4310840d4b2b053a2658303beae217354e6d2583e28def62f60c7",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn1",
+      "canonical_sha256": "68bd9fc727a4a8998570e298b52392e4a0c076aa49279d135398459599481141",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn2",
+      "canonical_sha256": "81267108f6d8a9af64648c7901a1299a5fce0099b554887813369bdec6430418",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn3",
+      "canonical_sha256": "73fe58ca9ba827024a27c4352b1ad29c9365e73ce610ed8b5c593a099c2ddc16",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn4",
+      "canonical_sha256": "3850ce9e55f7ecc351f445a0e69a792fe845350488542789c01463586641c028",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn5",
+      "canonical_sha256": "ccbf99b69224138e3b34b33dfb6eea8f832d94d02efd0e01d5a56130619bdc8e",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn6",
+      "canonical_sha256": "7591d140962426050e21d6108474d5406a0e4107f52e38efdcb9d9f367c89d0e",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-delete-ffn7",
+      "canonical_sha256": "597db8d5806ac985df0015e5f750c85768b3cca448a8c08c770f09f8f01efcb4",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-attn0-2",
+      "canonical_sha256": "d95e35df7438ecad3d83043b09ae605988d6fa39a9b1c3876073704372f89752",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-attn0-4",
+      "canonical_sha256": "04baa143ec2ee28a558b5bbc6e90c2aefceb9b2d49d3ca8758ed24e0a16afc2e",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-attn0-7",
+      "canonical_sha256": "d770afabbf177d72103a67538f930155f7a4c921128d28afde523b9528148237",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-attn1-5",
+      "canonical_sha256": "33795af55b7f59b0f0bdd502eda5c2bf527788853f224bad5ace4f29be928932",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-attn2-6",
+      "canonical_sha256": "bd21bfeac84dd96abf9fb94e511f7db9bfb409f61966caacc3b0700e9c171c49",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-attn3-7",
+      "canonical_sha256": "71f00c1edcacf63bbd59fc4a2383e774c608d674a2bc3ec94bcb9861bb83cf70",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-ffn0-2",
+      "canonical_sha256": "e91f6b3c5e734ba53f81b96487f4c3a17140e9a7ac0bc5d49064bf7ce8ae293a",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-ffn0-4",
+      "canonical_sha256": "e6fad168778589132a11c2606e149f47774986665da5ebcefcfa31cbd725306c",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-ffn0-7",
+      "canonical_sha256": "6cc276d54aecbebdca4dfa78ac02d967387ea9a77cbe4fcc9275cb68cd33ab7e",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-ffn1-5",
+      "canonical_sha256": "4ea013464177bfe26c53a5b1677f677f1094873bf297732f98a1a69a55db5aa2",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-ffn2-6",
+      "canonical_sha256": "03fa3d8b53af79c71d99f4d924e95f21b449e52ff19454a232532b836e774789",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-ffn3-7",
+      "canonical_sha256": "8da037a4d8156d52eb35923aff780eaf70ef51f50b35eed2c104f137519ba06c",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-both0-2",
+      "canonical_sha256": "ade93d87433e59bf8c25388e20a696defd2e9f735b9901cc88c570cc883fb43f",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-both0-4",
+      "canonical_sha256": "c3f61d60f64af28d96a24cb06d660b6f9e5734024c810e247a560230a8220490",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-both0-7",
+      "canonical_sha256": "7fe98c5df49a47a128194eebf60ac86e80149f749cbf6954228a59d635603c35",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-both1-5",
+      "canonical_sha256": "801b8178b7980a45f3dd2960bc7d5c6dc55af7c334632a0dae4fa10fcfb70dee",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-both2-6",
+      "canonical_sha256": "0e8f5fe2f09ec682198efef7b1d8024c9ad6d6049a95e054806e75e6d9fb7a0b",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-share-both3-7",
+      "canonical_sha256": "b1834d6428676dcb91ae936e2a36091212d91d9800d3ccfb942c7facbd202e44",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop0",
+      "canonical_sha256": "40e89530747d263188826d5fbea33eb22a3a67e97d97dfdd7f6df4989b763324",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop0-inject",
+      "canonical_sha256": "3b9fac1a10c2d576d20a5e39457e802227f9dc16bf29a64f423ebbc97d29d369",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop3",
+      "canonical_sha256": "0a3c970391505ef8946b998b930b694cf3fa0ccc542e75969b09471d3173811b",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop3-inject",
+      "canonical_sha256": "d637cbe9da078efa2d9c63dee8fb8848fead8842a9bde2f8f15a1b1676ed0d03",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop6",
+      "canonical_sha256": "6353c4f387ce968b396ae33efffc31936035b2a1a5983453388fcf7d870bdfae",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop6-inject",
+      "canonical_sha256": "0889d1d6a15b085046e01a5719e1058362f994adbd5475d9f1363906dfe3d416",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop4x2",
+      "canonical_sha256": "2b0ef8b88f2d898be1c9ee5aab6741aaf98c5c39646b7accedde6e147f59f185",
+      "parameters": 20060928,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop4x2-inject",
+      "canonical_sha256": "bdbe6e85004bcbf849e7fbf0335d5ef005d1afbe621b48680e23659446e360a8",
+      "parameters": 20060928,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop2x4",
+      "canonical_sha256": "7a2d597aef2b63bfcb3161246f7bf77b0269791ee32b1a5dabe2fa6ea947c8a7",
+      "parameters": 16518912,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-loop2x4-inject",
+      "canonical_sha256": "d0422ef4d87614026a29cce798dbd268175635633417afd9ca0f05fb28d47bf4",
+      "parameters": 16518912,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-cycle4",
+      "canonical_sha256": "b39451961d174daa030daffa65508541df712823990289af4b0c29e46c33cdb6",
+      "parameters": 20060928,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose0",
+      "canonical_sha256": "6fb82462c190b4f38f2b88c5b7263023072009c2bc2a5c6c04a49b84d9660c9d",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose1",
+      "canonical_sha256": "13804666027ce78b79912b17176dfe4af4bab8c1b43fecfb79491d9a60c0572b",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose2",
+      "canonical_sha256": "70c22ee0a4d0c8904035e06849003e6497b101dd3d5a617e2981fde1bc3ef3c8",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose3",
+      "canonical_sha256": "d5a890a9540d261caf54c3fd61088d11cfd5d8c879f69753d84e61f940366735",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose4",
+      "canonical_sha256": "6f894b88e1c7afc5884e9da9831453a2bc65e1701a5159cfc0fd78167bac17cf",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose5",
+      "canonical_sha256": "94db05e56f793a7dfbedccb389f5d24fddde56c2c2c0c5f99122be6b89000cf1",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose6",
+      "canonical_sha256": "fd64ec2f9066ad569ea7f5992dd30c2985074906e4bd0a984915fdc660a73fc7",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose7",
+      "canonical_sha256": "0f830213dba3e23a35f7f3f822e7c585b921355645731fbef78af5c2d2d6e824",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-transpose-all",
+      "canonical_sha256": "bd005b18e7ec5d4a270584b6b462563ac133262b9926584fd1c5233c2f216f09",
+      "parameters": 22426368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-attn-0p5",
+      "canonical_sha256": "063f4abca96d692597f86d00c0f8469ccde1899b9a04ce75d5820911792cbcce",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-attn-0p707",
+      "canonical_sha256": "6bed911c14f5633471bb8b8ca6ef9a1b627a36cbefc4c8742cbba225a8c8144c",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-attn-1p25",
+      "canonical_sha256": "c9600a8b4d2087702c5ed823489137090b5d1baafaaf32379478872bb4e83d77",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-learned-attn-0p1",
+      "canonical_sha256": "1c2085c7459e4e7a91d88567d23b4eaed29ca3e30601d452b126f7f26ee2608c",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "gelu-learned-attn-0p5",
+      "canonical_sha256": "e3eb0684b8704b1fd55b3b01139ea12507585eccdd14c5a4da52513ccca7a01f",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "gelu-learned-attn-1",
+      "canonical_sha256": "8876add06771b942bb5fb424f9b65dec6fc3a93ad5ae03135d39a384d3ea9cd2",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "gelu-fixed-ffn-0p5",
+      "canonical_sha256": "688b8c7f1ae1d539f2159d4a92875e95c6763d2b2dcecef29ce9ad4c245892af",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-ffn-0p707",
+      "canonical_sha256": "ef5b98c4327b5c96555aabb79eb0127c7157155fc59ad21b724f796d14859fd5",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-ffn-1p25",
+      "canonical_sha256": "212cfecaa5566624f6f2c1291ed3f0af69a59942f40ac04e9c5f9ea39f39d0c0",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-learned-ffn-0p1",
+      "canonical_sha256": "9d56f2f4c4b61005bf2acb20392dcfb2fbb76370f2527ea41040a7b538a4d689",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "gelu-learned-ffn-0p5",
+      "canonical_sha256": "dc144e3a55f4731f1f05e5d8a9789cb6ce1f3c797100b04761d881ca512b0a76",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "gelu-learned-ffn-1",
+      "canonical_sha256": "3ff0312b24963cc17132aed32fb26d76c147204c4ac3c46d4874b5de2406fa6d",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "gelu-fixed-both-0p5",
+      "canonical_sha256": "daf8246335c2be888c882fed98db6d063f83f8e527da010d21f566ffe6bcc12e",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-both-0p707",
+      "canonical_sha256": "d2263abce837a89106fb4ba1f382de219e0644a831e4d287dd4c5edb7a130206",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-fixed-both-1p25",
+      "canonical_sha256": "61db5457b4a264d095d613bbd72af326cc5e803f20d45b3f5643cae0787fd3ac",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-learned-both-0p1",
+      "canonical_sha256": "9ef9750b84369b1e3d8141dce3ab759e2200fdf42fc84c3a4ba7efdbb197c1d5",
+      "parameters": 27144976,
+      "learned_scale_parameters": 16
+    },
+    {
+      "name": "gelu-learned-both-0p5",
+      "canonical_sha256": "4b1aa8030582f1fe059032c7bd12cf9241927f414c138bdadc12522616f795cc",
+      "parameters": 27144976,
+      "learned_scale_parameters": 16
+    },
+    {
+      "name": "gelu-learned-both-1",
+      "canonical_sha256": "f5a22b4f1a8849039ba511ed02c264c4d23c5b5e83dbf20cd4dfbefe77637297",
+      "parameters": 27144976,
+      "learned_scale_parameters": 16
+    },
+    {
+      "name": "gelu-reverse-all",
+      "canonical_sha256": "e5d3198614b1a9e3164d0b37ff1d287dc74cbe96f01c74ab5d82e164fe5c83ea",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse-even",
+      "canonical_sha256": "0a63e3ab210131a1842da1bd0d11735e06a2ea59c5c00e7e1430df45ff3c44ec",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse-odd",
+      "canonical_sha256": "2eef6c33d8ca352330cb0978c834f36b1bde89d9dc23760a6da6760a2cce6af9",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse-early",
+      "canonical_sha256": "b0ef3eb49a83e952f62a0b653b054f2316b6d0e65f19510c3cc56306a6ff50ec",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse-late",
+      "canonical_sha256": "d0f718ad4093c999812dd0799865e57546cf3bfc77272b8aaceb043a73a2ba10",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse0",
+      "canonical_sha256": "947f63de96569c527b5997bac2a9f01115289c743855d3a375e4d094cfe9415c",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse1",
+      "canonical_sha256": "3e8d7459c78e7a271e03969caa48a6af24618c76ffcb7bb5044ea6d16dcc7d7d",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse2",
+      "canonical_sha256": "4e810136891709132d783a49d06103a5238e2d4f7a5f5e1eea270645d2eadf9f",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse3",
+      "canonical_sha256": "212ffedf97c0fe6050f0dde374c2341cdb44654183de592ef02acb0c2c8fc468",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse4",
+      "canonical_sha256": "a0c7407a4efe97e974f9c17816d567a5fa949893f04fd0bad66c12c9d62c3948",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse5",
+      "canonical_sha256": "0bea8f52370df069e5d020a50a5e731c82476289d6354add0d8307839f5dd000",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse6",
+      "canonical_sha256": "fbe3acf04600b8c74444d6eea7740e6bcdc35c6be488e2cbcd2d1935891096f1",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "gelu-reverse7",
+      "canonical_sha256": "f40a2b1ec2fb5fa1ee657979ae878ad37f3ce0b1327944747d3aff6ea27d11a8",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow1408",
+      "canonical_sha256": "927bf533942e759214865481bdbc481b883ff80ea939280b6705f0d369641a95",
+      "parameters": 26358528,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow1280",
+      "canonical_sha256": "427dd04d40dcfa1083be2a81f2e711598632562f6efba29b4bfd09b79b4449bb",
+      "parameters": 25572096,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow1152",
+      "canonical_sha256": "ec8b4dc15575a8e6f2348055967afd7c6f04c5c234f74fcd194212dcc3121e48",
+      "parameters": 24785664,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow1024",
+      "canonical_sha256": "e4f612acf6e145c0de0afbcf18548467b4b945184e5a0ddc02047464c87fa0b3",
+      "parameters": 23999232,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-narrow768",
+      "canonical_sha256": "ff9e6c1654db610fcb617a184bf3ead089febe9f4e6ad05cb680a1cc47f6f0f9",
+      "parameters": 22426368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-early-width1280",
+      "canonical_sha256": "af2884d4bb90523fd8c473477dd4dde9c1b33c31b175b256be120b9c054071bd",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-early-width1024",
+      "canonical_sha256": "85246a01857916be35e1ffdf3e5d1e2a9747901b752cefdf5cf091aa94f1a71e",
+      "parameters": 25965312,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-middle-width1280",
+      "canonical_sha256": "621b5a87170f430ace401eea9a162493abb624c610095dab58927bfffc8fc52f",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-middle-width1024",
+      "canonical_sha256": "5e1a08a9dac4e287aef5d37bf845c638d1d5701d5f87be7f662845d0dc428b08",
+      "parameters": 26358528,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-late-width1280",
+      "canonical_sha256": "5745d606abe63682fa5aa98258d2a81e45734936f2a9f2a755cc0c9d4bacc0cc",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-late-width1024",
+      "canonical_sha256": "ed482f2eb15ef6f0a6725c5b5c1314037a5c9572824db6738f7961b378b45f59",
+      "parameters": 25965312,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn0",
+      "canonical_sha256": "c7c1787653dc4d5eff63e109378cf933e59ac637d8a7be76b33521e7267b0f4e",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn1",
+      "canonical_sha256": "5fc879984f19630a6706e54e9a658a9ab7375bf883563c700071651ca1b521b5",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn2",
+      "canonical_sha256": "b8556bf110d14367e7b5b5ca3541f15bdae6f9f57efde5555834d48d3f4e4cf8",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn3",
+      "canonical_sha256": "c841f8c9b056386ac83af0b250c91d3b185d8f89daff4cdbc0e958569e3b5d13",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn4",
+      "canonical_sha256": "6491f7621ed8a7cca68821c61ac05ab5aad93f92f6c10e74ba82c6f4b4100e34",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn5",
+      "canonical_sha256": "1e1aaf52419e3c624865b4dc630501424dca25a0d379bb510fd7592b2c1935db",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn6",
+      "canonical_sha256": "e46fa719ac524ba178ab9b9374c2eccfdb6080c72b2cca471bc9516a6484e65e",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-attn7",
+      "canonical_sha256": "aaa1ff5ca4e2b0912a1ee55d0f685899ecd608a0b11c7b62306731c328581455",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn0",
+      "canonical_sha256": "15a5e8fb9f45bd5a33208dcb779ab1575458328605a993c4dda3232cb98ef49d",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn1",
+      "canonical_sha256": "3c7898fa8748481d23177e6f10cfa95fadef3eb233fefa1dafded790bdf90ae3",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn2",
+      "canonical_sha256": "fc20236dbb80738714908b677abb91809f916df9db72df96313c5c08ad9b13ea",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn3",
+      "canonical_sha256": "dd39ce1fa7d938191b3e09299a19be7b45b171520c5d466a6a998f94956d7a7c",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn4",
+      "canonical_sha256": "f87f277d4813f786db1c34f641741dfb207d90c4e632b3490ebf26ef1723a13d",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn5",
+      "canonical_sha256": "ad1a86914eaeaa05990fc0162e58091bdaece29a54f08768848c6427bb7dd1a3",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn6",
+      "canonical_sha256": "3f53bab11e1f5e9860926a6d08a0d7616d71a7366efa64321f869e10a93d1e20",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-delete-ffn7",
+      "canonical_sha256": "1065afc044ea1a6de4813519cc0e8cb70d96e0b8e539f72a51037a24701f4ed0",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-attn0-2",
+      "canonical_sha256": "be83f870e54caa4fc8e0faedbd8e2239bfc0ce68187edd03d3e67efc72eede0f",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-attn0-4",
+      "canonical_sha256": "f3e54d02ca86134f3b81ee332f5cde823d2b611a714431530a2b1e11470e9d1b",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-attn0-7",
+      "canonical_sha256": "c4c5e10d30491b4510c8ff5c7b657963dbbc966bfb367938f96b3d6f2b1ea500",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-attn1-5",
+      "canonical_sha256": "46a2001aab9e31d8c12acbc8741b0589257a364a2cf2258b2accfd38c8128314",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-attn2-6",
+      "canonical_sha256": "3dd2c54f3b4cddc346c2b4833fa40a8e9ef6e9c19100da4be1ae4b436cbdaf47",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-attn3-7",
+      "canonical_sha256": "f8e7e3727977d30a0689e3358bb52e4fcc341262769899cee472529f41bd8fa6",
+      "parameters": 26554368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-ffn0-2",
+      "canonical_sha256": "8353db526d7d66fb219477827747de0e5b6251e41a408a8ec0a4ad7221ea5df8",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-ffn0-4",
+      "canonical_sha256": "b341f809d3a80928a0e3b9f14313c6cb893d9781d8d8179873ea3e45de3f4a47",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-ffn0-7",
+      "canonical_sha256": "d0967ef13d32811be3018b2bc1eec2ffb15e2dbf1610ef365b118cce5a3929d3",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-ffn1-5",
+      "canonical_sha256": "791187d70461051fec892ffd54a45366adc9e5d1b70b7c3653a15fc3b36f8b77",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-ffn2-6",
+      "canonical_sha256": "14b7d72665d869231bfeac99748cddc44d65e981cda36dae2117b59abe2fd7cd",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-ffn3-7",
+      "canonical_sha256": "742b4b78c5e7c85f4fe7ea753a71c346ef0e0a38ae84a05354cb8e1213c54bd8",
+      "parameters": 25964544,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-both0-2",
+      "canonical_sha256": "fe71aa076c61e5a5d05af77dcc5015c37c45c3e9c0025b092e92160825d50202",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-both0-4",
+      "canonical_sha256": "15f54c6e51ecfcda1b1de2b744bf81995dcf364c86c3b191f6e20602763a971d",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-both0-7",
+      "canonical_sha256": "51b37c3e473aab37b2e3c1222b0a63570b930007f7dd93d8f12c28694062ca39",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-both1-5",
+      "canonical_sha256": "422e213fe0021cd0556f14af61e77f07a3be7294763696dc806c4372710b1e25",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-both2-6",
+      "canonical_sha256": "509b5667a8918cfa838c457fcf7654b10b45c15df11946531b57f76c2fdbc8c1",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-share-both3-7",
+      "canonical_sha256": "f04729b6b43d0b971b096f446cb92b0400ff8d7244407e39e826bfc36f5b1f81",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop0",
+      "canonical_sha256": "2f122c2b06f8a5c5abd91861206ba160267cb4891feffa6b8bc43764a8172340",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop0-inject",
+      "canonical_sha256": "e6a12c2068e8cf641e207cba223b6a9c4383440ec7c39448c5cff54bd9ba078d",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop3",
+      "canonical_sha256": "853ed488bebfdc860fc78c3596d93c5601e632a16142f6279b1907df964fad43",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop3-inject",
+      "canonical_sha256": "81e796ca6c96e061c8f8587d0bb27ceacb41b32c256ac9dcb83ca47afe27c820",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop6",
+      "canonical_sha256": "26617bb59a55cdb889180f084ce630276ba8ab4fca3b5afb8f62e2b624253a5e",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop6-inject",
+      "canonical_sha256": "98e421bc5b051f0edbd55d94267d7f5ea67b3ea79aabf8d8f830764b50bb1a75",
+      "parameters": 25373952,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop4x2",
+      "canonical_sha256": "2523cb7cdfd1067f989593b5d074e491757f436dd45f2985a8fc3e51e180dfb8",
+      "parameters": 20060928,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop4x2-inject",
+      "canonical_sha256": "f3664de304034ed23bb68a2d21ed834e42a1ec9cb07e4b132eb1db305930720a",
+      "parameters": 20060928,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop2x4",
+      "canonical_sha256": "55590fae91db2c306da191bd5eb6a5883c970481ee9b4fdf73a479fa3336456f",
+      "parameters": 16518912,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-loop2x4-inject",
+      "canonical_sha256": "9258587e4ac48eac31b55db3cd222c7a5b94d9c3dfab3d2de624cbf4029a4430",
+      "parameters": 16518912,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-cycle4",
+      "canonical_sha256": "6f77b811b41720907e107226a4df26e5fe50f437b17948080e211e109ad791b9",
+      "parameters": 20060928,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose0",
+      "canonical_sha256": "ba42141070d244d99a01a1003ae1047c3375163fda01ece3921a508111b6b6d8",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose1",
+      "canonical_sha256": "5a35299c400c4115ebea79ebd9ca468685bf5a8f17a1a9067158a98ae66c9929",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose2",
+      "canonical_sha256": "80721be97e40592a3e5c29190a90a922b92c7e69944b9cdaf4e586fa0d811345",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose3",
+      "canonical_sha256": "391fe27b14e41e815d783c29412795dc60ce9b151dc3173ce9da3f371f5f11b5",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose4",
+      "canonical_sha256": "9a26f106a5cb7684b9988e786d9ebd3ecb6dbda5f602d838927e8c50c9b84e0b",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose5",
+      "canonical_sha256": "26755854fec6a69bd37907cef5a93202c6e0a882f4f0a86ba48f07a7b453f7fd",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose6",
+      "canonical_sha256": "460ec0655904d92c18524f1c5b66ddc640d82414623a42c2cfe2d663603412e9",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose7",
+      "canonical_sha256": "8283c10b9997532efd0ece44d51344ba5620cc6b4760d15049be38fe4e3c7d86",
+      "parameters": 26555136,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-transpose-all",
+      "canonical_sha256": "544a8a008512e3432fb23635f9b831fece37a766a96201322da5c177aaf0b04b",
+      "parameters": 22426368,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-attn-0p5",
+      "canonical_sha256": "65ce95d702a5e105396253c85c2006796e1c298f73b9df92ef0b6ba4dcefa1a3",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-attn-0p707",
+      "canonical_sha256": "e2a9e09d3a5dac63701369aad4e12c577ebdaeecc6ca73d1697f1d6a11a4e304",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-attn-1p25",
+      "canonical_sha256": "7feab743651d07b46b8a426ddefd3ff5bf22080c84aba5c7cb72925385cd7825",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-learned-attn-0p1",
+      "canonical_sha256": "84a16bfa5bbd41040247fc12d4be38dc105c4a505e9b331c5d0187c95ee79427",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-learned-attn-0p5",
+      "canonical_sha256": "d39618e7cc691f8d29d5cd0a6820f2a7793d521196feecaaf4276eb95513fd7e",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-learned-attn-1",
+      "canonical_sha256": "b79696e1f32b4d84ce4a5449af1b8f811a43c03e3a1675cbc1375a54b72ee40c",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-fixed-ffn-0p5",
+      "canonical_sha256": "b8a3b0a8d1fa4bbac6994a9edc8b439df24ae9c777525232d25f0981a93436a0",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-ffn-0p707",
+      "canonical_sha256": "fb10a80e6a9b9856013510707019a08a5a0387c4de4c97038b31e17107de605c",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-ffn-1p25",
+      "canonical_sha256": "ff88b3b6989a4d041598ad805559ea27eabc290c68ee178da7990220fedfd517",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-learned-ffn-0p1",
+      "canonical_sha256": "945b71ef9530317977412fd3da11313234982328009244ae20f96d3d75d4bdb7",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-learned-ffn-0p5",
+      "canonical_sha256": "d479f6fc6d1acd68881ea683f8a26ebc02abf64cb378957b1e3f254c61c1fa0b",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-learned-ffn-1",
+      "canonical_sha256": "6bfbe2c1c929276de26d031bf12c73b419ed6871d917ab3f4bfc2ffa604ff8f9",
+      "parameters": 27144968,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-fixed-both-0p5",
+      "canonical_sha256": "d3919d8814572c5fc5b79365a65e478fdd14308594550ebf5361f0b88c87b4c0",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-both-0p707",
+      "canonical_sha256": "4deb2d4abd58de1651faaf21159fb6059f315a8f8368424d0ff58a1a5b3d9881",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-fixed-both-1p25",
+      "canonical_sha256": "82644c16a1d6519969a9445dbba7b61d5e55b5ac864f15db90c270ded4a6324f",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-learned-both-0p1",
+      "canonical_sha256": "c8c06e8a6b654204fd4d521d962c7213cc6a7a97a6827ffb50d93f20313b9ddd",
+      "parameters": 27144976,
+      "learned_scale_parameters": 16
+    },
+    {
+      "name": "relu2-learned-both-0p5",
+      "canonical_sha256": "6fc3b4ca8e2a435a69acd59577518b55ea9f6237c37ad2b9210cae552e4615fa",
+      "parameters": 27144976,
+      "learned_scale_parameters": 16
+    },
+    {
+      "name": "relu2-learned-both-1",
+      "canonical_sha256": "93951320cee4c58a68c85e2bdbb30c1a581120ca1f92e10ca2cfdf5ba8321102",
+      "parameters": 27144976,
+      "learned_scale_parameters": 16
+    },
+    {
+      "name": "relu2-reverse-all",
+      "canonical_sha256": "0fd85d3b7253fd3432deb2d83b8266f12117c29c49658749a0b5b36046c16944",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse-even",
+      "canonical_sha256": "61668be49dfa5010fa5a4f23768e9a01971f0c79cd439407a978101b20158ca2",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse-odd",
+      "canonical_sha256": "5d458941f465e9e11acb717cdabda374af6d588902950840e1bda40524bd7fa7",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse-early",
+      "canonical_sha256": "118fd07ea6086c4c6f9e74df2de972da8557564f6b0f9659b413acbb9f584585",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse-late",
+      "canonical_sha256": "f53b5c4e21c8c44c1c18b0a1495b40445df63fa178b3eaf13909393381cc9fa5",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse0",
+      "canonical_sha256": "249dcf7f1089a8d3abcf4843fca7dc4398eba4ae74d8bc5f5c8e430b33ec83a5",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse1",
+      "canonical_sha256": "80ca7f0acf8a06a0d6b0567c8941872c1bf49948f4dfb2f20fb831bee9c42782",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse2",
+      "canonical_sha256": "dd1320e06efa1e6121ba11e79f47d217b9c81676871cdf66bcb5d3ea61e1a728",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse3",
+      "canonical_sha256": "2e50b5caec4d552570cc3ffd0f3b7742ca4aaf8a215307d71c28fa94ae1854da",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse4",
+      "canonical_sha256": "9c1150d2e05abe33f5890f5062eb03a2b27fbf3ab0fa0c6e065abe0d6b97f2ea",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse5",
+      "canonical_sha256": "c83c10005da87bb6bda358f0e46e06f8b18709b89d40db3a3e94990e21358ddd",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse6",
+      "canonical_sha256": "b413edd2753a8042a2c68350ef18d8560f46c9eafcd3eaee7f0793686054095f",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-reverse7",
+      "canonical_sha256": "a86478149dcc7e2d69e6d7f3a37aa88304f609edac0999fd6c75e681a8c8ea46",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-relu2-early",
+      "canonical_sha256": "a7cfa0700d639cb3edcd8abf102580e1be7700e482732c63eb7dcf70f2ff0b86",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-relu2-middle",
+      "canonical_sha256": "ebb0feb0b8662dcbe7ccd23850641fa357f8a62ba84f5a1abdcc4451e5688654",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-relu2-late",
+      "canonical_sha256": "0eb7d0a8506f955a4b2f0d14688ea0cc295a62dc9e14679140526e938bee6521",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-silu-early",
+      "canonical_sha256": "dc7879e11ea5aacde2b912b808c56960824b020670b9850c0fb068ebf3bb412c",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-silu-middle",
+      "canonical_sha256": "278b244a6fb39458e0e07333ed1602ba2a6cda78c2b0f5373555e52f8e35a9bf",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-silu-late",
+      "canonical_sha256": "fa0eaeee64fc4e822ae57d114098e450b8e42845e6330756fd7359573fcdc047",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-gelu_tanh-early",
+      "canonical_sha256": "722e1d0ae65448e922c2041aa35cbc75c553d18934df67725318000ca7bee77f",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-gelu_tanh-middle",
+      "canonical_sha256": "3f9266c54240fdb2b29001d80936a0284359b32aacb4bca143b9404279c9a95c",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "mixed-gelu_tanh-late",
+      "canonical_sha256": "ac20a0cdbe1428ab1a09371695ee6e2beea12f0745f28ced5a2b2e9b47fde1b9",
+      "parameters": 27144960,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-width1472-half-attn",
+      "canonical_sha256": "0c7e26488416507df481639b74e9c779e3e28960f5653b46699a9d5aba3b716f",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-width1472-learned-attn",
+      "canonical_sha256": "b2dc71dbcf5b4b7e700db724753938bd0cfae73ba1ec6da72363ad3250d5e769",
+      "parameters": 26751752,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-width1472-half-ffn",
+      "canonical_sha256": "dfe5f56c37ebcba191953bc0731a5df320ec5ca619ec3bbc9892ce2b9fb7dd50",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-width1472-reverse",
+      "canonical_sha256": "11a81ccf2395874fcf9eac0dc70d1a9b6460342db7a0151cfc0c8bed953765a8",
+      "parameters": 26751744,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-width1280-half-attn",
+      "canonical_sha256": "35adec2ad024c6168ccbabf88f698b6bdf6c568bb87a2008bdac3a12e6eaae85",
+      "parameters": 25572096,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-width1280-learned-attn",
+      "canonical_sha256": "ac0c95f2a4fed0bc5323db7289c942ab544ab5c51cbe797accaac71770eeb50e",
+      "parameters": 25572104,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-width1280-half-ffn",
+      "canonical_sha256": "fd98b3c866b7f3cea5f4838fa4f302a66dd1eaf6a038088bd7ab3d0b2f993e96",
+      "parameters": 25572096,
+      "learned_scale_parameters": 0
+    },
+    {
+      "name": "relu2-width1280-learned-ffn",
+      "canonical_sha256": "fc1b317a7e422922e62f98429ab316bbfef93bbf9922af494df3ab5e4f3207c8",
+      "parameters": 25572104,
+      "learned_scale_parameters": 8
+    },
+    {
+      "name": "relu2-width1280-reverse",
+      "canonical_sha256": "307c4f73d5cc966f0f941c02e363b47d32627140c256b75d5324f1d980349eaf",
+      "parameters": 25572096,
+      "learned_scale_parameters": 0
+    }
+  ]
+}
