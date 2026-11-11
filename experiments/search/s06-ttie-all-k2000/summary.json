@@ -1,0 +1,7 @@
+{
+  "parameters": 22426368,
+  "best_dev_loss": 4.634344316935805,
+  "train_seconds": 1470.0794460773468,
+  "steps": 2000,
+  "epochs_started": 5
+}
