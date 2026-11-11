@@ -1,0 +1,41 @@
+parameters 20,060,928
+{"step": 0, "epoch": 0, "dev_loss": 10.472204655022406, "elapsed": 1.4610910415649414, "train_loss": null, "answer_tokens_seen": 0, "best": true}
+{"step": 250, "epoch": 0, "dev_loss": 5.432371235416233, "elapsed": 193.92167115211487, "train_loss": 6.4484976959228515, "answer_tokens_seen": 1395018, "best": true}
+{"step": 500, "epoch": 1, "dev_loss": 4.88358580666866, "elapsed": 384.64998722076416, "train_loss": 5.131538387298584, "answer_tokens_seen": 2796120, "best": true}
+{"step": 750, "epoch": 1, "dev_loss": 4.536241483096482, "elapsed": 577.3787100315094, "train_loss": 4.634421045303345, "answer_tokens_seen": 4198164, "best": true}
+{"step": 1000, "epoch": 2, "dev_loss": 4.299305715257372, "elapsed": 764.0232591629028, "train_loss": 4.399498722076416, "answer_tokens_seen": 5597145, "best": true}
+{"step": 1250, "epoch": 2, "dev_loss": 4.1199757159562225, "elapsed": 951.2608790397644, "train_loss": 4.066683606147766, "answer_tokens_seen": 6998994, "best": true}
+{"step": 1500, "epoch": 3, "dev_loss": 3.987954450987817, "elapsed": 1137.6743862628937, "train_loss": 3.947203850746155, "answer_tokens_seen": 8396124, "best": true}
+{"step": 1750, "epoch": 3, "dev_loss": 3.9206381207175083, "elapsed": 1323.3431322574615, "train_loss": 3.726286798477173, "answer_tokens_seen": 9796425, "best": true}
+{"step": 2000, "epoch": 4, "dev_loss": 3.87191708340376, "elapsed": 1509.7406001091003, "train_loss": 3.6745495700836184, "answer_tokens_seen": 11191773, "best": true}
+{"parameters": 20060928, "best_dev_loss": 3.87191708340376, "train_seconds": 1509.802353143692, "steps": 2000, "epochs_started": 5}
+### Give three tips for staying healthy.
+1. Identify the importance of your daily include: Take time to start to schedule and stay organized and prioritize stress. 
+2. Spend time for help to relax and try enough sleep.
+3. Exercise: Get enough sleep: Take time to get enough sleep.
+4. Exercise: Take time for yourself and let your mind in a healthier and daily routine: Get enough sleep for yourself to eat healthy.
+5. Take time to enjoy your mind: Make time to get enough sleep: Aim for a day to help to relax and enjoy your body language.
+
+### What is the capital of France?
+The capital of France is Paris.
+
+### Write a short poem about the ocean.
+The sea breeze,
+The ocean is clear,
+The sun is not broken
+A gentle breeze, the breeze,
+A bright and light will never seem true.
+A gentle breeze, the sky is filled with ease,
+The sun is bright, and a feeling of love.
+The breeze and a bright,
+A hint of peaceful light.
+The sun is so bright,
+The stars to a place,
+A deep sight to stay alive and the joy.
+
+### Explain why the sky is blue.
+The blue is blue because it is blue and is associated with a form of energy that produces the same source of energy in the Earth. It also increases its energy for both organisms, with a long-term level of energy, and has a larger level than it provides one of energy.
+
+### Name three primary colors.
+The three primary colors are black, and blue.
+

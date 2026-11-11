@@ -1,0 +1,57 @@
+{
+  "model": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "dropout": 0.1
+  },
+  "spec": {
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "loop": 2
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "loop": 2
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "loop": 2
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "loop": 2
+      }
+    ],
+    "name": "s05-loop4x2",
+    "description": "Loop each of 4 layers twice, no injection: 8 applications, 4 unique layers."
+  },
+  "args": {
+    "out": "/Users/anish/Documents/git-repos/nas/.worktrees/nas/runs/search/s05-loop4x2-k2000",
+    "layers": 4,
+    "d_model": 384,
+    "heads": 6,
+    "d_ff": 0,
+    "dropout": 0.1,
+    "steps": 2000,
+    "batch_rows": 8,
+    "lr": 0.001,
+    "min_lr_frac": 0.1,
+    "warmup": 100,
+    "weight_decay": 0.1,
+    "clip": 1.0,
+    "eval_every": 250,
+    "seed": 0,
+    "spec": "experiments/search/specs/s05-loop4x2.json",
+    "max_params": 27144960
+  },
+  "parameters": 20060928
+}

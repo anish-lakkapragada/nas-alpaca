@@ -1,0 +1,26 @@
+{
+ "layers": [
+  {
+   "attn": "A0",
+   "ffn": "F0",
+   "loop": 2
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1",
+   "loop": 2
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2",
+   "loop": 2
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3",
+   "loop": 2
+  }
+ ],
+ "name": "s05-loop4x2",
+ "description": "Loop each of 4 layers twice, no injection: 8 applications, 4 unique layers."
+}

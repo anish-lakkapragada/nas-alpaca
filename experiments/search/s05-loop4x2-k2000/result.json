@@ -1,0 +1,16 @@
+{
+  "attempt": "s05-loop4x2-k2000",
+  "name": "s05-loop4x2",
+  "steps": 2000,
+  "seed": 0,
+  "layout": "A0/F0x2 A1/F1x2 A2/F2x2 A3/F3x2",
+  "description": "Loop each of 4 layers twice, no injection: 8 applications, 4 unique layers.",
+  "returncode": 0,
+  "wall_seconds": 1515,
+  "parameters": 20060928,
+  "best_dev": 3.8719,
+  "best_step": 2000,
+  "final_train": 3.6745,
+  "sec_per_step": 0.755,
+  "delta_vs_baseline": 0.0609
+}

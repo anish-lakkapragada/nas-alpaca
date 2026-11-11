@@ -12,6 +12,7 @@ train.json; validation.json is untouched. Baseline = N=8 GPT, 27,144,960 paramet
 | 4 | s03-cycle4-k2000 | 2000 | `A0/F0 A1/F1 A2/F2 A3/F3 A0/F0 A1/F1 A2/F2 A3/F3` | 20,060,928 | 3.9463 | +0.1354 | 2000 | 0.695 | [loss.png](s03-cycle4-k2000/loss.png) |
 | 5 | s00-baseline-k2000-s1-aborted | 2000 | `A0/F0 A1/F1 A2/F2 A3/F3 A4/F4 A5/F5 A6/F6 A7/F7` | — | FAILED (rc -15) | | | | [log](s00-baseline-k2000-s1-aborted/train.log) |
 | 6 | s04-loop4x2-inj-k2000 | 2000 | `A0/F0x2+inj A1/F1x2+inj A2/F2x2+inj A3/F3x2+inj` | 20,060,928 | 3.8967 | +0.0857 | 2000 | 1.021 | [loss.png](s04-loop4x2-inj-k2000/loss.png) |
+| 7 | s05-loop4x2-k2000 | 2000 | `A0/F0x2 A1/F1x2 A2/F2x2 A3/F3x2` | 20,060,928 | 3.8719 | +0.0609 | 2000 | 0.755 | [loss.png](s05-loop4x2-k2000/loss.png) |
 
 ## Notes per attempt
 
@@ -21,3 +22,4 @@ train.json; validation.json is untouched. Baseline = N=8 GPT, 27,144,960 paramet
 - **s03-cycle4-k2000** — Tie attention+FFN of layer i and i+4 (ABCDABCD): 4 unique layers, 8 applications. Data-limited regime: sharing may regularize.
 - **s00-baseline-k2000-s1-aborted** — ABORTED at step ~500: run in parallel with s04 to test 2-job concurrency. The GPU time-sliced the jobs (this run 3.7 s/step at first, then s04 stalled 7+ min) and swap rose 8.7 -> 13.5 GB, so no throughput gain. Concurrency abandoned; seed check rerun sequentially later.
 - **s04-loop4x2-inj-k2000** — Loop each of 4 layers twice with input injection (Yang et al.): 8 applications, 4 unique layers.
+- **s05-loop4x2-k2000** — Loop each of 4 layers twice, no injection: 8 applications, 4 unique layers.
