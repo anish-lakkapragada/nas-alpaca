@@ -1,0 +1,32 @@
+parameters 20,060,928
+{"step": 0, "epoch": 0, "dev_loss": 10.460133432391348, "elapsed": 1.4450571537017822, "train_loss": null, "answer_tokens_seen": 0, "best": true}
+{"step": 250, "epoch": 0, "dev_loss": 5.439633509048219, "elapsed": 177.72547507286072, "train_loss": 6.468600067138672, "answer_tokens_seen": 1395018, "best": true}
+{"step": 500, "epoch": 1, "dev_loss": 4.910334136943845, "elapsed": 353.3022038936615, "train_loss": 5.144990140914917, "answer_tokens_seen": 2796120, "best": true}
+{"step": 750, "epoch": 1, "dev_loss": 4.577919848062288, "elapsed": 528.1248171329498, "train_loss": 4.665951936721802, "answer_tokens_seen": 4198164, "best": true}
+{"step": 1000, "epoch": 2, "dev_loss": 4.345524924860013, "elapsed": 703.3611750602722, "train_loss": 4.44339905834198, "answer_tokens_seen": 5597145, "best": true}
+{"step": 1250, "epoch": 2, "dev_loss": 4.182105805918344, "elapsed": 875.3842623233795, "train_loss": 4.120034936904907, "answer_tokens_seen": 6998994, "best": true}
+{"step": 1500, "epoch": 3, "dev_loss": 4.051954084903851, "elapsed": 1047.2837669849396, "train_loss": 4.009116515159607, "answer_tokens_seen": 8396124, "best": true}
+{"step": 1750, "epoch": 3, "dev_loss": 3.9916095938648497, "elapsed": 1218.4557399749756, "train_loss": 3.7935884790420533, "answer_tokens_seen": 9796425, "best": true}
+{"step": 2000, "epoch": 4, "dev_loss": 3.946333477098827, "elapsed": 1390.7337641716003, "train_loss": 3.74561194896698, "answer_tokens_seen": 11191773, "best": true}
+{"parameters": 20060928, "best_dev_loss": 3.946333477098827, "train_seconds": 1390.7923159599304, "steps": 2000, "epochs_started": 5}
+### Give three tips for staying healthy.
+1. Identify your body and your body at your body.
+2. Learn the body with your body.
+3. Check your body into manageable chunks.
+4. Avoid eating your body.
+5. Get enough sleep in your body and you enjoy and practice your body with your body.
+
+### What is the capital of France?
+The capital of France is Paris.
+
+### Write a short poem about the ocean.
+The sun is still and light, 
+A gentle breeze of sunshine,
+A chill of light, all like a light
+
+### Explain why the sky is blue.
+The sky is a blue sky because it passes through the sky in a bright blue sky. This is clear, with the sky of a pink and blue sky, which is used to create a blue sky. The sky is a symbol of blue, and it is filled with a feeling of joy, but also serves to be seen in the sky. The two of the sky is the sky, making it a star-like and the sun on its bright.
+
+### Name three primary colors.
+The three primary colors are black, and blue.
+

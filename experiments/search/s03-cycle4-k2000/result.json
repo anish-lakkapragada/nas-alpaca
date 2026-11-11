@@ -1,0 +1,16 @@
+{
+  "attempt": "s03-cycle4-k2000",
+  "name": "s03-cycle4",
+  "steps": 2000,
+  "seed": 0,
+  "layout": "A0/F0 A1/F1 A2/F2 A3/F3 A0/F0 A1/F1 A2/F2 A3/F3",
+  "description": "Tie attention+FFN of layer i and i+4 (ABCDABCD): 4 unique layers, 8 applications. Data-limited regime: sharing may regularize.",
+  "returncode": 0,
+  "wall_seconds": 1395,
+  "parameters": 20060928,
+  "best_dev": 3.9463,
+  "best_step": 2000,
+  "final_train": 3.7456,
+  "sec_per_step": 0.695,
+  "delta_vs_baseline": 0.1354
+}

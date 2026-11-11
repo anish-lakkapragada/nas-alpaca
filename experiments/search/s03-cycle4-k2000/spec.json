@@ -1,0 +1,38 @@
+{
+ "layers": [
+  {
+   "attn": "A0",
+   "ffn": "F0"
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1"
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2"
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3"
+  },
+  {
+   "attn": "A0",
+   "ffn": "F0"
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1"
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2"
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3"
+  }
+ ],
+ "name": "s03-cycle4",
+ "description": "Tie attention+FFN of layer i and i+4 (ABCDABCD): 4 unique layers, 8 applications. Data-limited regime: sharing may regularize."
+}
