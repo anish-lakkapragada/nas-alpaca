@@ -1,4 +1,7 @@
 # Install the CUDA wheel matching the host driver; Lambda images may already supply torch.
 torch>=2.5,<3
-numpy>=1.26,<3
-tokenizers>=0.20,<1
+# Lambda's preinstalled torch 2.7 wheel uses the NumPy 1.x ABI.
+numpy>=1.26,<2
+tokenizers==0.22.2
+# Older system NetworkX releases use NumPy aliases removed in 1.24.
+networkx>=3.2,<4

@@ -313,7 +313,10 @@ def main():
             for entry in manifest:
                 path = args.fixtures / entry["file"]
                 with path.open("rb") as stream:
-                    digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                    checksum = hashlib.sha256()
+                    for block in iter(lambda: stream.read(1024 * 1024), b""):
+                        checksum.update(block)
+                    digest = checksum.hexdigest()
                 assert digest == entry["sha256"], f"fixture checksum mismatch: {path}"
         paths = sorted(args.fixtures.glob("*.npz"))
         assert paths, f"no fixtures in {args.fixtures}"

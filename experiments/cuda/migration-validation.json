@@ -1,7 +1,7 @@
 {
   "checked_at_utc": "2026-11-11T07:27:56Z",
-  "status": "passed_on_cpu",
-  "cuda_status": "pending_gpu_access",
+  "status": "passed_on_cpu_and_cuda",
+  "cuda_status": "passed",
   "commands": [
     "../nas/.venv/bin/python export_mlx_fixture.py --out runs/parity",
     "../nas/.venv/bin/python export_mlx_fixture.py --out runs/parity --optimizer-only",
@@ -55,6 +55,41 @@
     "resumed_after_update": 2,
     "max_parameter_abs_error": 9.094947017729282e-13
   },
+  "cuda_validation": {
+    "recorded_at_utc": "2026-11-11T07:47:06Z",
+    "status": "passed",
+    "command": "python test_cuda.py --device cuda --fixtures runs/parity",
+    "environment": {
+      "python": "3.10.12",
+      "pytorch": "2.7.0",
+      "cuda": "12.8",
+      "numpy": "1.26.4",
+      "tokenizers": "0.22.2",
+      "gpu": "NVIDIA H100 80GB HBM3",
+      "device": "cuda",
+      "precision": "float32",
+      "dropout": 0.0,
+      "tf32": false
+    },
+    "all_structural_checks_passed": true,
+    "model_parity": [
+      {"case": "baseline", "parameters": 27144960, "loss": 10.463943481445312, "max_logit_abs_error": 2.6226043701171875e-6, "max_sampled_gradient_abs_error": 1.2069940567016602e-6},
+      {"case": "composite", "parameters": 20553984, "loss": 10.3756103515625, "max_logit_abs_error": 1.9073486328125e-6, "max_sampled_gradient_abs_error": 8.940696716308594e-7},
+      {"case": "composite-no-inject", "parameters": 20553984, "loss": 10.402520179748535, "max_logit_abs_error": 2.086162567138672e-6, "max_sampled_gradient_abs_error": 9.238719940185547e-7}
+    ],
+    "optimizer_parity": {
+      "mlx_bias_correction": false,
+      "fused": true,
+      "updates": 4,
+      "resumed_after_update": 2,
+      "max_parameter_abs_error": 1.1920928955078125e-7
+    },
+    "compatibility_notes": [
+      "Fixture hashing uses streaming SHA256 for Python 3.10 compatibility.",
+      "The CUDA requirements pin NumPy below 2 for the image's NumPy ABI compatibility.",
+      "tokenizers remains pinned to the original version 0.22.2."
+    ]
+  },
   "tolerances": {
     "logits": {"absolute": 2e-5, "relative": 2e-4},
     "loss": {"absolute": 3e-6, "relative": 2e-6},
@@ -70,6 +105,6 @@
   "limitations": [
     "This verifies arithmetic on synthetic inputs and optimizer updates; it does not establish CUDA throughput or a 5000-step training result.",
     "Full training curves need not be identical across MLX and CUDA because random number generators, dropout masks, and floating-point kernels differ.",
-    "BF16 training stability and GPU fused-kernel behavior require the pending GPU checks."
+    "BF16 training stability requires separate training checks; the arithmetic comparisons recorded here use FP32."
   ]
 }
