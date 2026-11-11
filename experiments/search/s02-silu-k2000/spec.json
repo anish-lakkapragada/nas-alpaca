@@ -1,0 +1,64 @@
+{
+ "name": "s02-silu",
+ "description": "Activation: GELU -> SiLU in every FFN (0 params).",
+ "layers": [
+  {
+   "attn": "A0",
+   "ffn": "F0"
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1"
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2"
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3"
+  },
+  {
+   "attn": "A4",
+   "ffn": "F4"
+  },
+  {
+   "attn": "A5",
+   "ffn": "F5"
+  },
+  {
+   "attn": "A6",
+   "ffn": "F6"
+  },
+  {
+   "attn": "A7",
+   "ffn": "F7"
+  }
+ ],
+ "ffns": {
+  "F0": {
+   "act": "silu"
+  },
+  "F1": {
+   "act": "silu"
+  },
+  "F2": {
+   "act": "silu"
+  },
+  "F3": {
+   "act": "silu"
+  },
+  "F4": {
+   "act": "silu"
+  },
+  "F5": {
+   "act": "silu"
+  },
+  "F6": {
+   "act": "silu"
+  },
+  "F7": {
+   "act": "silu"
+  }
+ }
+}

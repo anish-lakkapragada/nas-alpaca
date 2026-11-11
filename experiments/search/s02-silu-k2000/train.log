@@ -1,0 +1,35 @@
+parameters 27,144,960
+{"step": 0, "epoch": 0, "dev_loss": 10.464897077991731, "elapsed": 1.8398127555847168, "train_loss": null, "answer_tokens_seen": 0, "best": true}
+{"step": 250, "epoch": 0, "dev_loss": 5.451423972499956, "elapsed": 173.45918202400208, "train_loss": 6.43869567489624, "answer_tokens_seen": 1395018, "best": true}
+{"step": 500, "epoch": 1, "dev_loss": 4.913360889853555, "elapsed": 344.7069139480591, "train_loss": 5.162715515136719, "answer_tokens_seen": 2796120, "best": true}
+{"step": 750, "epoch": 1, "dev_loss": 4.608750749300608, "elapsed": 517.6989688873291, "train_loss": 4.6992542304992675, "answer_tokens_seen": 4198164, "best": true}
+{"step": 1000, "epoch": 2, "dev_loss": 4.380520936942003, "elapsed": 701.9596989154816, "train_loss": 4.482237110137939, "answer_tokens_seen": 5597145, "best": true}
+{"step": 1250, "epoch": 2, "dev_loss": 4.211701859416714, "elapsed": 886.3699667453766, "train_loss": 4.171308814048767, "answer_tokens_seen": 6998994, "best": true}
+{"step": 1500, "epoch": 3, "dev_loss": 4.087208179071537, "elapsed": 1082.0947661399841, "train_loss": 4.060260032653809, "answer_tokens_seen": 8396124, "best": true}
+{"step": 1750, "epoch": 3, "dev_loss": 4.022040949938458, "elapsed": 1275.4019210338593, "train_loss": 3.8522268047332764, "answer_tokens_seen": 9796425, "best": true}
+{"step": 2000, "epoch": 4, "dev_loss": 3.9753694089240517, "elapsed": 1451.8236119747162, "train_loss": 3.8011858320236205, "answer_tokens_seen": 11191773, "best": true}
+{"parameters": 27144960, "best_dev_loss": 3.9753694089240517, "train_seconds": 1451.8943219184875, "steps": 2000, "epochs_started": 5}
+### Give three tips for staying healthy.
+1. Use a balanced and nutritious meals at 20 years.
+2. Use a healthy diet and body for physical illnesses.
+3. Avoid using healthy diet such as fruits and vegetables, such as vegetables, minerals, or legumes.
+4. Avoid using fruits and vegetables that can help reduce the risk of disease by making it more healthy and healthier.
+5. Get enough sleep for your diet and healthy.
+
+### What is the capital of France?
+The capital of France is France.
+
+### Write a short poem about the ocean.
+The sun is still as light in the ocean,
+The sun is like a warm,
+A golden breeze like the light,
+The sun is full of grace.
+A gentle breeze, the sky's warmth and light.
+The sun is bright, and a gentle, with a peaceful and healthyness.
+
+### Explain why the sky is blue.
+The sky is blue that is bright and orange. It is blue because it is a color and yellow source that is used to describe a piece of elements. It is dark and bright, with blue and blue, and is often associated with a sense of serenity. The text is associated with the words that have elements of colors that help us find the reader about it. It is the text, making it easier to understand each person’s needs with the words that will not be made in a wide range of colors and colors that can be connected to its beauty.
+
+### Name three primary colors.
+The three main colors are black, black, and red.
+
