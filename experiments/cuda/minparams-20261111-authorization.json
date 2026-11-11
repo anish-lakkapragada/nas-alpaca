@@ -1,0 +1,84 @@
+{
+  "recorded_at_utc": "2026-11-11T22:52:11.372998+00:00",
+  "source": "User approval in NAS conversation on 2026-11-11",
+  "baseline": {
+    "parameters": 27144960,
+    "layers": 8,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "vocab_size": 32768,
+    "context_length": 1024
+  },
+  "objective": "Minimize total unique trainable parameters while matching or beating the original baseline mean dev answer-token CE; confirm non-worse held-out test loss on fresh paired seeds before including the result in a tweet.",
+  "candidate_parameter_constraint": "Total unique trainable parameter count, including embeddings and learned scalars, must be strictly below 27144960. Individual components may increase in size.",
+  "fixed_training": {
+    "steps_per_run": 5000,
+    "data": "Same tokenizer, train/dev/test splits, packing, batch size and batch order per paired seed",
+    "recipe": "Same optimizer, learning-rate schedule, regularization, precision and initialization policy",
+    "evaluation": "Same answer-token CE, evaluation frequency and checkpoint-selection rule"
+  },
+  "allowed_architecture_changes": [
+    "Layer loops with optional reinjection of the original layer input",
+    "Nonadjacent attention sharing, including LayerNorm",
+    "Nonadjacent FFN sharing, including LayerNorm",
+    "GELU, ReLU, squared ReLU, SiLU, or tanh-approximate GELU activations",
+    "Attention deletion",
+    "FFN deletion",
+    "FFN transpose-tied up/down projections",
+    "Increase or decrease individual FFN hidden widths",
+    "Fixed or learned residual branch scalars, with matched initial values for fixed/learned comparisons",
+    "Reorder and repeat sublayers, including FFN followed by FFN followed by attention",
+    "Increase or decrease number of layers",
+    "Increase or decrease embedding/residual model dimension with compatible attention dimensions"
+  ],
+  "selection_protocol_discussed": {
+    "screening_training_seeds": 1,
+    "promising_candidate_training_seeds_total": 3,
+    "frozen_finalist_additional_fresh_training_seeds": 5,
+    "dev_conversations": 1000,
+    "test_conversations": 2599,
+    "test_used_for_architecture_search": false
+  },
+  "new_compute": {
+    "instance_id": "287cdb48d8e64da3b849dceaaf9b3bc2",
+    "ip": "192.222.54.228",
+    "ssh_key_name": "anish-nas",
+    "ssh_access_confirmed": true,
+    "gpu_count_verified": 4,
+    "gpu_model_verified": "NVIDIA H100 80GB HBM3"
+  },
+  "training_started": true,
+  "user_reconfirmed_at_utc": "2026-11-11T23:11:05.385771+00:00",
+  "parameter_allocation_rule": "Individual components may increase in parameter count, including adding layers or widening parts. Other reductions must more than offset those increases: total unique trainable parameters, including embeddings and learned scalars, must be strictly below the 27,144,960-parameter baseline.",
+  "step_budget_confirmed_by_user": true,
+  "mandatory_logging": {
+    "architecture_registry": "Record every architecture tried with a unique ID, canonical specification/hash, parent/edit history, and total parameter count.",
+    "run_registry": "Record every attempted run with a unique run ID, architecture ID, seed, full training configuration and source/data hashes, host, physical GPU, UTC start/end, step count, elapsed time, and status/error details.",
+    "metrics": "Retain training-loss and dev-loss curves, best-dev checkpoint/step, parameter count, and final held-out test scores when evaluated.",
+    "coverage": "Retain completed, failed, interrupted and rejected attempts. Never omit unfavorable results.",
+    "relationship": "Each run links to exactly one architecture specification; multiple seeds and GPU assignments are separately recorded.",
+    "execution": "Maintain logs on the compute server so recording continues without dependence on the laptop."
+  },
+  "run_authorized": true,
+  "run_authorization": "User explicitly instructed starting this goal now and final results by 10:30 PM Pacific.",
+  "deadline_utc": "2026-11-12T06:30:00Z",
+  "search_cutoff_utc": "2026-11-12T05:30:00Z",
+  "checkin_utc": "2026-11-12T02:15:00Z",
+  "search_seeds": [
+    0,
+    1,
+    2
+  ],
+  "final_confirmation_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104
+  ],
+  "service_started_utc": "2026-11-11T23:29:51Z",
+  "service": "nas-minparams-20261111.service",
+  "remote_run_root": "/home/ubuntu/nas-minparams/runs/cuda/minparams-20261111",
+  "rental_termination_authorized": false
+}

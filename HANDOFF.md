@@ -134,3 +134,50 @@ ps aux | grep train.py                             # anything running?
 caffeinate -i ./queue.sh 2000 experiments/search/specs/<spec>.json   # new attempt
 .venv/bin/python test_arch.py                      # sanity checks
 ```
+# Active NVIDIA minimum-parameter search — November 11, 2026
+
+This section supersedes the historical MLX protocol below for this branch.
+
+- Branch: `research/nvidia-minparams`, based on `01e20c2`.
+- Goal: minimize total parameters below the original 27,144,960 while matching
+  or beating its mean dev CE. Local parameter increases are allowed when the
+  total decreases. All authorized primitives are recorded in
+  `experiments/cuda/minparams-20261111-authorization.json`.
+- Every training run uses the same data, tokenizer, packing, optimizer,
+  schedule, dropout, precision, checkpoint rule, and exactly 5,000 steps.
+  Data order is paired by seed and independent of architecture initialization.
+- Screen seed 0; confirm candidates against baseline on seeds 0/1/2.
+  Freeze one smallest qualifying architecture. Train it and the baseline on
+  fresh seeds 100–104, then evaluate the fixed held-out test split. No reselection
+  after confirmation. The test split was previously scored in the earlier
+  CUDA study; this limitation must remain explicit in the final report.
+- Server: `ubuntu@192.222.54.228`, four H100 80GB GPUs. Project:
+  `/home/ubuntu/nas-minparams`; Python:
+  `/home/ubuntu/nas-minparams-venv/bin/python`.
+- Run root: `/home/ubuntu/nas-minparams/runs/cuda/minparams-20261111`.
+  Append-only `architecture_registry.jsonl` and `run_registry.jsonl` retain
+  every proposal/attempt, including failures, with source/data identities,
+  host/GPU, seed, parameters, recipe, timestamps and checkpoint metadata.
+  Each attempt retains train/dev curves and metrics; lower-value checkpoint
+  binaries may be pruned with a retention record.
+- Independent server service: `nas-minparams-20261111.service`, started
+  **2026-11-11 23:29:51 UTC / 3:29:51 PM PT**. It automatically runs search,
+  freezes selection, performs fresh-seed confirmation, and writes the report.
+  Laptop connectivity is not required. No API or SSH secrets were copied to
+  the server.
+- Search cutoff: **9:30 PM PT**. Final confirmation/report target: **10:25 PM
+  PT**. Server timer `nas-minparams-20261111-training-cutoff.timer` stops this
+  training service at **10:30 PM PT / 2026-11-12 06:30 UTC**. This does not
+  terminate the rental; the user has not authorized termination of this instance.
+- Verification: original CUDA tests and expanded-architecture GPU tests pass,
+  including exact baseline weights/outputs/gradients against the frozen old
+  implementation. 19 controller tests pass. Synthetic checkpoint/evaluation
+  integration passes across differing widths/depths. Fixed non-unit residual
+  scales now use nonpersistent tensors so matched fixed/learned initial values
+  have identical BF16 arithmetic; the baseline unit-scale path is unchanged.
+- Frozen execution sources/data are hashed in `workflow_source_manifest.json`.
+  Do not edit deployed source during this experiment. Additional architecture
+  proposals may be supplied atomically through `inbox/*.json` as
+  `{name, frame, spec, parents?, operator?}`; these are fully logged.
+
+---

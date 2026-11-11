@@ -1,4 +1,4 @@
-"""PyTorch/CUDA architecture search model: the original eight plus two primitives.
+"""PyTorch/CUDA architecture search model with opt-in expanded architecture space.
 
 The default frame is the original 27,144,960-parameter GPT: 8 layers, width
 384, 6 attention heads and FFN width 1536. Archived 50M experiments remain
@@ -18,6 +18,19 @@ entries, remain independent when sublayer weights are shared, and are reused
 across that entry's loop repetitions. No per-loop scalar copies are created.
 Each learned scalar is counted and is an explicit +1 exception to the original
 parameter ceiling; fixed scalars add no parameters or persistent buffers.
+
+The newly authorized search uses ``"search_space": "expanded"`` at the spec
+root. In that mode depth and FFN hidden widths are unrestricted by the frame,
+and adjacent shared sublayers are allowed. The experiment controller, rather
+than this model, enforces its absolute total-parameter budget. Global embedding
+width and compatible head count remain Config fields. Arbitrary sublayer
+sequences use the existing nullable branches: e.g. ``[{"ffn": "F0"},
+{"ffn": "F1", "attn": "A0", "order": "ffn_attn"}]`` executes FFN, FFN,
+attention, with separate FFN weights. Repeating an ID shares its entire
+sublayer; repeating with new IDs allocates new weights. Initialization always
+uses the same actual-entry-application-count rule, including entry loops.
+Specs without the marker retain the original validation restrictions and the
+same computation, initialization, parameter names, and checkpoint format.
 """
 from __future__ import annotations
 
@@ -128,8 +141,16 @@ def spec_parameter_count(spec: dict, config: Config | None = None) -> int:
 
 
 def validate(spec: dict, config: Config | None = None) -> None:
-    """Enforce ten primitives; only declared learned scalars exceed the ceiling."""
+    """Validate authorized primitives; expanded experiments enforce budgets outside.
+
+    Legacy specs retain the original frame restrictions. The expanded marker
+    grants architectural freedom only and changes no training settings.
+    """
     c = config if config is not None else Config()
+    search_space = spec.get("search_space", "legacy")
+    if search_space not in ("legacy", "expanded"):
+        raise ValueError("search_space must be 'legacy' or 'expanded'")
+    expanded = search_space == "expanded"
     layers = spec.get("layers")
     if not isinstance(layers, list) or not layers:
         raise ValueError("layers must be a nonempty list")
@@ -162,12 +183,12 @@ def validate(spec: dict, config: Config | None = None) -> None:
         if layer.get("inject") and repeats == 1:
             raise ValueError(f"layer {i}: inject only applies to looped layers")
         applications += repeats
-    if applications > c.n_layers:
+    if not expanded and applications > c.n_layers:
         raise ValueError(f"{applications} layer applications exceed the {c.n_layers}-layer frame")
     for kind in ("attn", "ffn"):
         for i in range(1, len(layers)):
             previous, current = layers[i - 1].get(kind), layers[i].get(kind)
-            if previous is not None and previous == current:
+            if not expanded and previous is not None and previous == current:
                 raise ValueError(f"{kind} {current} tied at adjacent layers {i-1},{i}; express reuse there as a loop")
     for fid, given in spec.get("ffns", {}).items():
         if not isinstance(given, dict):
@@ -179,13 +200,15 @@ def validate(spec: dict, config: Config | None = None) -> None:
         if options["act"] not in ACTIVATIONS:
             raise ValueError(f"ffn {fid}: unknown activation {options['act']}")
         hidden = options["hidden"]
-        if not isinstance(hidden, int) or isinstance(hidden, bool) or not 1 <= hidden <= c.d_ff:
+        if not isinstance(hidden, int) or isinstance(hidden, bool) or hidden < 1:
+            raise ValueError(f"ffn {fid}: hidden width must be a positive integer")
+        if not expanded and hidden > c.d_ff:
             raise ValueError(f"ffn {fid}: hidden width must be an integer in [1, {c.d_ff}] (narrowing only)")
         if not isinstance(options["transpose_tie"], bool):
             raise ValueError(f"ffn {fid}: transpose_tie must be boolean")
     parameters = spec_parameter_count(spec, c)
     ceiling = baseline_parameter_count(c) + learned_scale_count(spec)
-    if parameters > ceiling:
+    if not expanded and parameters > ceiling:
         raise ValueError(f"{parameters:,} parameters exceed baseline plus authorized scalar allowance {ceiling:,}")
 
 
@@ -269,6 +292,14 @@ class SpecGPT(nn.Module):
                     self.branch_scales[key] = nn.Parameter(torch.tensor(options["init"]))
                 else:
                     self._fixed_branch_scales[key] = options["init"]
+                    if options["init"] != 1.0:
+                        # A Python scalar and a device FP32 scalar do not
+                        # necessarily round alike when multiplying BF16.
+                        # Match learned-scalar arithmetic exactly, without a
+                        # trainable parameter or checkpoint entry. Module
+                        # device/dtype conversions also move these buffers.
+                        self.register_buffer(f"_fixed_scale_{key}",
+                                             torch.tensor(options["init"]), persistent=False)
         self.register_buffer("_causal_mask", torch.ones(c.max_len, c.max_len, dtype=torch.bool).tril(), persistent=False)
         self._init()
         assert count_parameters(self) == spec_parameter_count(self.spec, c)
@@ -312,6 +343,8 @@ class SpecGPT(nn.Module):
             branch = self.drop(branch)
             key = f"L{index}_{kind}"
             scale = self.branch_scales[key] if key in self.branch_scales else self._fixed_branch_scales[key]
+            if isinstance(scale, float) and scale != 1.0:
+                scale = getattr(self, f"_fixed_scale_{key}")
             # The omitted/default fixed-1 case preserves the original graph.
             # Learned-1 still multiplies so the new scalar receives a gradient.
             if not isinstance(scale, float) or scale != 1.0:
