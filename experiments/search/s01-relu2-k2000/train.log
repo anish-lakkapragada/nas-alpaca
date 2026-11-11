@@ -1,0 +1,42 @@
+parameters 27,144,960
+{"step": 0, "epoch": 0, "dev_loss": 10.461570020770491, "elapsed": 1.9090228080749512, "train_loss": null, "answer_tokens_seen": 0, "best": true}
+{"step": 250, "epoch": 0, "dev_loss": 5.305783254793899, "elapsed": 175.87556385993958, "train_loss": 6.411862802505493, "answer_tokens_seen": 1395018, "best": true}
+{"step": 500, "epoch": 1, "dev_loss": 4.681928342212529, "elapsed": 348.8597218990326, "train_loss": 4.966809810638428, "answer_tokens_seen": 2796120, "best": true}
+{"step": 750, "epoch": 1, "dev_loss": 4.324272450441197, "elapsed": 534.0066087245941, "train_loss": 4.422029579162598, "answer_tokens_seen": 4198164, "best": true}
+{"step": 1000, "epoch": 2, "dev_loss": 4.076043532299901, "elapsed": 718.1691429615021, "train_loss": 4.177225109100342, "answer_tokens_seen": 5597145, "best": true}
+{"step": 1250, "epoch": 2, "dev_loss": 3.909669653237358, "elapsed": 896.3406677246094, "train_loss": 3.8181702451705934, "answer_tokens_seen": 6998994, "best": true}
+{"step": 1500, "epoch": 3, "dev_loss": 3.7711982491624627, "elapsed": 1074.6786918640137, "train_loss": 3.7042323055267334, "answer_tokens_seen": 8396124, "best": true}
+{"step": 1750, "epoch": 3, "dev_loss": 3.7118724582016895, "elapsed": 1250.7981927394867, "train_loss": 3.460973313331604, "answer_tokens_seen": 9796425, "best": true}
+{"step": 2000, "epoch": 4, "dev_loss": 3.668449954710145, "elapsed": 1426.9967737197876, "train_loss": 3.4091027431488037, "answer_tokens_seen": 11191773, "best": true}
+{"parameters": 27144960, "best_dev_loss": 3.668449954710145, "train_seconds": 1427.0783648490906, "steps": 2000, "epochs_started": 5}
+### Give three tips for staying healthy.
+1. Get enough sleep - it's important to have a variety of activities and focus.
+2. Take regular breaks - it allows you to stay active and healthy.
+3. Get enough sleep - it'll help you stay active, break your energy and stay positive.
+
+### What is the capital of France?
+The capital of France is Paris.
+
+### Write a short poem about the ocean.
+The sea is still and light in harmony.
+
+The sun is like a beacon of hope and grace.
+The light are bright and still,
+The heat of life is a place,
+And it's too high in my heart,
+As life's a feeling of love,
+A life of hope is a hope that can be found.
+
+The sun is so bright, it is pure, like a blanket of joy that can be seen.
+
+The clouds of life is blue, so bright and full of wonders,
+This place is peaceful for the world.
+
+
+
+### Explain why the sky is blue.
+The blue sky is blue because it is composed of several other colors. It is also a strong, robust, and abundant element. The atmosphere of the sky is dark and has a blue shape, and it is often composed of various elements such as red and yellow. The sky is composed of white, orange, yellows, and orange. The blue sky is often made with a large, warm, gentle, and white hue. The sun is also bright and clear, with a light that is not in its full color.
+
+### Name three primary colors.
+The three primary colors are red, yellow, and red.
+

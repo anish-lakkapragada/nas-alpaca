@@ -1,0 +1,95 @@
+{
+  "model": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "dropout": 0.1
+  },
+  "spec": {
+    "name": "s01-relu2",
+    "description": "Activation: GELU -> ReLU^2 in every FFN (0 params). Prior: Primer found ReLU^2 helps small LMs.",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "act": "relu2"
+      },
+      "F1": {
+        "act": "relu2"
+      },
+      "F2": {
+        "act": "relu2"
+      },
+      "F3": {
+        "act": "relu2"
+      },
+      "F4": {
+        "act": "relu2"
+      },
+      "F5": {
+        "act": "relu2"
+      },
+      "F6": {
+        "act": "relu2"
+      },
+      "F7": {
+        "act": "relu2"
+      }
+    }
+  },
+  "args": {
+    "out": "/Users/anish/Documents/git-repos/nas/.worktrees/nas/runs/search/s01-relu2-k2000",
+    "layers": 4,
+    "d_model": 384,
+    "heads": 6,
+    "d_ff": 0,
+    "dropout": 0.1,
+    "steps": 2000,
+    "batch_rows": 8,
+    "lr": 0.001,
+    "min_lr_frac": 0.1,
+    "warmup": 100,
+    "weight_decay": 0.1,
+    "clip": 1.0,
+    "eval_every": 250,
+    "seed": 0,
+    "spec": "experiments/search/specs/s01-relu2.json",
+    "max_params": 27144960
+  },
+  "parameters": 27144960
+}
