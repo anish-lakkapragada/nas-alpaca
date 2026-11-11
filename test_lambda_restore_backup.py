@@ -139,6 +139,14 @@ class RestoreTests(unittest.TestCase):
         with self.assertRaises(OSError):
             self.run_restore()
         self.assertFalse(self.out.exists())
+        obj.unlink()
+        real.rename(obj)
+        manifest_real = self.root / "real-manifest"
+        self.path.rename(manifest_real)
+        self.path.symlink_to(manifest_real)
+        with self.assertRaises(OSError):
+            self.run_restore()
+        self.assertFalse(self.out.exists())
 
     def test_special_object_is_rejected_without_waiting_for_a_writer(self):
         item = self.manifest["files"]["runs/cuda/search/best.pt"]
