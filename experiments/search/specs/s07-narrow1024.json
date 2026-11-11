@@ -1,0 +1,64 @@
+{
+ "name": "s07-narrow1024",
+ "description": "Narrow every FFN 1536 -> 1024.",
+ "layers": [
+  {
+   "attn": "A0",
+   "ffn": "F0"
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1"
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2"
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3"
+  },
+  {
+   "attn": "A4",
+   "ffn": "F4"
+  },
+  {
+   "attn": "A5",
+   "ffn": "F5"
+  },
+  {
+   "attn": "A6",
+   "ffn": "F6"
+  },
+  {
+   "attn": "A7",
+   "ffn": "F7"
+  }
+ ],
+ "ffns": {
+  "F0": {
+   "hidden": 1024
+  },
+  "F1": {
+   "hidden": 1024
+  },
+  "F2": {
+   "hidden": 1024
+  },
+  "F3": {
+   "hidden": 1024
+  },
+  "F4": {
+   "hidden": 1024
+  },
+  "F5": {
+   "hidden": 1024
+  },
+  "F6": {
+   "hidden": 1024
+  },
+  "F7": {
+   "hidden": 1024
+  }
+ }
+}

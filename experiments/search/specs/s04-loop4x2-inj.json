@@ -1,0 +1,30 @@
+{
+ "layers": [
+  {
+   "attn": "A0",
+   "ffn": "F0",
+   "loop": 2,
+   "inject": true
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1",
+   "loop": 2,
+   "inject": true
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2",
+   "loop": 2,
+   "inject": true
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3",
+   "loop": 2,
+   "inject": true
+  }
+ ],
+ "name": "s04-loop4x2-inj",
+ "description": "Loop each of 4 layers twice with input injection (Yang et al.): 8 applications, 4 unique layers."
+}

@@ -86,6 +86,8 @@ def main():
     p.add_argument("--clip", type=float, default=1.0)
     p.add_argument("--eval-every", type=int, default=250)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--spec", default=None, help="architecture spec JSON (arch.py)")
+    p.add_argument("--max-params", type=int, default=0)
     a = p.parse_args()
 
     out = Path(a.out)
@@ -95,11 +97,20 @@ def main():
     train_ex = data.encode_split(tok, data.load_split("train"))
     dev_packed = data.pack(data.encode_split(tok, data.load_split("dev")), rng=None)
 
-    cfg = Config(n_layers=a.layers, d_model=a.d_model, n_heads=a.heads,
-                 d_ff=a.d_ff or 4 * a.d_model, dropout=a.dropout)
-    model = GPT(cfg)
+    spec = None
+    if a.spec:
+        import arch
+        spec = arch.load_spec(a.spec)
+        model = arch.SpecGPT(spec, dropout=a.dropout)
+        cfg = model.config
+        if a.max_params and count_parameters(model) > a.max_params:
+            raise SystemExit(f"{count_parameters(model):,} parameters exceed --max-params {a.max_params:,}")
+    else:
+        cfg = Config(n_layers=a.layers, d_model=a.d_model, n_heads=a.heads,
+                     d_ff=a.d_ff or 4 * a.d_model, dropout=a.dropout)
+        model = GPT(cfg)
     n_params = count_parameters(model)
-    (out / "config.json").write_text(json.dumps({"model": cfg.to_dict(), "args": vars(a),
+    (out / "config.json").write_text(json.dumps({"model": cfg.to_dict(), "spec": spec, "args": vars(a),
                                                  "parameters": n_params}, indent=2))
     print(f"parameters {n_params:,}", flush=True)
 

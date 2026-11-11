@@ -1,0 +1,64 @@
+{
+ "name": "s06-ttie-all",
+ "description": "Transpose-tie every FFN (down = up^T): halves FFN weights.",
+ "layers": [
+  {
+   "attn": "A0",
+   "ffn": "F0"
+  },
+  {
+   "attn": "A1",
+   "ffn": "F1"
+  },
+  {
+   "attn": "A2",
+   "ffn": "F2"
+  },
+  {
+   "attn": "A3",
+   "ffn": "F3"
+  },
+  {
+   "attn": "A4",
+   "ffn": "F4"
+  },
+  {
+   "attn": "A5",
+   "ffn": "F5"
+  },
+  {
+   "attn": "A6",
+   "ffn": "F6"
+  },
+  {
+   "attn": "A7",
+   "ffn": "F7"
+  }
+ ],
+ "ffns": {
+  "F0": {
+   "transpose_tie": true
+  },
+  "F1": {
+   "transpose_tie": true
+  },
+  "F2": {
+   "transpose_tie": true
+  },
+  "F3": {
+   "transpose_tie": true
+  },
+  "F4": {
+   "transpose_tie": true
+  },
+  "F5": {
+   "transpose_tie": true
+  },
+  "F6": {
+   "transpose_tie": true
+  },
+  "F7": {
+   "transpose_tie": true
+  }
+ }
+}
