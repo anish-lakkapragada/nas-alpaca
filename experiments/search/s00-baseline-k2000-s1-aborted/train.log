@@ -1,0 +1,4 @@
+parameters 27,144,960
+{"step": 0, "epoch": 0, "dev_loss": 10.464250996674771, "elapsed": 3.030728340148926, "train_loss": null, "answer_tokens_seen": 0, "best": true}
+{"step": 250, "epoch": 0, "dev_loss": 5.4087922046191315, "elapsed": 925.6927781105042, "train_loss": 6.422118085861206, "answer_tokens_seen": 1402182, "best": true}
+{"step": 500, "epoch": 1, "dev_loss": 4.841453290367563, "elapsed": 1126.9736890792847, "train_loss": 5.082431707382202, "answer_tokens_seen": 2797342, "best": true}

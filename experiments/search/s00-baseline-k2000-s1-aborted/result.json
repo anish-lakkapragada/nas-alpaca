@@ -1,0 +1,10 @@
+{
+  "attempt": "s00-baseline-k2000-s1-aborted",
+  "name": "s00-baseline",
+  "steps": 2000,
+  "seed": 1,
+  "layout": "A0/F0 A1/F1 A2/F2 A3/F3 A4/F4 A5/F5 A6/F6 A7/F7",
+  "description": "Reference: unmodified N=8 baseline at this K.",
+  "returncode": -15,
+  "wall_seconds": 1177
+}

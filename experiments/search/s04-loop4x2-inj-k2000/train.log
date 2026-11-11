@@ -2,3 +2,7 @@ parameters 20,060,928
 {"step": 0, "epoch": 0, "dev_loss": 10.469923469760895, "elapsed": 1.4452109336853027, "train_loss": null, "answer_tokens_seen": 0, "best": true}
 {"step": 250, "epoch": 0, "dev_loss": 5.362039943647718, "elapsed": 195.89749193191528, "train_loss": 6.435221748352051, "answer_tokens_seen": 1395018, "best": true}
 {"step": 500, "epoch": 1, "dev_loss": 4.7966760273375195, "elapsed": 386.3363778591156, "train_loss": 5.056737508773804, "answer_tokens_seen": 2796120, "best": true}
+{"step": 750, "epoch": 1, "dev_loss": 4.4707099645265584, "elapsed": 596.8848249912262, "train_loss": 4.55494441986084, "answer_tokens_seen": 4198164, "best": true}
+{"step": 1000, "epoch": 2, "dev_loss": 4.256823731315226, "elapsed": 805.4222028255463, "train_loss": 4.341556398391724, "answer_tokens_seen": 5597145, "best": true}
+{"step": 1250, "epoch": 2, "dev_loss": 4.102101400518341, "elapsed": 1009.2179861068726, "train_loss": 4.016863556861877, "answer_tokens_seen": 6998994, "best": true}
+{"step": 1500, "epoch": 3, "dev_loss": 3.9933127883436046, "elapsed": 1209.1967780590057, "train_loss": 3.9174839181900025, "answer_tokens_seen": 8396124, "best": true}
