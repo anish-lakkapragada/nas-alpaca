@@ -1,0 +1,28 @@
+{
+  "as_of_utc": "2026-11-11T09:38:28.018252+00:00",
+  "search_host": "192.222.53.120",
+  "search_instance_id": "5c07904125d442d8a43d41a1fd085ef3",
+  "search_root": "/home/ubuntu/nas-cuda/runs/cuda/search-27m-20261111",
+  "training_source_frozen": true,
+  "uses_ongoing_local_experiment_results": false,
+  "backup_host": "150.136.94.199",
+  "backup_instance_id": "9ed2a014d28347bdaa4816926f9f1f32",
+  "filesystem_id": "e2ce35a9ee634ffb85572dd87f7d6dc5",
+  "filesystem_region": "us-east-1",
+  "backup_root": "/lambda/nfs/nas-backup-20261111/5c07904125d442d8a43d41a1fd085ef3",
+  "backup_timer": "nas-artifact-backup.timer",
+  "backup_timer_active": true,
+  "first_verified_backup": {
+    "artifact_count": 1183,
+    "bytes": 3492762755,
+    "manifest_sha256": "75ef189fb36c4642780987f9582a51be0ff3dab07a079a622508bcbbb5758edb",
+    "all_objects_sha256_verified": true
+  },
+  "main_remote_cutoff_utc": "2026-11-11T16:14:00+00:00",
+  "helper_remote_cutoff_utc": "2026-11-11T16:15:00+00:00",
+  "remote_cutoff_services": "installed_disabled_no_API_credentials",
+  "pending_user_approval": "Temporary 8-hour Lambda service credential with instance-reader and instance-terminate roles only in the rental workspace",
+  "local_fallback_active": true,
+  "local_fallback_deadline_utc": "2026-11-11T16:15:00+00:00",
+  "storage_persists_after_compute_termination": true
+}

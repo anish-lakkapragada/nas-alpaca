@@ -183,7 +183,12 @@ host and working API access. The detached training and adaptation already run
 entirely on Lambda, using frozen inputs and their own CUDA results.
 
 `lambda_filesystem_backup.py` provides direct server-to-server backups with
-SHA-256 verification and completion receipts. `lambda_remote_watchdog.py` and
+SHA-256 verification and completion receipts. Its independent systemd timer
+is active on the search host. The first verified snapshot at 09:38 UTC contains
+1,183 artifacts (3.49 GB); deployment details are recorded in
+`experiments/cuda/cloud-independence.json`. `lambda_restore_backup.py` verifies
+the content-addressed snapshot and reconstructs readable files into a new
+directory. `lambda_remote_watchdog.py` and
 the helper watchdog provide independent API termination once their private
 credentials and services are installed. Automatic approval review required
 explicit user approval for the proposed eight-hour, workspace-scoped
