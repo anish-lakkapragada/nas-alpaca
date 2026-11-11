@@ -1,0 +1,86 @@
+{
+  "name": "old-cuda-sharing-d256-f1024-reverse0",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 256,
+    "n_heads": 4,
+    "d_ff": 1024,
+    "dropout": 0.1
+  },
+  "spec": {
+    "name": "old-cuda-sharing-d256-f1024-reverse0",
+    "description": "Transfer the previously successful first-attention deletion, nonadjacent attention/FFN sharing, first-FFN SiLU, and one fixed 0.5 FFN branch scale to a smaller embedding dimension. Preserve the original successful sublayer order to isolate width allocation. This is an unmeasured hypothesis; match baseline dev across paired fresh search runs before claiming success.",
+    "layers": [
+      {
+        "attn": null,
+        "ffn": "F0"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F1"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "ffn_scale": 0.5
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "act": "silu",
+        "hidden": 1024
+      },
+      "F1": {
+        "act": "relu2",
+        "hidden": 1024
+      },
+      "F2": {
+        "act": "relu2",
+        "hidden": 1024
+      },
+      "F3": {
+        "act": "relu2",
+        "hidden": 1024
+      },
+      "F4": {
+        "act": "relu2",
+        "hidden": 1024
+      },
+      "F6": {
+        "act": "relu2",
+        "hidden": 1024
+      },
+      "F7": {
+        "act": "relu2",
+        "hidden": 1024
+      }
+    },
+    "search_space": "expanded"
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "transfer-old-cuda-sharing-to-smaller-width"
+}

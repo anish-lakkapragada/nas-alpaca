@@ -1,0 +1,94 @@
+{
+  "name": "old-cuda-sharing-d320-f1280-reverse1",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 320,
+    "n_heads": 5,
+    "d_ff": 1280,
+    "dropout": 0.1
+  },
+  "spec": {
+    "name": "old-cuda-sharing-d320-f1280-reverse1",
+    "description": "Transfer the previously successful first-attention deletion, nonadjacent attention/FFN sharing, first-FFN SiLU, and one fixed 0.5 FFN branch scale to a smaller embedding dimension. Reverse all paired sublayers because FFN-first was favorable in the separately confirmed CUDA winner. This is an unmeasured hypothesis; match baseline dev across paired fresh search runs before claiming success.",
+    "layers": [
+      {
+        "attn": null,
+        "ffn": "F0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "ffn_scale": 0.5,
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "act": "silu",
+        "hidden": 1280
+      },
+      "F1": {
+        "act": "relu2",
+        "hidden": 1280
+      },
+      "F2": {
+        "act": "relu2",
+        "hidden": 1280
+      },
+      "F3": {
+        "act": "relu2",
+        "hidden": 1280
+      },
+      "F4": {
+        "act": "relu2",
+        "hidden": 1280
+      },
+      "F6": {
+        "act": "relu2",
+        "hidden": 1280
+      },
+      "F7": {
+        "act": "relu2",
+        "hidden": 1280
+      }
+    },
+    "search_space": "expanded"
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "transfer-old-cuda-sharing-to-smaller-width"
+}

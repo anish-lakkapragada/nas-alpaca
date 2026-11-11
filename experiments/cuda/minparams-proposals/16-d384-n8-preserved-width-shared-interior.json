@@ -1,0 +1,81 @@
+{
+  "name": "d384-n8-preserved-width-shared-interior",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1536,
+        "act": "silu"
+      },
+      "Fmiddle0": {
+        "hidden": 1536,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 1536,
+        "act": "relu2"
+      },
+      "Flast": {
+        "hidden": 1536,
+        "act": "relu2"
+      }
+    },
+    "name": "d384-n8-preserved-width-shared-interior",
+    "description": "Keep the exact original 384-wide embedding and 1536-wide FFNs, but give the first and last blocks independent weights and alternate two shared interior blocks across the six middle applications. This isolates a strong sharing-based compression route from embedding-width reductions and uses favorable FFN-first/ReLU2 processing."
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "expert-architecture-proposal"
+}

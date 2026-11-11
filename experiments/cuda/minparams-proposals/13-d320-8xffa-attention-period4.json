@@ -1,0 +1,153 @@
+{
+  "name": "d320-8xffa-attention-period4",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 16,
+    "d_model": 320,
+    "n_heads": 5,
+    "d_ff": 1024,
+    "dropout": 0.1
+  },
+  "spec": {
+    "layers": [
+      {
+        "ffn": "Fpre0"
+      },
+      {
+        "ffn": "Fpost0",
+        "attn": "A0",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre1"
+      },
+      {
+        "ffn": "Fpost1",
+        "attn": "A1",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre2"
+      },
+      {
+        "ffn": "Fpost2",
+        "attn": "A2",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre3"
+      },
+      {
+        "ffn": "Fpost3",
+        "attn": "A3",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre4"
+      },
+      {
+        "ffn": "Fpost4",
+        "attn": "A0",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre5"
+      },
+      {
+        "ffn": "Fpost5",
+        "attn": "A1",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre6"
+      },
+      {
+        "ffn": "Fpost6",
+        "attn": "A2",
+        "order": "ffn_attn"
+      },
+      {
+        "ffn": "Fpre7"
+      },
+      {
+        "ffn": "Fpost7",
+        "attn": "A3",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Fpre0": {
+        "hidden": 512,
+        "act": "silu"
+      },
+      "Fpost0": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre1": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost1": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre2": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost2": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre3": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost3": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre4": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost4": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre5": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost5": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre6": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost6": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fpre7": {
+        "hidden": 512,
+        "act": "relu2"
+      },
+      "Fpost7": {
+        "hidden": 1024,
+        "act": "relu2"
+      }
+    },
+    "search_space": "expanded",
+    "name": "d320-8xffa-attention-period4",
+    "description": "Use exactly FFN\u2192FFN\u2192attention groups with independently weighted 512-wide and 1024-wide FFNs. This reallocates parameters from dense attention coverage into two successive nonlinear residual updates. Reuse attention nonadjacently across two sweeps. The data, dropout and training schedule remain fixed."
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "expert-architecture-proposal"
+}

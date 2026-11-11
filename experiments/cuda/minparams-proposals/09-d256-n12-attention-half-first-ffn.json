@@ -1,0 +1,133 @@
+{
+  "name": "d256-n12-attention-half-first-ffn",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 12,
+    "d_model": 256,
+    "n_heads": 4,
+    "d_ff": 1024,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": null,
+        "ffn": "F0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A0",
+        "ffn": "F6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F8",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F9",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F10",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F11",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "hidden": 1024,
+        "act": "silu"
+      },
+      "F1": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F2": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F3": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F4": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F5": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F6": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F7": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F8": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F9": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F10": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F11": {
+        "hidden": 1024,
+        "act": "relu2"
+      }
+    },
+    "name": "d256-n12-attention-half-first-ffn",
+    "description": "Keep twelve independent FFNs while reusing six nonadjacent attention modules. The first block remains FFN-only with SiLU, as in the old 24.78M positive control. Width256 reduces tied embedding cost; later recurrence supplies context mixing without extra attention weights."
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "expert-architecture-proposal"
+}

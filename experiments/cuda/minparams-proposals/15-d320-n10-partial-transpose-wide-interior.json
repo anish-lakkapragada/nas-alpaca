@@ -1,0 +1,119 @@
+{
+  "name": "d320-n10-partial-transpose-wide-interior",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 10,
+    "d_model": 320,
+    "n_heads": 5,
+    "d_ff": 1024,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F8",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A9",
+        "ffn": "F9",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "hidden": 1024,
+        "act": "silu"
+      },
+      "F1": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F2": {
+        "hidden": 1536,
+        "act": "relu2",
+        "transpose_tie": true
+      },
+      "F3": {
+        "hidden": 1536,
+        "act": "relu2",
+        "transpose_tie": true
+      },
+      "F4": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F5": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F6": {
+        "hidden": 1536,
+        "act": "relu2",
+        "transpose_tie": true
+      },
+      "F7": {
+        "hidden": 1536,
+        "act": "relu2",
+        "transpose_tie": true
+      },
+      "F8": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F9": {
+        "hidden": 1024,
+        "act": "relu2"
+      }
+    },
+    "name": "d320-n10-partial-transpose-wide-interior",
+    "description": "Use four enlarged 1536-wide interior FFNs whose down matrices are transpose-tied, leaving six conventional independent FFNs. Compared with an all-tied network this retains flexible input/output processing while testing whether extra hidden units compensate for shared up/down weights. Two distant attention ties fund additional savings."
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "expert-architecture-proposal"
+}

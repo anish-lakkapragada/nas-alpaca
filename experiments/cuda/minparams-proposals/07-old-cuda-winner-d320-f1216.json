@@ -1,0 +1,106 @@
+{
+  "name": "old-cuda-winner-d320-f1216",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 320,
+    "n_heads": 5,
+    "d_ff": 1216,
+    "dropout": 0.1
+  },
+  "spec": {
+    "name": "old-cuda-winner-d320-f1216",
+    "description": "Transfer the independently confirmed old CUDA winner to a smaller residual/embedding width: predominantly FFN-first ReLU2, SiLU first FFN, GELU fifth FFN, original seventh-block order, fixed first-attention scale 1.25, and the two learned third-block branch scalars. Its old 26.702594M version beat baseline test CE, but this smaller shape is unmeasured and has no claimed inherited performance.",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.5,
+          "learned": true
+        }
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "act": "silu",
+        "hidden": 1216
+      },
+      "F1": {
+        "act": "relu2",
+        "hidden": 1216
+      },
+      "F2": {
+        "act": "relu2",
+        "hidden": 1216
+      },
+      "F3": {
+        "act": "relu2",
+        "hidden": 1216
+      },
+      "F4": {
+        "act": "gelu",
+        "hidden": 1216
+      },
+      "F5": {
+        "act": "relu2",
+        "hidden": 1216
+      },
+      "F6": {
+        "act": "relu2",
+        "hidden": 1216
+      },
+      "F7": {
+        "act": "relu2",
+        "hidden": 1152
+      }
+    },
+    "search_space": "expanded"
+  },
+  "parents": [
+    "c80fbbd202f6c2c32e1b4329c26cd41492ec7cf5578a2a7ff6b7602a4a9c1d26"
+  ],
+  "operator": "transfer-old-cuda-winner-to-smaller-width"
+}

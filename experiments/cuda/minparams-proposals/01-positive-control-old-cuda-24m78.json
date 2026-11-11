@@ -1,0 +1,79 @@
+{
+  "name": "positive-control-old-cuda-24m78",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 8,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "dropout": 0.1
+  },
+  "spec": {
+    "name": "positive-control-old-cuda-24m78",
+    "description": "Repeat the old NVIDIA candidate, not a result from the independent local MLX search. Its 24,783,360 parameters achieved best-dev CE 3.3255946460, 3.3339972838, 3.3401832038 on search seeds 0/1/2 versus baseline 3.4122, 3.4298, 3.4346. No test result was used. Exact prior architecture; only expanded validation marker and unused metadata normalized.",
+    "layers": [
+      {
+        "attn": null,
+        "ffn": "F0"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F1"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "ffn_scale": 0.5
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "act": "silu"
+      },
+      "F1": {
+        "act": "relu2"
+      },
+      "F2": {
+        "act": "relu2"
+      },
+      "F3": {
+        "act": "relu2"
+      },
+      "F4": {
+        "act": "relu2"
+      },
+      "F6": {
+        "act": "relu2"
+      },
+      "F7": {
+        "act": "relu2"
+      }
+    },
+    "search_space": "expanded"
+  },
+  "parents": [
+    "64d1a34619776a155e0d61ffff9ae3248c430c6f266610bd41a75543e0eec0cd"
+  ],
+  "operator": "previous-cuda-positive-control"
+}

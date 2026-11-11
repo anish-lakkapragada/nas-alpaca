@@ -1,0 +1,133 @@
+{
+  "name": "d256-n12-wide-ends-sparse-attention-sharing",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 12,
+    "d_model": 256,
+    "n_heads": 4,
+    "d_ff": 768,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A8",
+        "ffn": "F8",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F9",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A10",
+        "ffn": "F10",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "A11",
+        "ffn": "F11",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "hidden": 2048,
+        "act": "silu"
+      },
+      "F1": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F2": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F3": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F4": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F5": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F6": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F7": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F8": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F9": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F10": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F11": {
+        "hidden": 2048,
+        "act": "relu2"
+      }
+    },
+    "name": "d256-n12-wide-ends-sparse-attention-sharing",
+    "description": "Grow the first and last FFNs to 2048 while shrinking ten interior FFNs to 768 and reusing two distant attention modules. This tests whether independent boundary capacity protects loss after reducing the embedding width, without the stronger sharing of the shared-middle proposals."
+  },
+  "parents": [
+    "0360aee82581b83eff04d42ed322be027240722e9fe37c59af314be28e7aff65"
+  ],
+  "operator": "expert-architecture-proposal"
+}
