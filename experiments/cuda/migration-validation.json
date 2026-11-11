@@ -1,0 +1,75 @@
+{
+  "checked_at_utc": "2026-11-11T07:27:56Z",
+  "status": "passed_on_cpu",
+  "cuda_status": "pending_gpu_access",
+  "commands": [
+    "../nas/.venv/bin/python export_mlx_fixture.py --out runs/parity",
+    "../nas/.venv/bin/python export_mlx_fixture.py --out runs/parity --optimizer-only",
+    "../../.venv/bin/python test_cuda.py --device cpu --fixtures runs/parity",
+    "../../.venv/bin/python -c 'import test_cuda; from pathlib import Path; test_cuda.check_mlx_optimizer(Path(\"runs/parity/optimizer.json\"))'"
+  ],
+  "environment": {
+    "python": "3.12.13",
+    "mlx": "0.32.4",
+    "pytorch": "2.6.0",
+    "numpy": "2.5.4",
+    "tokenizers": "0.22.2",
+    "platform": "macOS-14.4-arm64-arm-64bit",
+    "device": "cpu",
+    "precision": "float32",
+    "dropout": 0.0,
+    "tf32": false
+  },
+  "scope": {
+    "reference_frame_parameters": 27144960,
+    "new_frame_parameters": 48780288,
+    "new_frame": {"layers": 10, "width": 512, "heads": 8, "ffn_width": 2048, "context": 1024, "vocabulary": 32768},
+    "numerical_fixture_shape": [2, 12],
+    "logits": "Every vocabulary logit at every fixture position is compared.",
+    "gradients": "Every parameter is sampled: all vector entries; 16 random matrix rows plus first/last rows and input-token embedding rows.",
+    "training_data_read": false,
+    "held_out_validation_read": false
+  },
+  "checks_passed": [
+    "Exact original and scaled baseline parameter counts",
+    "Parameter counts for sharing including shared LayerNorms, deletion, narrowing, loops, and transpose tying",
+    "Transpose tying forward math and gradient flow",
+    "Packed versus individual conversation logits, weighted losses, and all parameter gradients",
+    "No forward or gradient leakage across conversation boundaries",
+    "No forward leakage from future tokens",
+    "Invalid architecture whitelist rejection",
+    "Dense masked cross entropy versus optimized answer-only vocabulary projection, including chunked projection and all gradients",
+    "Warmup and total-step-dependent cosine learning rate schedule",
+    "MLX original-frame forward/loss/gradient parity for baseline and all-primitives composite with injection enabled and disabled",
+    "Installed MLX uncorrected AdamW versus adapted PyTorch AdamW: four updates, all parameters and first/second moments, clipping, varying learning rates, and resume after update two"
+  ],
+  "model_parity": [
+    {"case": "baseline", "parameters": 27144960, "loss": 10.463943481445312, "max_logit_abs_error": 2.9802322387695312e-6, "max_sampled_gradient_abs_error": 4.246830940246582e-7},
+    {"case": "composite", "parameters": 20553984, "loss": 10.3756103515625, "max_logit_abs_error": 1.7881393432617188e-6, "max_sampled_gradient_abs_error": 2.384185791015625e-7},
+    {"case": "composite-no-inject", "parameters": 20553984, "loss": 10.402521133422852, "max_logit_abs_error": 1.7881393432617188e-6, "max_sampled_gradient_abs_error": 2.980232238769531e-7}
+  ],
+  "optimizer_parity": {
+    "mlx_bias_correction": false,
+    "implementation": "Adapt standard PyTorch AdamW learning rate, epsilon, and decay each step to reproduce uncorrected MLX AdamW while retaining fused CUDA kernels.",
+    "updates": 4,
+    "resumed_after_update": 2,
+    "max_parameter_abs_error": 9.094947017729282e-13
+  },
+  "tolerances": {
+    "logits": {"absolute": 2e-5, "relative": 2e-4},
+    "loss": {"absolute": 3e-6, "relative": 2e-6},
+    "sampled_gradients": {"absolute": 8e-6, "relative": 5e-4},
+    "optimizer_parameters": {"absolute": 2e-7, "relative": 2e-6},
+    "optimizer_moments": {"absolute": 2e-9, "relative": 3e-6}
+  },
+  "fixture_sha256": {
+    "baseline.npz": "1d447795fd8862b20b50d8c4d68d47fe696d07c71516bb40b1745f7ace493ee2",
+    "composite.npz": "4007ed116924735784dfe4883e59339c222ea8af8b6d8f3459a6fef96b3a380e",
+    "optimizer.json": "6af18399fe510548a9be186f2be6dcbc9b37f1abaa88c967b3cab8f7fd2259bf"
+  },
+  "limitations": [
+    "This verifies arithmetic on synthetic inputs and optimizer updates; it does not establish CUDA throughput or a 5000-step training result.",
+    "Full training curves need not be identical across MLX and CUDA because random number generators, dropout masks, and floating-point kernels differ.",
+    "BF16 training stability and GPU fused-kernel behavior require the pending GPU checks."
+  ]
+}
