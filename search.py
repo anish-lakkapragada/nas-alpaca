@@ -106,6 +106,9 @@ def main():
 def write_log_md():
     rows = read_log(EXP / "results.jsonl")
     lines = ["# Architecture search log", "",
+             "**Objective (set by the user):** (1) primary: lower dev loss than the N=8 baseline;",
+             "(2) secondary: fewer parameters (always <= 27,144,960; some reduction required).",
+             "Parameter cuts are taken only where they cost little or no loss.", "",
              "Every attempt, in order, including failures. Dev = 1,000 conversations held out from",
              "train.json; validation.json is untouched. Baseline = N=8 GPT, 27,144,960 parameters.",
              "Δ = best dev loss minus the baseline's at the same K (negative is better).", "",
