@@ -48,6 +48,36 @@ This section supersedes the historical MLX protocol below for this branch.
   proposals may be supplied atomically through `inbox/*.json` as
   `{name, frame, spec, parents?, operator?}`; these are fully logged.
 
+### Smaller qualifier — 2026-11-12 04:40 UTC / 8:40 PM PT
+
+At this snapshot, 544 runs completed and two were finishing the confirmation
+batch. The new smallest three-seed qualifier is **10,988,640 parameters**
+(`912e36c73c1914bdb49f3b23e660360ab405c144421659f1650acb7eed514cff`),
+**59.52% below baseline**. This round13 model has width208, eight heads of
+dimension26, 37 applications, middle A3/F7 sharing, FFN768 in the middle and
+1024 at the boundaries. Its dev values are 3.410383672723 / 3.420344207300 /
+3.429595394940, mean **3.420107758321**, versus baseline **3.420729675568**.
+It only wins one paired seed and clears the mean criterion by about0.000622;
+do not describe this as robust or held-out-confirmed. Seeds1/2 took
+307.290/307.710 seconds including process/setup overhead. Selection remains
+unfrozen. Manual inbox additions remain paused; autonomous search continues.
+
+The preceding 11,101,888-parameter round11 model also completed all three seeds,
+with dev3.410054622084 / 3.411918579296 / 3.417858936661, mean3.413277379347.
+Its additional-seed full-run times were209.678/208.220 seconds. A six-run
+train/dev comparison against baseline is saved under
+`search-comparisons/20261112T0433-11m-frontier/`, visually checked and backed up.
+The selection rule remains minimum parameters among three-seed mean qualifiers;
+do not substitute this larger model based on anticipated test performance.
+
+The reviewed metadata-only checkpoint exporter, commit`9ed0461`, is deployed:
+`experiments/cuda/export_minparams_fresh_checkpoints.py --root RUN_ROOT`.
+Invoke it on the server once`final_confirmation.json` exists. It validates
+the exact ten fresh paired5000-step runs and writes`fresh_checkpoint_manifest.json`
+with expected SHA256 hashes and sizes for their`best.pt` files. It reads no
+checkpoint bytes or test outcomes. Copy those exact ten paths locally and
+verify the actual copied bytes against the manifest before final delivery.
+
 ### Confirmation queue update — 2026-11-12 04:20 UTC / 8:20 PM PT
 
 At this snapshot, 506 runs completed, four were running and twelve queued across
