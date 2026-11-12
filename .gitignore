@@ -6,3 +6,7 @@ __pycache__/
 .lambda/
 .venv-cuda/
 .venv-control/
+.pytest_cache/
+# Independent Git worktree; preserve its own history outside this repository.
+/math-reasoning/
+/.worktrees/

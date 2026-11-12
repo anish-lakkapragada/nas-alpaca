@@ -1,5 +1,19 @@
 # Completed NVIDIA minimum-parameter search — November 11, 2026
 
+## Primary checkout — main in the repository root
+
+At the user's request, the NVIDIA code is now checked out directly at
+`/Users/anish/Documents/git-repos/nas` on branch `main`. The redundant
+`.worktrees/nvidia-minparams` worktree was removed after verifying that its commit
+and all 13 frozen source/data hashes matched the root checkout. Its branch
+`research/nvidia-minparams` remains at `6ec3cd4` as a preserved reference.
+
+The former root branch `alpaca-simple-nas` remains at `5741347`; the former `main`
+is preserved as `archive/main-before-nvidia-20261112T072133Z` at `79fd8ef`.
+Other worktrees and all `.lambda` artifacts remain in place. Original local
+ignore rules were preserved, with the prior change also saved in a Git stash and
+`.lambda/migrations/`. No GitHub remote is configured.
+
 ## Current user choice — candidate C, selected after search completion
 
 After the search completed and the independent diagnostic was disclosed, the
@@ -24,7 +38,7 @@ No additional training or evaluation runs were launched for this selection.
   totaling 463,407,498 bytes. SHA256 values match the preexisting diagnostic hashes.
   See `CANDIDATE_C_LOCAL_BACKUP.json` in the artifact root below. Run directories
   contain `best.pt`, `config.json`, summaries, logs and curves.
-- Branch remains `research/nvidia-minparams` in the local `nas` repository;
+- Current branch is `main` in the local `nas` repository root;
   `git remote -v` is empty. No GitHub remote is configured or publication performed.
 
 The independent report was opened only after search completion, following the

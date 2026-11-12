@@ -1,0 +1,56 @@
+{
+  "created_utc": "2026-11-12T07:24:42.505807+00:00",
+  "scope": "Completed afternoon-to-10PM-PT NVIDIA minimum-parameter study on November 11, 2026; no new runs included.",
+  "training_started_utc": "2026-11-11T23:29:52.861440+00:00",
+  "last_training_completed_utc": "2026-11-12T05:35:39.023037+00:00",
+  "architecture_registry_entries": 767,
+  "architecture_status_counts": {
+    "accepted": 760,
+    "rejected": 7
+  },
+  "unique_trained_architectures_including_baseline": 368,
+  "unique_trained_alternatives": 367,
+  "completed_training_runs": 616,
+  "completed_search_runs": 606,
+  "completed_fresh_confirmation_runs": 10,
+  "training_steps_per_run": 5000,
+  "total_optimizer_steps": 3080000,
+  "architectures_by_number_of_search_seeds": {
+    "3": 119,
+    "1": 249
+  },
+  "never_launched_run_entries": 420,
+  "trained_architecture_specifications": {
+    "files": 368,
+    "formatted_json_physical_lines": 67167,
+    "bytes": 1284889,
+    "interpretation": "Expanded configuration text, not independent Python implementations or a measure of manually authored algorithmic code."
+  },
+  "shared_python_source": {
+    "cuda_model.py": {
+      "physical_lines_including_comments_and_blanks": 381,
+      "sha256": "bf2fe606a2eb47a3e54601fc1cef369d1d5a95af5ba7b5817df1fdc39b1f0a4e",
+      "distinct_hashes_in_completed_run_records": 1
+    },
+    "cuda_train.py": {
+      "physical_lines_including_comments_and_blanks": 491,
+      "sha256": "72966a64cc84d0107ed9b24a2e16ae5964c179340c4abdc47108aa329dbd5540",
+      "distinct_hashes_in_completed_run_records": 1
+    },
+    "data.py": {
+      "physical_lines_including_comments_and_blanks": 96,
+      "sha256": "9d3a4ea3b03d110e4179bce99db8bbc8dccb7129f080fdc9020074da2d41bd59",
+      "distinct_hashes_in_completed_run_records": 1
+    },
+    "cuda_minparams_search.py": {
+      "physical_lines_including_comments_and_blanks": 914,
+      "sha256": "a4cac887ab390d752c838d53acb5085b8ff9eb5ca01b8be37ed1b3391a2868a8",
+      "distinct_hashes_in_completed_run_records": 1
+    }
+  },
+  "interpretation": "Architectures vary by model dimensions and JSON specifications. The model, trainer, data pipeline, and search controller each have one recorded source version across all completed runs.",
+  "input_sha256": {
+    "architecture_registry.jsonl": "04805cd24d33e6d3af021c766743211c9027dcb430dce46abbaaee202019af58",
+    "run_registry.jsonl": "cf56df16e4913243bad7b0aabe3186787a595693eadee482d7d806fb2067305c"
+  }
+}
