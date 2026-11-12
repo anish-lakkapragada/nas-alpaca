@@ -180,4 +180,54 @@ This section supersedes the historical MLX protocol below for this branch.
   proposals may be supplied atomically through `inbox/*.json` as
   `{name, frame, spec, parents?, operator?}`; these are fully logged.
 
+### Live handoff snapshot — 2026-11-12 00:59 UTC / 4:59 PM PT
+
+The goal remains active; selection and final confirmation are **not complete**.
+At this snapshot, 194 runs had completed across 144 measured architectures,
+without failed/interrupted/timed-out runs. The controller is PID 5643, supervised
+by workflow PID 5640. Always recheck live service/process state and current
+ledgers rather than assuming this snapshot remains current.
+
+Search baseline seeds 0/1/2: 3.4088462352 / 3.4191115265 / 3.4342312650,
+mean **3.4207296756**. Each finished 5,000 steps (~87 training seconds, ~101
+seconds including process/setup overhead). Completed runs were audited for
+frozen source/data identity and paired training token counts: seed 0 has
+27,974,610 supervised tokens, seed 1 has 27,976,370, seed 2 has 27,989,048.
+
+Smallest qualifying three-seed mean so far: **11,312,256 parameters**, architecture
+`d0a6bb3cf3dc0c558a36ff57fefdc7cf07b8268578f78d5522388b7b460fc939`,
+mean dev **3.4173459045**. Its individual values rounded to seven decimals are
+3.4236843, 3.4182718, and 3.4100817. It loses to baseline
+on seed 0 and has only a thin mean advantage; do not imply all-seed dominance.
+The previously discussed 14,464,896-parameter model
+`3ae00b99f608e4ba9754404a16d1fcf88dfd1ce342c2a58975ace88aaf19adf9`
+has mean dev 3.4093774553 and does beat baseline on all three search seeds.
+These are search results, not fresh-seed or held-out test confirmation.
+
+Additional proposals were committed and submitted through the inbox:
+`experiments/cuda/minparams-proposals/` (16), `minparams-proposals-round2/`
+(16), and `minparams-proposals-round3/` (14). Round 3 targets 9.84–12.30M,
+including complete repeated passes, separate attention/FFN sharing groups,
+matched-initialization learned scalars, and a documented width160/head5×32
+model. All other proposed widths use head dimension64. The expanded user
+authorization allows embedding-width changes with compatible attention heads.
+The autonomous adaptive search also continues after breadth phases.
+
+`nas-minparams-report-20261111.timer` runs the independent, read-only
+`cuda_minparams_report.py` every five minutes, producing `audit-report/`
+with every-run/architecture Markdown logs, summary JSON, and PNG/SVG plots.
+It stops at 06:31 UTC through `nas-minparams-report-cutoff-20261111.timer`.
+Local artifact backups (excluding `.pt` checkpoints) are under
+`/Users/anish/Documents/git-repos/nas/.lambda/artifacts/287cdb48d8e64da3b849dceaaf9b3bc2/cuda/minparams-20261111/`.
+
+After selection freezes, run the separate `cuda_minparams_architecture_report.py
+--root RUN_ROOT` to export exact ASCII execution and independently reconciled
+parameter accounting under `architecture-report/`. This reads no training or
+test examples. The frozen workflow already handles ten fresh training runs,
+held-out scoring, plots and `FINAL_REPORT.json`/`.md` automatically. Verify
+those actual artifacts, successful paired data/step checks, no reselection,
+and complete logs before declaring the goal complete. Back up final reports,
+all logs/curves/specs, and the selected fresh checkpoints locally. Report any
+failure to match test mean honestly, including the existing test-reuse caveat.
+
 ---
