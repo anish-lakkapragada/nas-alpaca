@@ -1,0 +1,373 @@
+{
+  "name": "r5-global-attention125-ffn075-matched-learned-d192n24",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 24,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 832,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.75,
+          "learned": true
+        }
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1280,
+        "act": "silu"
+      },
+      "Fmiddle0": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Flast": {
+        "hidden": 1280,
+        "act": "relu2"
+      }
+    },
+    "name": "r5-global-attention125-ffn075-matched-learned-d192n24",
+    "description": "Exact matched-initialization companion to the preceding fixed model: all attention scalars start at 1.25 and all FFN scalars at 0.75, now learned independently per entry. All 48 scalars count toward parameters. Common parameter initialization and initial forward computation match the fixed-scale model; the comparison tests adaptation from a different authorized residual balance without changing the optimizer."
+  },
+  "parents": [
+    "5d32d3d84e6b2ffd284d3934df988c98f602bbbfad5c29c020359cfbeaaa6bb5"
+  ],
+  "operator": "matched-fixed-learned-nonunit-residual-scales"
+}

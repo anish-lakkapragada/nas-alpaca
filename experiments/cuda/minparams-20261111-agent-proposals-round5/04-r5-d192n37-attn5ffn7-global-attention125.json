@@ -1,0 +1,283 @@
+{
+  "name": "r5-d192n37-attn5ffn7-global-attention125",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 37,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 960,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn",
+        "attn_scale": 1.25
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1536,
+        "act": "silu"
+      },
+      "Fmiddle0": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Flast": {
+        "hidden": 1536,
+        "act": "relu2"
+      }
+    },
+    "name": "r5-d192n37-attn5ffn7-global-attention125",
+    "description": "Strengthen every attention residual by 1.25 while leaving FFNs at 1.0 in the 11.286912M separate-bank model. This keeps 37 applications, unique weights, activations and order unchanged. It tests whether attention shared across more FFN partners needs a different relative branch contribution; the automatic mutation operator currently changes only one entry at a time."
+  },
+  "parents": [
+    "5c44665d3cfca4f45d6075bffb43ccbc640eda565e2bab70730fba7ef6f87278"
+  ],
+  "operator": "coordinated-attention-branch-amplification"
+}

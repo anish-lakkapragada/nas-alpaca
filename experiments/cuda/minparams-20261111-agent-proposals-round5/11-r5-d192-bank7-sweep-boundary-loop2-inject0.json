@@ -1,0 +1,187 @@
+{
+  "name": "r5-d192-bank7-sweep-boundary-loop2-inject0",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 27,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 832,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "loop": 2,
+        "inject": false
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "loop": 2,
+        "inject": false
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "loop": 2,
+        "inject": false
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1280,
+        "act": "silu"
+      },
+      "Fmiddle0": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Flast": {
+        "hidden": 1280,
+        "act": "relu2"
+      }
+    },
+    "name": "r5-d192-bank7-sweep-boundary-loop2-inject0",
+    "description": "On the 11.04M model, apply the first module of each later sharing-bank sweep twice (entries 8,15,22). This raises effective applications from 24 to 27 without changing unique weights. Use ordinary local loops without input reinjection. This is the matching execution/depth control for the input-injected companion. All branch scales stay fixed at 1.0 and the same application-count initialization rule is retained."
+  },
+  "parents": [
+    "6cb75f1930aaa2375786b5ddb0b2bd8f6ff7c50406a48e3c12c9944e74bc5368"
+  ],
+  "operator": "coordinated-sweep-boundary-local-recurrence"
+}
