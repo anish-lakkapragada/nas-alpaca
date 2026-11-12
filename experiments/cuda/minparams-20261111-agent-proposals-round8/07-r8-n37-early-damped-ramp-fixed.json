@@ -1,0 +1,321 @@
+{
+  "name": "r8-n37-early-damped-ramp-fixed",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 37,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 960,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn",
+        "attn_scale": 0.5,
+        "ffn_scale": 0.5
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 0.520833,
+        "ffn_scale": 0.520833
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 0.541667,
+        "ffn_scale": 0.541667
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 0.5625,
+        "ffn_scale": 0.5625
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 0.583333,
+        "ffn_scale": 0.583333
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 0.604167,
+        "ffn_scale": 0.604167
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 0.625,
+        "ffn_scale": 0.625
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 0.645833,
+        "ffn_scale": 0.645833
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 0.666667,
+        "ffn_scale": 0.666667
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 0.6875,
+        "ffn_scale": 0.6875
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 0.708333,
+        "ffn_scale": 0.708333
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 0.729167,
+        "ffn_scale": 0.729167
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 0.75,
+        "ffn_scale": 0.75
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 0.770833,
+        "ffn_scale": 0.770833
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 0.791667,
+        "ffn_scale": 0.791667
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 0.8125,
+        "ffn_scale": 0.8125
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 0.833333,
+        "ffn_scale": 0.833333
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 0.854167,
+        "ffn_scale": 0.854167
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 0.875,
+        "ffn_scale": 0.875
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 0.895833,
+        "ffn_scale": 0.895833
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 0.916667,
+        "ffn_scale": 0.916667
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 0.9375,
+        "ffn_scale": 0.9375
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 0.958333,
+        "ffn_scale": 0.958333
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 0.979167,
+        "ffn_scale": 0.979167
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.0,
+        "ffn_scale": 1.0
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.020833,
+        "ffn_scale": 1.020833
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.041667,
+        "ffn_scale": 1.041667
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.0625,
+        "ffn_scale": 1.0625
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.083333,
+        "ffn_scale": 1.083333
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": 1.104167,
+        "ffn_scale": 1.104167
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": 1.125,
+        "ffn_scale": 1.125
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": 1.145833,
+        "ffn_scale": 1.145833
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": 1.166667,
+        "ffn_scale": 1.166667
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": 1.1875,
+        "ffn_scale": 1.1875
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": 1.208333,
+        "ffn_scale": 1.208333
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": 1.229167,
+        "ffn_scale": 1.229167
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn",
+        "attn_scale": 1.25,
+        "ffn_scale": 1.25
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1408,
+        "act": "silu"
+      },
+      "Flast": {
+        "hidden": 1408,
+        "act": "relu2"
+      },
+      "Fmiddle0": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 960,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 960,
+        "act": "relu2"
+      }
+    },
+    "name": "r8-n37-early-damped-ramp-fixed",
+    "description": "Coarse early-damped residual scales suggested by completed search run r00342-d2d0d08d70-s0. No checkpoint weights are reused. Profile=ramp; learned=False. The matched fixed and learned pair has identical scalar initialization and unchanged common parameter initialization. Only authorized branch scalars change relative to the structural parent; all data, optimizer, dropout, precision and 5000-step training settings stay fixed."
+  },
+  "parents": [
+    "99c5d2fdddc66045354a71b6e0a65afb42651703ba3ad2962625c3d07b653b56",
+    "d2d0d08d70fad3f06257fddc651763c8c040f9989a09c054d67b1945a22c4825"
+  ],
+  "operator": "fixed-depth-profile-residual-scales"
+}

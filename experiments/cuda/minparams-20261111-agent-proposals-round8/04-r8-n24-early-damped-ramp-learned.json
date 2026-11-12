@@ -1,0 +1,373 @@
+{
+  "name": "r8-n24-early-damped-ramp-learned",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 24,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 832,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.5,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.5,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.532609,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.532609,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.565217,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.565217,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.597826,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.597826,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.630435,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.630435,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.663043,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.663043,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.695652,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.695652,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.728261,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.728261,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.76087,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.76087,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.793478,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.793478,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.826087,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.826087,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.858696,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.858696,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.891304,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.891304,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.923913,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.923913,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.956522,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.956522,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 0.98913,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 0.98913,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.021739,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.021739,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.054348,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.054348,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.086957,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.086957,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.119565,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.119565,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.152174,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.152174,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.184783,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.184783,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.217391,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.217391,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.25,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.25,
+          "learned": true
+        }
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1280,
+        "act": "silu"
+      },
+      "Fmiddle0": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Flast": {
+        "hidden": 1280,
+        "act": "relu2"
+      }
+    },
+    "name": "r8-n24-early-damped-ramp-learned",
+    "description": "Coarse early-damped residual scales suggested by completed search run r00342-d2d0d08d70-s0. No checkpoint weights are reused. Profile=ramp; learned=True. The matched fixed and learned pair has identical scalar initialization and unchanged common parameter initialization. Only authorized branch scalars change relative to the structural parent; all data, optimizer, dropout, precision and 5000-step training settings stay fixed."
+  },
+  "parents": [
+    "ae50aae728c9e0f238e9564222f13c033a79cb2f3615a39f8e7628085d41b9ae"
+  ],
+  "operator": "matched-learned-depth-profile"
+}
