@@ -45,12 +45,13 @@ This section supersedes the historical MLX protocol below for this branch.
   proposals may be supplied atomically through `inbox/*.json` as
   `{name, frame, spec, parents?, operator?}`; these are fully logged.
 
-### Live handoff snapshot — 2026-11-12 00:59 UTC / 4:59 PM PT
+### Live search snapshot — 2026-11-12 02:48 UTC / 6:48 PM PT
 
 The goal remains active; selection and final confirmation are **not complete**.
-At this snapshot, 194 runs had completed across 144 measured architectures,
-without failed/interrupted/timed-out runs. The controller is PID 5643, supervised
-by workflow PID 5640. Always recheck live service/process state and current
+At this snapshot, 370 runs had completed across 272 measured architectures,
+with four running and 17 queued, without failed/interrupted/timed-out runs.
+The controller is PID 89072, supervised by workflow PID 89071.
+Always recheck live service/process state and current
 ledgers rather than assuming this snapshot remains current.
 
 Search baseline seeds 0/1/2: 3.4088462352 / 3.4191115265 / 3.4342312650,
@@ -74,8 +75,9 @@ Additional proposals were committed and submitted through the inbox:
 (16), and `minparams-proposals-round3/` (14). Round 3 targets 9.84–12.30M,
 including complete repeated passes, separate attention/FFN sharing groups,
 matched-initialization learned scalars, and a documented width160/head5×32
-model. All other proposed widths use head dimension64. The expanded user
-authorization allows embedding-width changes with compatible attention heads.
+model. Subsequent batches also explore intermediate widths and other compatible
+head counts. The expanded user authorization allows embedding-width changes
+with compatible attention heads.
 The autonomous adaptive search also continues after breadth phases.
 
 `nas-minparams-report-20261111.timer` runs the independent, read-only
@@ -154,6 +156,31 @@ than 64 under the user's expanded width authorization. Every proposal is below
 11,312,256 parameters. Schema and actual model parameter counts were validated
 without consuming a training GPU. The matched fixed/learned non-unit scalar
 pair additionally has identical initial weights and BF16 outputs.
+
+Rounds 7–9 were subsequently committed, validated and accepted by the live
+scheduler. Round 7 (12 proposals, commit `7b75f2d`) compresses the confirmed
+11,458,944-parameter `b8886b5f1c...` sharing schedule, whose three-seed dev mean
+is 3.4057126965. Round 8 (8 proposals, `ab0c09f`) tests coarse residual-scale
+profiles on 24- and 37-application models, with exact matched fixed/learned
+initial weights and BF16 outputs verified on CPU. Its builder is
+`experiments/cuda/build_minparams_round8.py`. Round 9 (12 proposals, `b531727`)
+tests width216/224, compatible head counts, FFN capacity allocation, and shared
+sublayer schedules; ten are below 11M parameters. All actual model counts
+were checked on the PyTorch meta device without initializing CUDA.
+
+The new width224 round6 screens achieved seed0 dev 3.4118703302 at 11,216,576
+parameters and 3.4164891691 at 11,073,216 parameters. Round7 middle960/ends1408
+achieved seed0 dev 3.4125429400 at 11,188,608 parameters. These are single-seed
+screens, not three-seed qualifications. The smallest qualified architecture
+remains the 11,312,256-parameter model described above at this snapshot.
+
+A descriptive nine-run train/dev comparison of baseline, smallest qualifier,
+and the improved nearby parent is saved under
+`search-comparisons/20261112T0225-three-seed-frontier/`; it is explicitly labeled
+as search evidence, not final confirmation. A CPU inspection of a completed
+learned-scalar checkpoint is recorded in
+`search-comparisons/20261112T0230-learned-scalars.json`; its hash was verified
+and no weights were transferred into new training runs.
 
 ---
 
