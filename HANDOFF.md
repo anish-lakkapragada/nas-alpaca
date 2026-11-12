@@ -48,6 +48,32 @@ This section supersedes the historical MLX protocol below for this branch.
   proposals may be supplied atomically through `inbox/*.json` as
   `{name, frame, spec, parents?, operator?}`; these are fully logged.
 
+### Confirmation queue update — 2026-11-12 04:20 UTC / 8:20 PM PT
+
+At this snapshot, 506 runs completed, four were running and twelve queued across
+328 measured architectures. The smallest three-seed qualifier is still the
+11,144,896-parameter round10 model described below; selection is not frozen.
+Rounds13 and14 have finished their seed0 screens. The width208, eight-head
+round13 model has 10,988,640 parameters and seed0 dev CE3.4103836727, but has
+not yet received the other two seeds and is not a qualified result.
+
+Manual inbox additions are paused after round14. The frozen scheduler recomputes
+its confirmation shortlist only at stage boundaries; continually adding screens
+would defer those boundaries. It has now entered another confirmation batch.
+There is no supported inbox option to request seeds1/2 for an existing
+architecture. Do not edit frozen source, ledgers or controller state to force
+priority. Not every promising screen is guaranteed confirmation before the
+deadline. Final claims must refer to the smallest confirmed qualifier, not a
+global optimum or a one-seed screen.
+
+Round13 is commit`6a39621`, round14 is commit`7b8e2d9`; all proposals and
+outcomes are in the registries. Round12's width192 A3/F5 candidates were weak
+(seed0 dev3.445–3.463 for most settings); keep these negative results. Round14
+shrinks the independent final FFN of the established width192 A5/F7 model.
+All completed runs remain full5,000-step runs. Root/search have still not read
+the independent held-out diagnostic scores. The main finalizer, postprocessor
+and delivery waiter remain active; no final result is available yet.
+
 ### Deadline and exploration update — 2026-11-12 03:42 UTC / 7:42 PM PT
 
 The latest user request makes **10 PM PT the finished-result deadline**. This
