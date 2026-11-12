@@ -1,4 +1,52 @@
-# Active NVIDIA minimum-parameter search — November 11, 2026
+# Completed NVIDIA minimum-parameter search — November 11, 2026
+
+## Final outcome — completed before 10 PM PT; held-out criterion NOT met
+
+The experiment is complete. Do not publish the proposed smaller-without-worse-loss
+claim for its frozen winner. The 10,988,640-parameter model is 59.5187% smaller
+than the 27,144,960-parameter baseline, but it lost the final held-out comparison
+on all five fresh paired seeds (100–104).
+
+| Fresh five-seed mean | Baseline | Frozen smaller model |
+|---|---:|---:|
+| Dev CE | 3.404286900126 | 3.419348275735 |
+| Test CE | 3.332142296131 | 3.358821600617 |
+| Process wall seconds per 5,000-step run | 91.12 | 308.79 |
+
+Test difference (smaller minus baseline): +0.026679304486, paired bootstrap
+95% interval [+0.013141114014, +0.038331159356]. The search-seed mean had narrowly
+qualified (3.420107758321 versus 3.420729675568); that result did not hold up on
+fresh seeds. Selection was not changed in response to fresh dev or test results.
+
+Selection froze at 05:25:17 UTC. The last fresh training run finished 05:35:39;
+the final report completed 05:37:05 and delivery packaging completed 05:38:42,
+all before the 06:00 UTC / 10 PM PT deadline. There are 616 completed training
+runs (606 search plus ten fresh), each exactly 5,000 steps, across 368 trained
+architectures. All 420 additional ledger entries were never admitted: no start
+timestamp, PID or attempt directory. They are not failed training runs.
+
+The main workflow, postprocessor and delivery services exited successfully.
+No GPU compute processes remain. The Lambda instance was left running as
+requested. The passing integrity audit recomputed exact test means/differences;
+its one warning says bootstrap draws were not independently rerun. Integrity
+passing does not mean the candidate passed the held-out loss criterion.
+
+Final evidence is in RUN_ROOT/FINAL_DELIVERY.md and .json, with complete run and
+architecture logs, diagrams, curves and the audit. All 33 linked artifact hashes
+were verified remotely and in the local copy. All ten fresh best-dev checkpoints
+were copied locally (762,928,990 bytes total) and content-hash verified at
+05:48:33 UTC; see LOCAL_CHECKPOINT_BACKUP.json and fresh_checkpoint_manifest.json.
+Local artifacts: /Users/anish/Documents/git-repos/nas/.lambda/artifacts/
+287cdb48d8e64da3b849dceaaf9b3bc2/cuda/minparams-20261111/.
+
+Both test-access caveats remain in the final report: reuse of the earlier-study
+test split and the separate twelve-checkpoint diagnostic before selection froze.
+Root/search never read the independent diagnostic scores during this search;
+they were not pooled with the final five-seed comparison. Raw per-conversation
+arrays remain on the server and were not copied locally. No architecture
+reselection or additional training followed the final result.
+
+The following sections are historical protocol and progress snapshots.
 
 This section supersedes the historical MLX protocol below for this branch.
 
