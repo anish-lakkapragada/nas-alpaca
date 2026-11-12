@@ -1,0 +1,235 @@
+{
+  "name": "r9-d224-n37-attn4ffn4-middle704-phase-cycled",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 37,
+    "d_model": 224,
+    "n_heads": 4,
+    "d_ff": 704,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1024,
+        "act": "silu"
+      },
+      "Flast": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle0": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 704,
+        "act": "relu2"
+      }
+    },
+    "name": "r9-d224-n37-attn4ffn4-middle704-phase-cycled",
+    "description": "Authorized main CUDA search seed 0: width224, 37 applications, heads4x56, middle attention/FFN banks3/5, middle FFN768 and boundary FFN1024 reached dev CE 3.411870330160877 and diagnostic train CE 2.761565312689088, at best step4750. The matched-width bank4/4 parent reached dev3.416489169101809 and train2.773140408073652, best step5000. Baseline seed0 dev CE is3.4088462352. These are single-seed screening results, not qualified candidates or held-out results. Use the same parameter tensor shapes, widths and37-entry shape of the aligned-bank control, but advance the attention-bank phase by one after each four-FFN sweep. This visits16 distinct middle pairs rather than4 while retaining the same first-appearance initialization order. This tests recombination separately from the extra FFN capacity in the bank3/5 parent. Keep37 paired FFN-to-attention applications, independent first/last sublayer weights, first-FFN SiLU and all other FFNs ReLU2, and fixed unit residual scales. The common initialization policy, vocabulary32768, context1024, dropout0.1, fixed data and5000-step recipe remain unchanged. No trained weights or learned scalar values are reused."
+  },
+  "parents": [
+    "276da29f2c16b634d61ddf051f552127400cb9351f496616be40c0434b850c38",
+    "ff30f7f6189afb551b27002bfcddc937bbb1ffde569321863097241b80b2c6e5"
+  ],
+  "operator": "coordinate-attention-phase-per-ffn-sweep"
+}
