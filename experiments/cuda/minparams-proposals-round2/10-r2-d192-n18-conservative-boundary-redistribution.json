@@ -1,0 +1,187 @@
+{
+  "name": "r2-d192-n18-conservative-boundary-redistribution",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 18,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 768,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A8",
+        "ffn": "F8",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A9",
+        "ffn": "F9",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A10",
+        "ffn": "F10",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A11",
+        "ffn": "F11",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A12",
+        "ffn": "F12",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A13",
+        "ffn": "F13",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A14",
+        "ffn": "F14",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A15",
+        "ffn": "F15",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A16",
+        "ffn": "F16",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A17",
+        "ffn": "F17",
+        "order": "attn_ffn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F1": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F2": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F3": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F4": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F5": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F6": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F7": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F8": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F9": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F10": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F11": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F12": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F13": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F14": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F15": {
+        "hidden": 704,
+        "act": "relu2"
+      },
+      "F16": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F17": {
+        "hidden": 1024,
+        "act": "relu2"
+      }
+    },
+    "name": "r2-d192-n18-conservative-boundary-redistribution",
+    "description": "Live standard 18-layer,width 192,FFN768 ReLU2 qualified on three search seeds with mean dev 3.409377 versus baseline3.420730. Preserve depth and normal attention-first ordering; redistribute a nearly unchanged FFN budget toward the first/last two layers. Four FFNs grow to 1024 while fourteen shrink to 704. No new sharing or activation change."
+  },
+  "parents": [
+    "3ae00b99f608e4ba9754404a16d1fcf88dfd1ce342c2a58975ace88aaf19adf9"
+  ],
+  "operator": "live-cuda-qualified-192-local-ffn-allocation"
+}

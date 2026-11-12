@@ -1,0 +1,209 @@
+{
+  "name": "r2-d192-n24-eight-distant-block-ties",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 24,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 768,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A8",
+        "ffn": "F8",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A9",
+        "ffn": "F9",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A10",
+        "ffn": "F10",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A11",
+        "ffn": "F11",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F6",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F7",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A8",
+        "ffn": "F8",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A9",
+        "ffn": "F9",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A10",
+        "ffn": "F10",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A11",
+        "ffn": "F11",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A20",
+        "ffn": "F20",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A21",
+        "ffn": "F21",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A22",
+        "ffn": "F22",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A23",
+        "ffn": "F23",
+        "order": "attn_ffn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F1": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F2": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F3": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F4": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F5": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F6": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F7": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F8": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F9": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F10": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F11": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F20": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F21": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F22": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "F23": {
+        "hidden": 768,
+        "act": "relu2"
+      }
+    },
+    "name": "r2-d192-n24-eight-distant-block-ties",
+    "description": "Preserve24 executed applications of the live192-wide24-layer model while sharing both attention and FFN for eight nonadjacent middle pairs. First/final boundary modules remain independent; all FFNs stay768-wide ReLU2 and all blocks stay attention-first. This stronger compression targets below14 M while preserving the measured useful depth."
+  },
+  "parents": [
+    "2cd2a82e956691c3334cf98d3fac5055e33b18ca24ca2c609041e5a2e9278d5d"
+  ],
+  "operator": "live-cuda-deep192-combined-sharing"
+}

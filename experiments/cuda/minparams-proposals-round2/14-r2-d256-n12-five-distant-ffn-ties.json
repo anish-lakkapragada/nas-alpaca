@@ -1,0 +1,113 @@
+{
+  "name": "r2-d256-n12-five-distant-ffn-ties",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 12,
+    "d_model": 256,
+    "n_heads": 4,
+    "d_ff": 1024,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "A0",
+        "ffn": "F0",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A1",
+        "ffn": "F1",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A2",
+        "ffn": "F2",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A3",
+        "ffn": "F3",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A4",
+        "ffn": "F4",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A5",
+        "ffn": "F5",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A6",
+        "ffn": "F1",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A7",
+        "ffn": "F2",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A8",
+        "ffn": "F3",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A9",
+        "ffn": "F4",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A10",
+        "ffn": "F5",
+        "order": "attn_ffn"
+      },
+      {
+        "attn": "A11",
+        "ffn": "F11",
+        "order": "attn_ffn"
+      }
+    ],
+    "ffns": {
+      "F0": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F1": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F2": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F3": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F4": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F5": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "F11": {
+        "hidden": 1024,
+        "act": "relu2"
+      }
+    },
+    "name": "r2-d256-n12-five-distant-ffn-ties",
+    "description": "The live12-layer,width 256,FFN1024 model achieved seed0 dev 3.370026. Retain all 12 attention modules and independent first/last FFNs, but share five interior FFN pairs at distance five. This tests whether the observed loss margin supports a smaller model without shrinking residual or hidden width."
+  },
+  "parents": [
+    "1787655ff6f1f4a46ec5cb1ca3d0be46fecf42173abfd626daf09bba34c36cff"
+  ],
+  "operator": "live-cuda-deep256-ffn-sharing"
+}

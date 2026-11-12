@@ -1,0 +1,157 @@
+{
+  "name": "r2-shared-d256-n20-bank6-middle768-ends1280",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 20,
+    "d_model": 256,
+    "n_heads": 4,
+    "d_ff": 768,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1280,
+        "act": "silu"
+      },
+      "Fmiddle0": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Flast": {
+        "hidden": 1280,
+        "act": "relu2"
+      }
+    },
+    "name": "r2-shared-d256-n20-bank6-middle768-ends1280",
+    "description": "The live CUDA parent d256/n16 with seven shared middle modules and independent wide ends achieved mean dev CE 3.359938 across seeds 0/1/2 versus baseline 3.420730; this provides a measured loss margin for compression. Keep the exact unique weights of the sixteen-layer six-module proposal but apply the middle bank three times, for twenty total applications. More computation is explicitly logged; training remains 5000 steps."
+  },
+  "parents": [
+    "d97c03227af7e05b13c93cad7b06387642d1ba44fc847a125ba9d61b30462c30"
+  ],
+  "operator": "live-cuda-shared-middle-compression"
+}
