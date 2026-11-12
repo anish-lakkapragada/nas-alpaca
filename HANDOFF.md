@@ -29,7 +29,8 @@ This section supersedes the historical MLX protocol below for this branch.
   freezes selection, performs fresh-seed confirmation, and writes the report.
   Laptop connectivity is not required. No API or SSH secrets were copied to
   the server.
-- Search cutoff: **9:30 PM PT**. Final confirmation/report target: **10:25 PM
+- Search cutoff: **10:00 PM PT**, extended from 9:30 PM at the user's request.
+  Final confirmation/report target: **10:25 PM
   PT**. Server timer `nas-minparams-20261111-training-cutoff.timer` stops this
   training service at **10:30 PM PT / 2026-11-12 06:30 UTC**. This does not
   terminate the rental; the user has not authorized termination of this instance.
@@ -118,6 +119,28 @@ Round 4 adds 16 proposals under
 11,312,256 parameters. They were committed and accepted by the live scheduler
 after frozen CUDA schema/count validation, including matched fixed/learned
 scalar pairs, FFN capacity redistribution, and shared-layer execution schedules.
+
+### Timing update in progress — 2026-11-12 01:46 UTC
+
+The user asked to keep running until 10 PM PT while away. The stated
+interpretation is a 10 PM **search** cutoff, followed by final confirmation and
+the unchanged 10:30 PM report deadline. The service override now specifies
+`--training-cutoff 2026-11-12T06:00:00Z`; the existing controller still uses the
+old cutoff until its scheduled clean restart. Do not assume this transition
+has completed without checking the actual process arguments and new plan.
+
+Independent service `nas-minparams-cutoff-update-20261111.service` (initial
+PID 78297) runs the reviewed one-off
+`experiments/cuda/drain_minparams_for_cutoff.py`. It waits for all queued jobs
+and inbox files to clear, pauses scheduler 5643, lets current trainers finish
+their full 5,000 steps, then sends TERM/CONT. Workflow 5640 exits and its
+existing Restart=on-failure policy loads the new cutoff. The helper never
+signals trainers, preserves old plan/timeline under `operations/`, and has
+bounded recovery plus a separate CONT rescue process. Its service uses
+KillMode=process. Do not admit the prepared round5 proposals until this timing
+transition completes, to avoid delaying the empty-queue boundary. Verify the
+new workflow/controller PIDs, 06:00 cutoff, completed draining runs, and unchanged
+frozen source/data before considering the timing update done.
 
 ---
 
