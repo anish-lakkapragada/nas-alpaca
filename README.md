@@ -1,4 +1,4 @@
-# Neural Architecture Search on Stanford Alpaca
+# Codex-driven Architecture Search on Stanford Alpaca
 
 ![Baseline architecture (27.14M parameters) and Codex-optimized architecture (11.46M parameters), showing the full execution order and shared attention and FFN weights.](figures/baseline_vs_codex_architecture.png)
 
