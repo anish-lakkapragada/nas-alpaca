@@ -121,6 +121,7 @@ def main():
     parser.add_argument('--workflow-pid', type=int, required=True)
     parser.add_argument('--workflow-unit', default='nas-minparams-20261111.service')
     parser.add_argument('--new-training-cutoff', default='2026-11-12T06:00:00Z')
+    parser.add_argument('--expected-final-deadline', default='2026-11-12T06:30:00Z')
     parser.add_argument('--wait-timeout', type=float, default=3600)
     parser.add_argument('--drain-timeout', type=float, default=1000)
     parser.add_argument('--execute', action='store_true', help='otherwise inspect and write an operational record only')
@@ -138,8 +139,8 @@ def main():
     unit = subprocess.check_output(['systemctl', 'show', args.workflow_unit, '--property=ExecStart', '--value'], text=True, timeout=10)
     if ('--training-cutoff ' + args.new_training_cutoff) not in unit and ('--training-cutoff=' + args.new_training_cutoff) not in unit:
         raise RuntimeError('workflow ExecStart does not contain the authorized new cutoff')
-    if '--deadline 2026-11-12T06:30:00Z' not in unit:
-        raise RuntimeError('workflow final deadline is not the unchanged 06:30Z')
+    if ('--deadline ' + args.expected_final_deadline) not in unit and ('--deadline=' + args.expected_final_deadline) not in unit:
+        raise RuntimeError('workflow final deadline differs from the explicitly expected deadline')
     unit_pid = int(subprocess.check_output(['systemctl', 'show', args.workflow_unit, '--property=MainPID', '--value'], text=True, timeout=10).strip())
     if unit_pid != args.workflow_pid:
         raise RuntimeError('workflow unit MainPID differs from the verified workflow PID')
@@ -149,7 +150,8 @@ def main():
     plan_bytes = (root / 'plan.json').read_bytes()
     state = dict(started_utc=utc(), helper_pid=os.getpid(), root=str(root), scheduler=scheduler,
                  workflow=workflow, workflow_unit=args.workflow_unit, new_exec_start=unit.strip(),
-                 new_training_cutoff=args.new_training_cutoff, old_plan=json.loads(plan_bytes),
+                 new_training_cutoff=args.new_training_cutoff,
+                 expected_final_deadline=args.expected_final_deadline, old_plan=json.loads(plan_bytes),
                  old_plan_sha256=hashlib.sha256(plan_bytes).hexdigest(), timeline=[])
     def event(name, **details):
         state['timeline'].append(dict(time_utc=utc(), event=name, **details))
