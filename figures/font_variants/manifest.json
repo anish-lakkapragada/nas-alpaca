@@ -1,0 +1,61 @@
+{
+  "comparison": "comparison.png",
+  "comparison_content": "top sections of each full figure",
+  "variants": [
+    {
+      "number": 1,
+      "font_family": "Times New Roman",
+      "stem": "01-times-new-roman",
+      "preview": "/var/folders/tw/b1rr00953xl06n586nsgj1vc0000gn/T/nas-01-times-new-roman-preview.png",
+      "png_dimensions": [
+        8100,
+        13773
+      ],
+      "codex_accent_color": "#1557B0"
+    },
+    {
+      "number": 2,
+      "font_family": "Baskerville",
+      "stem": "02-baskerville",
+      "preview": "/var/folders/tw/b1rr00953xl06n586nsgj1vc0000gn/T/nas-02-baskerville-preview.png",
+      "png_dimensions": [
+        8100,
+        13773
+      ],
+      "codex_accent_color": "#1557B0"
+    },
+    {
+      "number": 3,
+      "font_family": "Charter",
+      "stem": "03-charter",
+      "preview": "/var/folders/tw/b1rr00953xl06n586nsgj1vc0000gn/T/nas-03-charter-preview.png",
+      "png_dimensions": [
+        8100,
+        13773
+      ],
+      "codex_accent_color": "#1557B0"
+    },
+    {
+      "number": 4,
+      "font_family": "Helvetica Neue",
+      "stem": "04-helvetica-neue",
+      "preview": "/var/folders/tw/b1rr00953xl06n586nsgj1vc0000gn/T/nas-04-helvetica-neue-preview.png",
+      "png_dimensions": [
+        8100,
+        13773
+      ],
+      "codex_accent_color": "#1557B0"
+    },
+    {
+      "number": 5,
+      "font_family": "Avenir Next",
+      "stem": "05-avenir-next",
+      "preview": "/var/folders/tw/b1rr00953xl06n586nsgj1vc0000gn/T/nas-05-avenir-next-preview.png",
+      "png_dimensions": [
+        8100,
+        13773
+      ],
+      "codex_accent_color": "#1557B0"
+    }
+  ]
+}

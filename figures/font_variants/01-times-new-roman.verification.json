@@ -1,0 +1,1572 @@
+{
+  "baseline_parameters": 27144960,
+  "candidate_c_parameters": 11458944,
+  "parameter_reduction_percent": 57.78610836044702,
+  "baseline_blocks": 8,
+  "candidate_c_blocks": 37,
+  "attention_palette": {
+    "Attn 0": "#F04B52",
+    "Attn 1": "#E7BB16",
+    "Attn 2": "#35BD77",
+    "Attn 3": "#3496EB",
+    "Attn 4": "#B65ACB"
+  },
+  "ffn_palette": {
+    "FFN 0": "#F04B52",
+    "FFN 1": "#FF9B35",
+    "FFN 2": "#F0D83A",
+    "FFN 3": "#35BD77",
+    "FFN 4": "#44ACF0",
+    "FFN 5": "#7775E7",
+    "FFN 6": "#C971DA"
+  },
+  "module_type_styles": {
+    "attn": "pale fill, rounded corners, colored outline, dark lettering",
+    "ffn": "strong rainbow fill, nearly square corners, dark lettering",
+    "scope": "candidate C; baseline uses white attention and dark space-gray FFN blocks"
+  },
+  "architecture_title_font_size": 60,
+  "parameter_count_font_size": 60,
+  "codex_accent_color": "#1557B0",
+  "codex_title_spans": [
+    {
+      "text": "Codex",
+      "color": "#1557B0"
+    },
+    {
+      "text": "-optimized Architecture",
+      "color": "#000000"
+    }
+  ],
+  "codex_parameter_count_color": "#1557B0",
+  "codex_title_alignment": "shared baseline",
+  "codex_title_baseline_y": 124.0,
+  "codex_title_contrast_ratio": 6.9488524214641885,
+  "module_label_font_size": 36,
+  "shared_weight_font_size": 30,
+  "architecture_body_widths": {
+    "baseline": 920,
+    "codex": 920
+  },
+  "architecture_column_widths": {
+    "baseline": 1350.0,
+    "codex": 1350.0
+  },
+  "legend_column": false,
+  "order_swap_callout": false,
+  "order_swap_row_highlight": true,
+  "baseline_palette": {
+    "attn": {
+      "fill": "#FFFFFF",
+      "text": "#000000"
+    },
+    "ffn": {
+      "fill": "#28282D",
+      "text": "#FFFFFF"
+    }
+  },
+  "shared_weight_labels": [
+    {
+      "module": "Fmiddle0",
+      "family": "FFN",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle1",
+      "family": "FFN",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle2",
+      "family": "FFN",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle3",
+      "family": "FFN",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle4",
+      "family": "FFN",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle5",
+      "family": "FFN",
+      "index": 5,
+      "math": "$W_{5}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle6",
+      "family": "FFN",
+      "index": 6,
+      "math": "$W_{6}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle0",
+      "family": "FFN",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle1",
+      "family": "FFN",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle2",
+      "family": "FFN",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle3",
+      "family": "FFN",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle4",
+      "family": "FFN",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle5",
+      "family": "FFN",
+      "index": 5,
+      "math": "$W_{5}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle6",
+      "family": "FFN",
+      "index": 6,
+      "math": "$W_{6}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle0",
+      "family": "FFN",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle1",
+      "family": "FFN",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle2",
+      "family": "FFN",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle3",
+      "family": "FFN",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle4",
+      "family": "FFN",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle5",
+      "family": "FFN",
+      "index": 5,
+      "math": "$W_{5}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle6",
+      "family": "FFN",
+      "index": 6,
+      "math": "$W_{6}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle0",
+      "family": "FFN",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle1",
+      "family": "FFN",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle2",
+      "family": "FFN",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle3",
+      "family": "FFN",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle4",
+      "family": "FFN",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle5",
+      "family": "FFN",
+      "index": 5,
+      "math": "$W_{5}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle6",
+      "family": "FFN",
+      "index": 6,
+      "math": "$W_{6}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle0",
+      "family": "FFN",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle1",
+      "family": "FFN",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Amiddle0",
+      "family": "Attn",
+      "index": 0,
+      "math": "$W_{0}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle2",
+      "family": "FFN",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Fmiddle3",
+      "family": "FFN",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle1",
+      "family": "Attn",
+      "index": 1,
+      "math": "$W_{1}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle4",
+      "family": "FFN",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle2",
+      "family": "Attn",
+      "index": 2,
+      "math": "$W_{2}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle5",
+      "family": "FFN",
+      "index": 5,
+      "math": "$W_{5}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle3",
+      "family": "Attn",
+      "index": 3,
+      "math": "$W_{3}^{\\mathrm{Attn}}$"
+    },
+    {
+      "module": "Fmiddle6",
+      "family": "FFN",
+      "index": 6,
+      "math": "$W_{6}^{\\mathrm{FFN}}$"
+    },
+    {
+      "module": "Amiddle4",
+      "family": "Attn",
+      "index": 4,
+      "math": "$W_{4}^{\\mathrm{Attn}}$"
+    }
+  ],
+  "candidate_c_execution_order": [
+    {
+      "block": 1,
+      "execution_order": [
+        "Ffirst",
+        "Afirst"
+      ]
+    },
+    {
+      "block": 2,
+      "execution_order": [
+        "Fmiddle0",
+        "Amiddle0"
+      ]
+    },
+    {
+      "block": 3,
+      "execution_order": [
+        "Fmiddle1",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 4,
+      "execution_order": [
+        "Fmiddle2",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 5,
+      "execution_order": [
+        "Fmiddle3",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 6,
+      "execution_order": [
+        "Fmiddle4",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 7,
+      "execution_order": [
+        "Fmiddle5",
+        "Amiddle0"
+      ]
+    },
+    {
+      "block": 8,
+      "execution_order": [
+        "Fmiddle6",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 9,
+      "execution_order": [
+        "Fmiddle0",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 10,
+      "execution_order": [
+        "Fmiddle1",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 11,
+      "execution_order": [
+        "Fmiddle2",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 12,
+      "execution_order": [
+        "Fmiddle3",
+        "Amiddle0"
+      ]
+    },
+    {
+      "block": 13,
+      "execution_order": [
+        "Fmiddle4",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 14,
+      "execution_order": [
+        "Fmiddle5",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 15,
+      "execution_order": [
+        "Fmiddle6",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 16,
+      "execution_order": [
+        "Fmiddle0",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 17,
+      "execution_order": [
+        "Fmiddle1",
+        "Amiddle0"
+      ]
+    },
+    {
+      "block": 18,
+      "execution_order": [
+        "Fmiddle2",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 19,
+      "execution_order": [
+        "Fmiddle3",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 20,
+      "execution_order": [
+        "Fmiddle4",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 21,
+      "execution_order": [
+        "Fmiddle5",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 22,
+      "execution_order": [
+        "Fmiddle6",
+        "Amiddle0"
+      ]
+    },
+    {
+      "block": 23,
+      "execution_order": [
+        "Fmiddle0",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 24,
+      "execution_order": [
+        "Fmiddle1",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 25,
+      "execution_order": [
+        "Fmiddle2",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 26,
+      "execution_order": [
+        "Fmiddle3",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 27,
+      "execution_order": [
+        "Fmiddle4",
+        "Amiddle0"
+      ]
+    },
+    {
+      "block": 28,
+      "execution_order": [
+        "Fmiddle5",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 29,
+      "execution_order": [
+        "Fmiddle6",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 30,
+      "execution_order": [
+        "Fmiddle0",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 31,
+      "execution_order": [
+        "Fmiddle1",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 32,
+      "execution_order": [
+        "Amiddle0",
+        "Fmiddle2"
+      ]
+    },
+    {
+      "block": 33,
+      "execution_order": [
+        "Fmiddle3",
+        "Amiddle1"
+      ]
+    },
+    {
+      "block": 34,
+      "execution_order": [
+        "Fmiddle4",
+        "Amiddle2"
+      ]
+    },
+    {
+      "block": 35,
+      "execution_order": [
+        "Fmiddle5",
+        "Amiddle3"
+      ]
+    },
+    {
+      "block": 36,
+      "execution_order": [
+        "Fmiddle6",
+        "Amiddle4"
+      ]
+    },
+    {
+      "block": 37,
+      "execution_order": [
+        "Flast",
+        "Alast"
+      ]
+    }
+  ],
+  "candidate_c_activation_edges": [
+    {
+      "source": [
+        1,
+        "ffn"
+      ],
+      "target": [
+        1,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        1,
+        "attn"
+      ],
+      "target": [
+        2,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        2,
+        "ffn"
+      ],
+      "target": [
+        2,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        2,
+        "attn"
+      ],
+      "target": [
+        3,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        3,
+        "ffn"
+      ],
+      "target": [
+        3,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        3,
+        "attn"
+      ],
+      "target": [
+        4,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        4,
+        "ffn"
+      ],
+      "target": [
+        4,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        4,
+        "attn"
+      ],
+      "target": [
+        5,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        5,
+        "ffn"
+      ],
+      "target": [
+        5,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        5,
+        "attn"
+      ],
+      "target": [
+        6,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        6,
+        "ffn"
+      ],
+      "target": [
+        6,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        6,
+        "attn"
+      ],
+      "target": [
+        7,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        7,
+        "ffn"
+      ],
+      "target": [
+        7,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        7,
+        "attn"
+      ],
+      "target": [
+        8,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        8,
+        "ffn"
+      ],
+      "target": [
+        8,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        8,
+        "attn"
+      ],
+      "target": [
+        9,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        9,
+        "ffn"
+      ],
+      "target": [
+        9,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        9,
+        "attn"
+      ],
+      "target": [
+        10,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        10,
+        "ffn"
+      ],
+      "target": [
+        10,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        10,
+        "attn"
+      ],
+      "target": [
+        11,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        11,
+        "ffn"
+      ],
+      "target": [
+        11,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        11,
+        "attn"
+      ],
+      "target": [
+        12,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        12,
+        "ffn"
+      ],
+      "target": [
+        12,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        12,
+        "attn"
+      ],
+      "target": [
+        13,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        13,
+        "ffn"
+      ],
+      "target": [
+        13,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        13,
+        "attn"
+      ],
+      "target": [
+        14,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        14,
+        "ffn"
+      ],
+      "target": [
+        14,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        14,
+        "attn"
+      ],
+      "target": [
+        15,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        15,
+        "ffn"
+      ],
+      "target": [
+        15,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        15,
+        "attn"
+      ],
+      "target": [
+        16,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        16,
+        "ffn"
+      ],
+      "target": [
+        16,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        16,
+        "attn"
+      ],
+      "target": [
+        17,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        17,
+        "ffn"
+      ],
+      "target": [
+        17,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        17,
+        "attn"
+      ],
+      "target": [
+        18,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        18,
+        "ffn"
+      ],
+      "target": [
+        18,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        18,
+        "attn"
+      ],
+      "target": [
+        19,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        19,
+        "ffn"
+      ],
+      "target": [
+        19,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        19,
+        "attn"
+      ],
+      "target": [
+        20,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        20,
+        "ffn"
+      ],
+      "target": [
+        20,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        20,
+        "attn"
+      ],
+      "target": [
+        21,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        21,
+        "ffn"
+      ],
+      "target": [
+        21,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        21,
+        "attn"
+      ],
+      "target": [
+        22,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        22,
+        "ffn"
+      ],
+      "target": [
+        22,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        22,
+        "attn"
+      ],
+      "target": [
+        23,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        23,
+        "ffn"
+      ],
+      "target": [
+        23,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        23,
+        "attn"
+      ],
+      "target": [
+        24,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        24,
+        "ffn"
+      ],
+      "target": [
+        24,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        24,
+        "attn"
+      ],
+      "target": [
+        25,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        25,
+        "ffn"
+      ],
+      "target": [
+        25,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        25,
+        "attn"
+      ],
+      "target": [
+        26,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        26,
+        "ffn"
+      ],
+      "target": [
+        26,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        26,
+        "attn"
+      ],
+      "target": [
+        27,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        27,
+        "ffn"
+      ],
+      "target": [
+        27,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        27,
+        "attn"
+      ],
+      "target": [
+        28,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        28,
+        "ffn"
+      ],
+      "target": [
+        28,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        28,
+        "attn"
+      ],
+      "target": [
+        29,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        29,
+        "ffn"
+      ],
+      "target": [
+        29,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        29,
+        "attn"
+      ],
+      "target": [
+        30,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        30,
+        "ffn"
+      ],
+      "target": [
+        30,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        30,
+        "attn"
+      ],
+      "target": [
+        31,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        31,
+        "ffn"
+      ],
+      "target": [
+        31,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        31,
+        "attn"
+      ],
+      "target": [
+        32,
+        "attn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        32,
+        "attn"
+      ],
+      "target": [
+        32,
+        "ffn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        32,
+        "ffn"
+      ],
+      "target": [
+        33,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        33,
+        "ffn"
+      ],
+      "target": [
+        33,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        33,
+        "attn"
+      ],
+      "target": [
+        34,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        34,
+        "ffn"
+      ],
+      "target": [
+        34,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        34,
+        "attn"
+      ],
+      "target": [
+        35,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        35,
+        "ffn"
+      ],
+      "target": [
+        35,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        35,
+        "attn"
+      ],
+      "target": [
+        36,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        36,
+        "ffn"
+      ],
+      "target": [
+        36,
+        "attn"
+      ],
+      "kind": "within_row"
+    },
+    {
+      "source": [
+        36,
+        "attn"
+      ],
+      "target": [
+        37,
+        "ffn"
+      ],
+      "kind": "between_rows"
+    },
+    {
+      "source": [
+        37,
+        "ffn"
+      ],
+      "target": [
+        37,
+        "attn"
+      ],
+      "kind": "within_row"
+    }
+  ],
+  "candidate_c_entry": "embedding output to block 1 FFN in",
+  "candidate_c_exit": "block 37 Attn out to final LayerNorm",
+  "png_dimensions": [
+    8100,
+    13773
+  ],
+  "font_family": "Times New Roman",
+  "font_files": {
+    "normal": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+    "bold": "/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf"
+  },
+  "weight_math_font": "STIXGeneral",
+  "text_within_canvas": true,
+  "capsule_labels_fit": true,
+  "minimum_module_label_contrast_ratio": 7.272030935490693,
+  "preview": "/var/folders/tw/b1rr00953xl06n586nsgj1vc0000gn/T/nas-01-times-new-roman-preview.png"
+}

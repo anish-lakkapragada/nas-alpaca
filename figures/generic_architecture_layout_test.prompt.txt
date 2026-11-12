@@ -1,0 +1,4 @@
+Generation: built-in image_gen tool, new abstract image with no reference image.
+Final export: resized to 8100 x 13773 pixels using macOS sips.
+
+Create a completely generic abstract raster image for testing a very large image upload. Portrait aspect ratio 2700:4591. Fill the whole canvas with random colorful geometric shapes, playful squiggles, circles, triangles, scattered dots, and broad areas of solid color on a light background. Crisp sharp edges, no blur. Use vivid blue, pink, yellow, green and purple. Absolutely no text, letters, numbers, symbols, logos, charts, diagrams, neural networks, architecture content, code, or technical information. This should look like random cheerful abstract wallpaper and contain no meaningful information. Use the highest available resolution.
