@@ -6,7 +6,7 @@ import sys
 
 PROJECT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT))
-from cuda_minparams_search import architecture_hash, parameter_count, validate
+from nas.cuda_minparams_search import architecture_hash, parameter_count, validate
 
 EVIDENCE = "d2d0d08d70fad3f06257fddc651763c8c040f9989a09c054d67b1945a22c4825"
 OUT = PROJECT / "experiments/cuda/minparams-20261111-agent-proposals-round8"

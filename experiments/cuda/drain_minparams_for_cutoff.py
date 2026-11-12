@@ -51,7 +51,8 @@ def argument(argv, name):
 
 def validate_identity(info, script, root):
     if (not info or info['uid'] != os.getuid() or info['state'] == 'Z'
-            or not any(Path(item).name == script for item in info['argv'])):
+            or not any(Path(item).name == script or item == 'nas.' + Path(script).stem
+                       for item in info['argv'])):
         raise RuntimeError(f'PID identity is not the expected live {script}')
     value = argument(info['argv'], '--root') or argument(info['argv'], '--out')
     if value is None or Path(value).resolve() != root:
@@ -221,7 +222,7 @@ def main():
             if child['state']=='Z':
                 row = next((r for r in registry.values() if r.get('pid')==child['pid']), None)
             else:
-                if not any(Path(arg).name=='cuda_train.py' for arg in child['argv']) or out is None:
+                if not any((Path(arg).name=='cuda_train.py' or arg=='nas.cuda_train') for arg in child['argv']) or out is None:
                     raise RuntimeError(f'unexpected direct child {child["pid"]}; refusing drain')
                 row = paths.get(str(Path(out).resolve()))
             if row is None:
