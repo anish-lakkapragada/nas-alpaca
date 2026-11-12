@@ -1,0 +1,113 @@
+{
+  "name": "r4-d192-n24-mid832-fixed-grouped-local-loops",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 24,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 832,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "loop": 4
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "loop": 3
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "loop": 3
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "loop": 3
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "loop": 3
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn",
+        "loop": 3
+      },
+      {
+        "attn": "Amiddle6",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn",
+        "loop": 3
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1408,
+        "act": "silu"
+      },
+      "Flast": {
+        "hidden": 1408,
+        "act": "relu2"
+      },
+      "Fmiddle0": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 832,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 832,
+        "act": "relu2"
+      }
+    },
+    "name": "r4-d192-n24-mid832-fixed-grouped-local-loops",
+    "description": "Current CUDA evidence: the 11,312,256-parameter width192/n24/bank7/middle896/ends1408 parent has three-seed mean dev CE 3.4173459 versus baseline 3.4207297. Its margin is thin; all proposals require new paired dev confirmation. Use exactly the fixed mid832 control unique parameters and 24 effective applications, but group repeated applications locally: middle module0 loops four times and modules1 through6 loop three times each. Both boundary blocks remain independent and all scales remain fixed at1.0. This directly compares global cycling versus local iterative refinement with equal effective depth, parameter count and initialization rule."
+  },
+  "parents": [
+    "8c516bbb852b0fe262ac4d06b6d55bd2789b96a1de8641f1459e03082cd56030"
+  ],
+  "operator": "same-depth-cyclic-versus-local-loop-comparison"
+}

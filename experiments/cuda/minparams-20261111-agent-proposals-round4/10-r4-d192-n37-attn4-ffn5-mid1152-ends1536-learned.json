@@ -1,0 +1,535 @@
+{
+  "name": "r4-d192-n37-attn4-ffn5-mid1152-ends1536-learned",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 37,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 1152,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn",
+        "attn_scale": {
+          "init": 1.0,
+          "learned": true
+        },
+        "ffn_scale": {
+          "init": 1.0,
+          "learned": true
+        }
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1536,
+        "act": "silu"
+      },
+      "Flast": {
+        "hidden": 1536,
+        "act": "relu2"
+      },
+      "Fmiddle0": {
+        "hidden": 1152,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 1152,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 1152,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 1152,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 1152,
+        "act": "relu2"
+      }
+    },
+    "name": "r4-d192-n37-attn4-ffn5-mid1152-ends1536-learned",
+    "description": "The prior n37 attention-bank4/FFN-bank5 model with middle896/ends1408 reached seed0 dev CE 3.431927 at 10.18M. Keep its depth and reuse schedule but widen the five middle FFNs to 1152 and endpoints to 1536, adding 74 learned unit-initialized scales. This deliberately grows useful components to recover loss while remaining substantially below 11.31M overall."
+  },
+  "parents": [
+    "d0a6bb3cf3dc0c558a36ff57fefdc7cf07b8268578f78d5522388b7b460fc939",
+    "2a2d83ddf6b455cf1fce2a602a5370baf199a793a15266d9834652a8d2e00d31"
+  ],
+  "operator": "small-bank-capacity-recovery"
+}
