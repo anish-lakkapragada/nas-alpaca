@@ -1,5 +1,38 @@
 # Completed NVIDIA minimum-parameter search — November 11, 2026
 
+## Current user choice — candidate C, selected after search completion
+
+After the search completed and the independent diagnostic was disclosed, the
+user selected candidate C for subsequent work. This is a post-search user choice;
+it does not replace the frozen 10.99M candidate or change the original final result.
+No additional training or evaluation runs were launched for this selection.
+
+- Candidate C: `c1bd3493ebc695ab79a11fc3444ac65d2efc4cc058479d342a20fd07b940d046`,
+  name `g1-2a2d83d-order-31`, **11,458,944 parameters (57.7861% fewer)**.
+- Exact architecture: `experiments/cuda/candidate-c/spec.json`; model dimensions,
+  run identities, results and provenance: `experiments/cuda/candidate-c/metadata.json`.
+- Width 192, three 64-dimensional heads, 37 block applications. The 35 middle
+  positions cycle five attention modules and seven FFNs; independent first/last
+  modules bring totals to seven attention modules and nine FFNs. Middle FFN hidden
+  width 1024, boundary FFNs 1536. FFN then attention everywhere except position 32
+  (one-indexed), which uses attention then FFN. First FFN uses SiLU; others ReLU2.
+- Independent diagnostic on search seeds 0/1/2: mean dev 3.410361574055 versus
+  baseline 3.420729675568; mean test 3.345952842958 versus baseline 3.355123637109.
+  C beat its paired baseline on test for all three seeds. It has **not** received
+  five-fresh-seed confirmation. The test split was reused from the earlier study.
+- Three candidate C and three paired baseline best-dev checkpoints are now local,
+  totaling 463,407,498 bytes. SHA256 values match the preexisting diagnostic hashes.
+  See `CANDIDATE_C_LOCAL_BACKUP.json` in the artifact root below. Run directories
+  contain `best.pt`, `config.json`, summaries, logs and curves.
+- Branch remains `research/nvidia-minparams` in the local `nas` repository;
+  `git remote -v` is empty. No GitHub remote is configured or publication performed.
+
+The independent report was opened only after search completion, following the
+user's final-status request. `POST_SEARCH_DIAGNOSTIC_DISCLOSURE.json` records that
+access and corrects an earlier receipt's checkpoint wording: all runs trained for
+5000 steps, but the diagnostic evaluated best-dev checkpoints, some before step 5000.
+All three candidate C checkpoints happen to be at step 5000.
+
 ## Final outcome — completed before 10 PM PT; held-out criterion NOT met
 
 The experiment is complete. Do not publish the proposed smaller-without-worse-loss
@@ -44,7 +77,8 @@ test split and the separate twelve-checkpoint diagnostic before selection froze.
 Root/search never read the independent diagnostic scores during this search;
 they were not pooled with the final five-seed comparison. Raw per-conversation
 arrays remain on the server and were not copied locally. No architecture
-reselection or additional training followed the final result.
+reselection or additional training was part of that completed protocol; the later
+user choice of candidate C and post-search disclosure are recorded above.
 
 The following sections are historical protocol and progress snapshots.
 

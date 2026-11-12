@@ -1,0 +1,230 @@
+{
+  "search_space": "expanded",
+  "layers": [
+    {
+      "attn": "Afirst",
+      "ffn": "Ffirst",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle0",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle1",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle2",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle3",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle4",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle5",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle6",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle0",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle1",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle2",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle3",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle4",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle5",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle6",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle0",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle1",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle2",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle3",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle4",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle5",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle6",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle0",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle1",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle2",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle3",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle4",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle5",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle6",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle0",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle1",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle0",
+      "ffn": "Fmiddle2",
+      "order": "attn_ffn"
+    },
+    {
+      "attn": "Amiddle1",
+      "ffn": "Fmiddle3",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle2",
+      "ffn": "Fmiddle4",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle3",
+      "ffn": "Fmiddle5",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Amiddle4",
+      "ffn": "Fmiddle6",
+      "order": "ffn_attn"
+    },
+    {
+      "attn": "Alast",
+      "ffn": "Flast",
+      "order": "ffn_attn"
+    }
+  ],
+  "ffns": {
+    "Ffirst": {
+      "hidden": 1536,
+      "act": "silu"
+    },
+    "Flast": {
+      "hidden": 1536,
+      "act": "relu2"
+    },
+    "Fmiddle0": {
+      "hidden": 1024,
+      "act": "relu2"
+    },
+    "Fmiddle1": {
+      "hidden": 1024,
+      "act": "relu2"
+    },
+    "Fmiddle2": {
+      "hidden": 1024,
+      "act": "relu2"
+    },
+    "Fmiddle3": {
+      "hidden": 1024,
+      "act": "relu2"
+    },
+    "Fmiddle4": {
+      "hidden": 1024,
+      "act": "relu2"
+    },
+    "Fmiddle5": {
+      "hidden": 1024,
+      "act": "relu2"
+    },
+    "Fmiddle6": {
+      "hidden": 1024,
+      "act": "relu2"
+    }
+  },
+  "name": "g1-2a2d83d-order-31",
+  "description": "Live CUDA seed 0 evidence: the 12,296,064-parameter width 192,32-application,eight-middle-module parent reached dev CE 3.401101 versus baseline 3.408846. These are screening results, not fresh-seed or held-out test claims. Use relatively prime five-module attention and seven-module FFN banks, giving 35 distinct middle pairings over 35 applications, with independent boundary blocks. Preserve 1024-wide middle FFNs and 1536-wide endpoints, seeking expressivity through different combinations of a small set of shared sublayers."
+}
