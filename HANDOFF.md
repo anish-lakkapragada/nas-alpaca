@@ -168,11 +168,23 @@ tests width216/224, compatible head counts, FFN capacity allocation, and shared
 sublayer schedules; ten are below 11M parameters. All actual model counts
 were checked on the PyTorch meta device without initializing CUDA.
 
-The new width224 round6 screens achieved seed0 dev 3.4118703302 at 11,216,576
-parameters and 3.4164891691 at 11,073,216 parameters. Round7 middle960/ends1408
-achieved seed0 dev 3.4125429400 at 11,188,608 parameters. These are single-seed
-screens, not three-seed qualifications. The smallest qualified architecture
-remains the 11,312,256-parameter model described above at this snapshot.
+The width224 round6 screen at 11,216,576 parameters was followed by a seven-head
+control with the same weights and schedule. That control, architecture
+`1ccfddeffaaf17682d19d034075788cac1175f6dddb23d2ff1a8a11afa084457`,
+is the new smallest qualifier: seed0/1/2 dev CE is 3.4084683852 / 3.4157168105 /
+3.4105685262, mean **3.4115845740**, versus baseline mean 3.4207296756. It has
+**11,216,576 parameters**, 15,928,384 fewer than baseline (**58.679%**), and
+beats its paired baseline on all three search seeds, although the seed0 margin
+is only 0.000378. This remains search evidence, not fresh-seed or held-out
+confirmation. Round7 middle960/ends1408 achieved seed0 dev 3.4125429400 at
+11,188,608 parameters, but has not qualified on three seeds.
+
+Round 10 (11 proposals, commit `e48a018`) was accepted at approximately 03:19
+UTC. It directly compresses the confirmed seven-head parent while preserving
+width224, heads7x32, 37 paired applications and the A3/F5 schedule in ten of
+eleven proposals. Counts range from 10,929,856 to 11,144,896; the remaining
+proposal is an explicitly labeled phase-cycle control. The live registry showed
+all 11 accepted and 31 total queued runs after admission.
 
 A descriptive nine-run train/dev comparison of baseline, smallest qualifier,
 and the improved nearby parent is saved under
