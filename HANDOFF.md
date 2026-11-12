@@ -105,6 +105,20 @@ invalid invocation. It explicitly reports recorded checkpoint pruning and any
 restart-related evidence limitations. Synthetic normal/restart/corruption cases
 pass. It does not independently rerun bootstrap interval draws.
 
+`cuda_minparams_postprocess.py` is a separate server-side waiter for the final
+report. Once the frozen workflow reports completion, it exports the selected
+architecture, refreshes the readable run/architecture report, and runs the final
+audit. It never trains or scores a model. The independent systemd unit is
+`nas-minparams-postprocess-20261111.service`; its output is recorded in
+`postprocessing.log` and `postprocessing.json` under the run root. Check its
+actual exit status and audit results; its presence alone is not completion.
+
+Round 4 adds 16 proposals under
+`experiments/cuda/minparams-20261111-agent-proposals-round4/`, all below
+11,312,256 parameters. They were committed and accepted by the live scheduler
+after frozen CUDA schema/count validation, including matched fixed/learned
+scalar pairs, FFN capacity redistribution, and shared-layer execution schedules.
+
 ---
 
 # Historical MLX handoff (superseded for this branch)
