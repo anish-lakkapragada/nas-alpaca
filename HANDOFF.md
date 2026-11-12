@@ -182,6 +182,22 @@ learned-scalar checkpoint is recorded in
 `search-comparisons/20261112T0230-learned-scalars.json`; its hash was verified
 and no weights were transferred into new training runs.
 
+At the user's request, a separate agent scored a frozen snapshot of the three
+smallest qualifiers then available plus the baseline (seeds 0/1/2) on all
+2,599 held-out conversations. This was extra test access before main selection
+freeze and must be disclosed in every final account. The diagnostic service
+completed 12/12 checkpoints at 02:49:07 UTC and exited 0. Its independent audit
+recomputed all 12 means and all three paired seed/conversation bootstrap
+intervals. No scores, rankings, or outcome hints were returned to the search
+controller, root agent, or architecture-search agents. The locally verified
+user-facing report is outside this worktree at
+`/Users/anish/Documents/git-repos/nas/.lambda/independent-heldout-20261112T0233/REPORT.md`;
+do not open it until the architecture freezes. A metrics-free integrity receipt
+is beside it as `COMPLETION_RECEIPT.json`. Immutable per-conversation arrays
+remain on the server because automatic approval review rejected their local
+download; report and audit hashes were verified locally. The planned five fresh
+paired seeds 100--104 and final held-out evaluation remain unchanged.
+
 ---
 
 # Historical MLX handoff (superseded for this branch)
