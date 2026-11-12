@@ -1,0 +1,246 @@
+{
+  "name": "r13-d208-h8x26-n37-attn3ffn7-mid768-ends1024",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 37,
+    "d_model": 208,
+    "n_heads": 8,
+    "d_ff": 768,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1024,
+        "act": "silu"
+      },
+      "Flast": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle0": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 768,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 768,
+        "act": "relu2"
+      }
+    },
+    "name": "r13-d208-h8x26-n37-attn3ffn7-mid768-ends1024",
+    "description": "Main-search dev evidence only: width224 heads7x32 A3/F5 reached three-seed mean3.411584573951 at11,216,576 parameters, versus baseline3.4207296756. The first width192 heads6x32 A3/F5 run (round12B,10,179,456 parameters) reached seed0 dev3.456402851568 and train2.844627356776; other round12 results were pending when these designs were selected. Width192 heads3x64 previously reached mean3.4057126965 at11,458,944 parameters with an A5/F7 bank. These observations motivate testing FFN diversity without assuming a head-count gain transfers. Change only attention head count fromfour to eight, giving26-dimensional heads, relative to the matched width208 seven-FFN-bank candidate. Parameter tensor shapes, sharing schedule, FFN widths and application count remain the same. Head dimensions52/26 are mathematically compatible with width208 and accepted by the frozen model; their GPU throughput has not been measured. Preserve37 paired FFN-to-attention applications, independent boundary modules, first-FFN SiLU, other FFNs ReLU2, unit fixed scales and the common initialization rule. Vocabulary32768, context1024, dropout0.1, all data, optimizer, seed protocol, precision and5000 training steps remain fixed. No trained weights or learned scalar values are reused. No held-out or test artifacts were accessed."
+  },
+  "parents": [
+    "e9758c8d136ddf1ebf7f5eff8e1fbd311329e0169e8c3dc63e4945f9ad508ade"
+  ],
+  "operator": "matched-width208-head8-control"
+}
