@@ -1,0 +1,236 @@
+{
+  "name": "r3-d192-n34-attnbank6-ffnbank8-middle1024-ends1280",
+  "frame": {
+    "vocab_size": 32768,
+    "max_len": 1024,
+    "n_layers": 34,
+    "d_model": 192,
+    "n_heads": 3,
+    "d_ff": 1024,
+    "dropout": 0.1
+  },
+  "spec": {
+    "search_space": "expanded",
+    "layers": [
+      {
+        "attn": "Afirst",
+        "ffn": "Ffirst",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle0",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle1",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle2",
+        "ffn": "Fmiddle2",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle3",
+        "ffn": "Fmiddle3",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle4",
+        "ffn": "Fmiddle4",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle5",
+        "ffn": "Fmiddle5",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle0",
+        "ffn": "Fmiddle6",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Amiddle1",
+        "ffn": "Fmiddle7",
+        "order": "ffn_attn"
+      },
+      {
+        "attn": "Alast",
+        "ffn": "Flast",
+        "order": "ffn_attn"
+      }
+    ],
+    "ffns": {
+      "Ffirst": {
+        "hidden": 1280,
+        "act": "silu"
+      },
+      "Flast": {
+        "hidden": 1280,
+        "act": "relu2"
+      },
+      "Fmiddle0": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle1": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle2": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle3": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle4": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle5": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle6": {
+        "hidden": 1024,
+        "act": "relu2"
+      },
+      "Fmiddle7": {
+        "hidden": 1024,
+        "act": "relu2"
+      }
+    },
+    "name": "r3-d192-n34-attnbank6-ffnbank8-middle1024-ends1280",
+    "description": "Live CUDA seed 0 evidence: the 12,296,064-parameter width 192,32-application,eight-middle-module parent reached dev CE 3.401101 versus baseline 3.408846. These are screening results, not fresh-seed or held-out test claims. Keep eight independent middle FFNs and four complete FFN-bank sweeps, but reduce the attention bank to six and endpoint FFNs to 1280. Different attention/FFN periods make repeated applications encounter different partner modules, increasing the number of combinations without allocating extra matrices."
+  },
+  "parents": [
+    "15445c2f88be60abf0e1ce1bb753d821f73fc58c6d650c269aa95a5d031a9c0c",
+    "d0a6bb3cf3dc0c558a36ff57fefdc7cf07b8268578f78d5522388b7b460fc939"
+  ],
+  "operator": "independent-attention-ffn-sharing-periods"
+}
