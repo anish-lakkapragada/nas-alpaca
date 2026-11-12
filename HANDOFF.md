@@ -120,27 +120,40 @@ Round 4 adds 16 proposals under
 after frozen CUDA schema/count validation, including matched fixed/learned
 scalar pairs, FFN capacity redistribution, and shared-layer execution schedules.
 
-### Timing update in progress — 2026-11-12 01:46 UTC
+### Timing update completed — 2026-11-12 02:18 UTC / 6:18 PM PT
 
 The user asked to keep running until 10 PM PT while away. The stated
 interpretation is a 10 PM **search** cutoff, followed by final confirmation and
 the unchanged 10:30 PM report deadline. The service override now specifies
-`--training-cutoff 2026-11-12T06:00:00Z`; the existing controller still uses the
-old cutoff until its scheduled clean restart. Do not assume this transition
-has completed without checking the actual process arguments and new plan.
+`--training-cutoff 2026-11-12T06:00:00Z`. The clean restart completed at
+02:12:06 UTC: workflow PID **89071** and controller PID **89072** both use the
+new cutoff, also verified in `plan.json`. All 13 frozen source/data hashes
+remained unchanged. These PIDs are a snapshot; recheck before any operation.
 
 Independent service `nas-minparams-cutoff-update-20261111.service` (initial
-PID 78297) runs the reviewed one-off
-`experiments/cuda/drain_minparams_for_cutoff.py`. It waits for all queued jobs
-and inbox files to clear, pauses scheduler 5643, lets current trainers finish
-their full 5,000 steps, then sends TERM/CONT. Workflow 5640 exits and its
-existing Restart=on-failure policy loads the new cutoff. The helper never
-signals trainers, preserves old plan/timeline under `operations/`, and has
-bounded recovery plus a separate CONT rescue process. Its service uses
-KillMode=process. Do not admit the prepared round5 proposals until this timing
-transition completes, to avoid delaying the empty-queue boundary. Verify the
-new workflow/controller PIDs, 06:00 cutoff, completed draining runs, and unchanged
-frozen source/data before considering the timing update done.
+PID 78297) successfully finished the reviewed one-off
+`experiments/cuda/drain_minparams_for_cutoff.py` and exited 0. It paused only
+the old scheduler, let all four active trainers finish their full 5,000 steps,
+then restarted the controller through its existing service policy. Drained runs
+`r00311-c5f5c34f2a-s0`, `r00313-2f3e84a219-s0`,
+`r00314-58510e69f9-s0`, and `r00315-28596bbfdd-s0` all completed normally;
+none was cut short. The old plan and transition timeline remain under
+`operations/`. At 02:17 UTC all four H100s were training at 94% utilization,
+with 323 completed runs, 4 running, and 12 queued across 241 measured
+architectures. No training failures, interruptions, or timeouts were recorded.
+
+After verifying the transition, 20 prevalidated proposals were moved atomically
+into the live inbox at 02:17:57 UTC: round 5 (12) and round 6 (8), stored locally
+under `experiments/cuda/minparams-20261111-agent-proposals-round5/` and
+`minparams-20261111-agent-proposals-round6/`. The admission operation is recorded
+in `operations/round5-round6-admission.json`; all 20 appeared in the architecture
+ledger and the inbox was empty at the subsequent check. They test residual scaling, sublayer frequencies/order,
+selective loops, mixed activations, tied FFNs, and intermediate widths with
+compatible head counts. Round 6 deliberately includes head dimensions other
+than 64 under the user's expanded width authorization. Every proposal is below
+11,312,256 parameters. Schema and actual model parameter counts were validated
+without consuming a training GPU. The matched fixed/learned non-unit scalar
+pair additionally has identical initial weights and BF16 outputs.
 
 ---
 
