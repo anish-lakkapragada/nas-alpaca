@@ -464,8 +464,11 @@ class Audit:
                                              "test_before_selection", "test evaluation started before architecture selection froze", output)
                 after_training = self.check(self.all_fresh_completed_time is not None and started >= self.all_fresh_completed_time,
                                             "test_before_fresh_completion", "test evaluation started before all ten fresh training runs completed", output)
+                trained = self.final_runs.get(row.get("run"))
+                evaluation_identity_matches = (trained is not None and row.get("checkpoint_sha256") ==
+                                               trained["ledger"]["checkpoints"]["best.pt"]["sha256"])
                 if started < self.confirmation_time:
-                    if after_selection and after_training and self.checkpoint_identities_verified:
+                    if after_selection and after_training and self.checkpoint_identities_verified and evaluation_identity_matches:
                         if not rewrite_warning_emitted:
                             self.warn("checkpoint_freeze_timestamp_rewritten",
                                       "Finalizer resume rewrote the checkpoint-freeze timestamp after an earlier evaluation. Exact frozen architecture/checkpoint identities match, and all fresh training completed before every accepted test start; no reselection inferred.")
