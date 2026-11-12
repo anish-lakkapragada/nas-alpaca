@@ -82,6 +82,40 @@ Independent diagnostic scores remain unread by root/search. Do not open them
 or use them to choose architectures. Final delivery must include the additional
 test-access disclosure alongside the older-study test-reuse caveat.
 
+### Subsequent progress — 2026-11-12 03:56 UTC / 7:56 PM PT
+
+At this snapshot, 476 runs completed, 4 were running and 8 queued across 306
+measured architectures. The smallest three-seed qualifier is now **11,144,896**
+parameters, `0af98067e38c62d94fe635411af4b020af3b7e5e4ec797eb59750a4d993bf606`
+(round10 last FFN864 only). Its mean dev CE is **3.418622401635**, from
+3.410739852919 / 3.421580451726 / 3.423546900259. This narrowly beats the
+baseline mean3.420729675568 but loses on individual seeds0/1; do not describe
+it as an all-seed win. Selection is not frozen; fresh confirmation is pending.
+
+All six round12 proposals (commit`7a8bf294`) were admitted at the recorded
+03:49:53.326856UTC timestamp and accepted. They test width192, cyclic A3/F5,
+FFN capacity redistribution, heads3/6/8 and37/47 applications at9.934–10.425M.
+The first10.179456M screen was weak (seed0dev3.4564028516); keep negative
+results. Round11 last768 has seed0dev3.4100546221 at11.101888M, not confirmed.
+
+The additive final-delivery builder is committed (`a3ea1b8`) and deployed:
+`experiments/cuda/build_minparams_delivery.py`. After the main final report
+and postprocessing/audit pass, run it with `--root RUN_ROOT
+--diagnostic-receipt RUN_ROOT/COMPLETION_RECEIPT.json`. It writes
+`FINAL_DELIVERY.md`/`.json`, packaging fixed-protocol results, runtime,
+complete logs/curves/architecture links and both test-reuse disclosures.
+The metrics-free receipt has been copied into the main runroot so the final
+links remain portable. The builder never reads independent diagnostic scores
+or arrays and refuses incomplete, stale or failed audit inputs. Final delivery
+must include the additional12-checkpoint diagnostic disclosure; the frozen
+original FINAL_REPORT mentions only older-study reuse. Do not edit frozen code.
+
+Routine local rsync now also excludes`*.npz`; diagnostic raw-array download
+was previously rejected by automatic approval review. Raw per-conversation
+arrays stay on the server and are audited there. Keep report/receipt hashes,
+and copy the ten fresh selected checkpoints after finalization. Do not claim
+those diagnostic arrays were backed up locally.
+
 ### Live search snapshot — 2026-11-12 02:48 UTC / 6:48 PM PT
 
 The goal remains active; selection and final confirmation are **not complete**.
