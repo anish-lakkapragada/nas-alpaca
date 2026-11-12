@@ -55,7 +55,7 @@ supersedes the older 10 PM search-cutoff / 10:30 PM report interpretation below.
 The workflow and plan now use `--deadline 2026-11-12T06:00:00Z` and
 `--training-cutoff 2026-11-12T05:30:00Z`; exploration ends 05:15Z, fresh
 training must finish by 05:45Z, and finalizer deadline is 05:55Z. The hard-stop
-timer fires 06:00Z, report updater cleanup 06:01Z. The postprocessor waiter also
+timer fires 06:00Z, report updater cleanup 05:30Z. The postprocessor waiter also
 uses 06:00Z. None of these actions terminates the rental.
 
 The helper `nas-minparams-deadline-update-20261111.service` exited 0 after
@@ -98,14 +98,22 @@ FFN capacity redistribution, heads3/6/8 and37/47 applications at9.934–10.425M.
 The first10.179456M screen was weak (seed0dev3.4564028516); keep negative
 results. Round11 last768 has seed0dev3.4100546221 at11.101888M, not confirmed.
 
-The additive final-delivery builder is committed (`a3ea1b8`) and deployed:
+The additive final-delivery builder is committed (`a3ea1b8`, bounded waiting
+added in `6118102`) and deployed:
 `experiments/cuda/build_minparams_delivery.py`. After the main final report
 and postprocessing/audit pass, run it with `--root RUN_ROOT
 --diagnostic-receipt RUN_ROOT/COMPLETION_RECEIPT.json`. It writes
 `FINAL_DELIVERY.md`/`.json`, packaging fixed-protocol results, runtime,
 complete logs/curves/architecture links and both test-reuse disclosures.
 The metrics-free receipt has been copied into the main runroot so the final
-links remain portable. The builder never reads independent diagnostic scores
+links remain portable. The independent server service
+`nas-minparams-delivery-20261111.service` now waits for postprocessing until
+06:00Z, then invokes the same strict builder. It must exit successfully and
+produce actual FINAL_DELIVERY artifacts before delivery is considered complete.
+The periodic report timer is now stopped at **05:30Z**, when search freezes;
+this prevents later periodic rewrites from invalidating final delivery hashes.
+Raw per-run training/evaluation logs and curves continue, and postprocessing
+performs the final complete report export. This changes no training deadline. The builder never reads independent diagnostic scores
 or arrays and refuses incomplete, stale or failed audit inputs. Final delivery
 must include the additional12-checkpoint diagnostic disclosure; the frozen
 original FINAL_REPORT mentions only older-study reuse. Do not edit frozen code.
@@ -154,7 +162,7 @@ The autonomous adaptive search also continues after breadth phases.
 `nas-minparams-report-20261111.timer` runs the independent, read-only
 `cuda_minparams_report.py` every five minutes, producing `audit-report/`
 with every-run/architecture Markdown logs, summary JSON, and PNG/SVG plots.
-It stops at 06:01 UTC through `nas-minparams-report-cutoff-20261111.timer`.
+It stops at 05:30 UTC through `nas-minparams-report-cutoff-20261111.timer`.
 Local artifact backups (excluding `.pt` checkpoints) are under
 `/Users/anish/Documents/git-repos/nas/.lambda/artifacts/287cdb48d8e64da3b849dceaaf9b3bc2/cuda/minparams-20261111/`.
 
