@@ -16,6 +16,7 @@ import os
 from pathlib import Path
 import statistics
 import sys
+import time
 from urllib.parse import quote
 
 
@@ -41,9 +42,28 @@ def read_json(path):
 
 
 def timestamp(value):
-    result = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    result = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
     require(result.tzinfo is not None, "timestamps must include a timezone")
     return result.astimezone(timezone.utc)
+
+
+def wait_for_postprocessing(root, deadline, poll_seconds=10):
+    """Wait only for the completion record; build() retains all strict gates."""
+    require(0 < poll_seconds <= 10, "postprocessing poll interval must be in (0, 10] seconds")
+    path = root.resolve() / "postprocessing.json"
+    print(json.dumps({"event": "waiting_for_postprocessing", "utc": datetime.now(timezone.utc).isoformat(),
+                      "deadline_utc": deadline.isoformat()}), flush=True)
+    while True:
+        current = datetime.now(timezone.utc)
+        if current >= deadline:
+            raise TimeoutError(f"postprocessing did not become ready before {deadline.isoformat()}")
+        if path.is_file():
+            record = read_json(path)
+            require(record.get("status") != "failed", "postprocessing recorded failure; delivery will not proceed")
+            print(json.dumps({"event": "postprocessing_record_ready", "utc": datetime.now(timezone.utc).isoformat(),
+                              "status": record.get("status")}), flush=True)
+            return
+        time.sleep(min(poll_seconds, (deadline - current).total_seconds()))
 
 
 def finite(value):
@@ -327,8 +347,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True, help="completed main experiment run directory")
     parser.add_argument("--diagnostic-receipt", type=Path, help="metrics-free COMPLETION_RECEIPT.json; defaults to the sole sibling independent-heldout receipt")
+    parser.add_argument("--wait-until", type=timestamp, help="optional timezone-aware ISO deadline for waiting on postprocessing.json, normalized to UTC")
     args = parser.parse_args()
     try:
+        if args.wait_until is not None:
+            wait_for_postprocessing(args.root, args.wait_until)
         result = build(args.root, args.diagnostic_receipt)
     except (OSError, ValueError, KeyError, TypeError, ZeroDivisionError) as error:
         print(f"Delivery refused: {error}", file=sys.stderr)
