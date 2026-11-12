@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-11-12T03:42:00Z",
+  "recorded_utc": "2026-11-12T03:43:17.406217+00:00",
   "user_request": "Continue exploration; deadline is10PM PT",
   "interpretation": "Finished results by10PM PT, with final confirmation reserved beforehand",
   "supersedes": "Prior10PMsearch/10:30PMfinal interpretation",
@@ -8,9 +8,11 @@
   "finalizer_deadline_utc": "2026-11-12T05:55:00Z",
   "fixed_recipe_unchanged": true,
   "steps_per_run": 5000,
-  "all13frozen_hashes_unchanged": true,
   "workflow_pid_verified": 133085,
   "scheduler_pid_verified": 133086,
   "rental_termination_authorized": false,
-  "server_record": "operations/deadline-10pm-update.json"
+  "server_record": "operations/deadline-10pm-update.json",
+  "workflow_started_utc": "2026-11-12T03:41:30.035223Z",
+  "verified_utc": "2026-11-12T03:42:01.316157+00:00",
+  "all_13_frozen_hashes_unchanged": true
 }

@@ -33,9 +33,9 @@ This section supersedes the historical MLX protocol below for this branch.
   Reserve the final 30 minutes: exploration ends 9:15 PM, search confirmations
   and selection finish by 9:30 PM, finalizer deadline is 9:55 PM. The hard-stop
   timer now fires at 10:00 PM; this stops training, not the rental.
-  The safe controller transition completed at 03:41:27 UTC: workflow PID133085
-  and scheduler PID133086 both use the revised deadline and cutoff. All four
-  drained trainers finished 5,000 steps; all13 frozen source/data hashes match.
+  The safe controller transition completed at 03:41:30 UTC: workflow PID 133085
+  and scheduler PID 133086 both use the revised deadline and cutoff. All four
+  drained trainers finished 5,000 steps; all 13 frozen source/data hashes match.
   Recheck live process state rather than treating these snapshot PIDs as permanent.
 - Verification: original CUDA tests and expanded-architecture GPU tests pass,
   including exact baseline weights/outputs/gradients against the frozen old
@@ -54,28 +54,28 @@ The latest user request makes **10 PM PT the finished-result deadline**. This
 supersedes the older 10 PM search-cutoff / 10:30 PM report interpretation below.
 The workflow and plan now use `--deadline 2026-11-12T06:00:00Z` and
 `--training-cutoff 2026-11-12T05:30:00Z`; exploration ends 05:15Z, fresh
-training must finish by05:45Z, and finalizer deadline is05:55Z. The hard-stop
-timer fires06:00Z, report updater cleanup06:01Z. The postprocessor waiter also
-uses06:00Z. None of these actions terminates the rental.
+training must finish by 05:45Z, and finalizer deadline is 05:55Z. The hard-stop
+timer fires 06:00Z, report updater cleanup 06:01Z. The postprocessor waiter also
+uses 06:00Z. None of these actions terminates the rental.
 
-The helper `nas-minparams-deadline-update-20261111.service` exited0 after
-safely draining runs r00447–r00450. Both original processes exited130 and
+The helper `nas-minparams-deadline-update-20261111.service` exited 0 after
+safely draining runs r00447–r00450. Both original processes exited 130 and
 systemd resumed the workflow with new arguments. The helper change is commit
 `15fa089`; detailed old/new unit configurations, process identities, plan and
-transition timestamps are retained under `operations/`. At03:42Z:450 completed,
-4 running,28 queued,304 measured architectures; no training failures or timeouts.
+transition timestamps are retained under `operations/`. At 03:42Z: 450 completed,
+4 running, 28 queued, 304 measured architectures; no training failures or timeouts.
 
-The current smallest three-seed qualifier remains11,216,576 parameters
+The current smallest three-seed qualifier remains 11,216,576 parameters
 (`1ccfddeffaaf17682d19d034075788cac1175f6dddb23d2ff1a8a11afa084457`),
-58.679% below baseline. Search dev mean3.411584573951 vsbaseline3.420729675568.
-Its full-run wall times were233.766/209.249/209.672sec; baseline~101sec.
+58.679% below baseline. Search dev mean 3.411584573951 vs baseline 3.420729675568.
+Its full-run wall times were 233.766/209.249/209.672 seconds; baseline ~101 seconds.
 The parameter reduction does not imply less compute: its narrow shared layers
-execute37 times. It has not had fresh-seed/final-test confirmation yet.
+execute 37 times. It has not had fresh-seed/final-test confirmation yet.
 
-Round11 (eight proposals,commit`313a0b7`) was schema/meta-count/dedup validated
-and admitted03:41:54Z via the inbox. It explores final FFN widths768/640,
-32/47 applications, sharing final attention, and width216 heads9×24, with
-10.830–11.102M parameters. Every run remains exactly5,000 steps. The current
+Round 11 (eight proposals, commit `313a0b7`) was schema/meta-count/dedup validated
+and admitted 03:42:01Z via the inbox. It explores final FFN widths 768/640,
+32/47 applications, sharing final attention, and width 216 heads 9×24, with
+10.830–11.102M parameters. Every run remains exactly 5,000 steps. The current
 baseline/candidate six-run train/dev plot is under
 `search-comparisons/20261112T0337-11m-frontier/`; visually checked, backed up.
 Independent diagnostic scores remain unread by root/search. Do not open them
